@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E6FFFFFF"
+    tools:context=".HospitalRegister_1">
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:lottie_rawRes="@raw/doctor"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"/>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_below="@id/lottie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/hospo_clear"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/purple_700"
+        android:textAllCaps="true"
+        android:layout_centerHorizontal="true"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/text"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/layout_bg">
+        <TextView
+            android:id="@+id/text2"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/purple_500"
+            android:text="Fill up all information to complete \nfirst step."
+            android:textStyle="bold"
+            android:textSize="17sp"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/hospitalName"
+            android:layout_below="@id/text2"
+            android:inputType="none"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="Hospital Name"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/edit_txt_bg"
+            android:padding="10dp"
+            android:layout_marginTop="15dp"
+            tools:ignore="HardcodedText"
+            android:importantForAutofill="no" />
+        <EditText
+            android:id="@+id/city"
+            android:inputType="none"
+            android:layout_below="@id/hospitalName"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="City Name"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/edit_txt_bg"
+            android:padding="10dp"
+            android:layout_marginTop="15dp"
+            tools:ignore="HardcodedText"
+            android:importantForAutofill="no" />
+        <EditText
+            android:id="@+id/dist"
+            android:layout_below="@id/city"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:hint="District Name"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/edit_txt_bg"
+            android:padding="10dp"
+            android:layout_marginTop="15dp"
+            tools:ignore="HardcodedText"
+            android:importantForAutofill="no" />
+        <EditText
+            android:id="@+id/state"
+            android:inputType="none"
+            android:layout_below="@id/dist"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="State Name"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/edit_txt_bg"
+            android:padding="10dp"
+            android:layout_marginTop="15dp"
+            tools:ignore="HardcodedText"
+            android:importantForAutofill="no" />
+
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_below="@id/state"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_below="@id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="1/2"
+            tools:ignore="HardcodedText" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

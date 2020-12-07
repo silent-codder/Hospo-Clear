@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity">
+
+   <RelativeLayout
+       android:id="@+id/relativeLayout"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_centerVertical="true"
+       tools:ignore="UselessParent">
+
+       <com.airbnb.lottie.LottieAnimationView
+           android:id="@+id/lottie"
+           android:layout_width="match_parent"
+           android:layout_height="270dp"
+           app:lottie_rawRes="@raw/doctor"
+           app:lottie_autoPlay="true"
+           app:lottie_loop="true"/>
+
+       <TextView
+           android:layout_below="@id/lottie"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:fontFamily="sans-serif-condensed-medium"
+           android:text="@string/hospo_clear"
+           android:textStyle="bold"
+           android:textSize="40sp"
+           android:textColor="@color/purple_700"
+           android:textAllCaps="true"
+           android:layout_centerHorizontal="true"/>
+
+   </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="320dp"
+        android:layout_height="55dp"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Get Started"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_centerHorizontal="true"
+        tools:ignore="HardcodedText" />
+
+</RelativeLayout>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "858235465414",
+    "project_id": "hospo-clear",
+    "storage_bucket": "hospo-clear.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858235465414:android:bed4557cc7835d9832b1c7",
+        "android_client_info": {
+          "package_name": "com.silentcodder.newhospital"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "858235465414-4o66pl8gug2pvpkjc17nmeeil8nn2f6h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAryDinEjAqga4VLcIrqFyB4qGfvMd5D0o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "858235465414-4o66pl8gug2pvpkjc17nmeeil8nn2f6h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
