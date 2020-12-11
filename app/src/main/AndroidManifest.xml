@@ -9,9 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewHospital">
-        <activity android:name=".HospitalRegister_1"></activity>
-        <activity android:name=".HospitalOtp" />
-        <activity android:name=".HospitalRegister" />
+        <activity android:name=".UserRegister.UserMainActivity"></activity>
+        <activity android:name=".UserRegister.UserRegister_1" />
+        <activity android:name=".UserRegister.UserOtp" />
+        <activity android:name=".UserRegister.UserRegister" />
+        <activity android:name=".HospitalRegister.DoctorRegister" />
+        <activity android:name=".HospitalRegister.HospitalRegister_2" />
+        <activity android:name=".HospitalRegister.HospitalRegister_1" />
+        <activity android:name=".HospitalRegister.HospitalOtp" />
+        <activity android:name=".HospitalRegister.HospitalRegister" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

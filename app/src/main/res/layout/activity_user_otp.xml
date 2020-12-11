@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E6FFFFFF"
-    tools:context=".HospitalRegister.HospitalRegister">
+    tools:context=".UserRegister.UserOtp">
 
 
     <com.airbnb.lottie.LottieAnimationView
@@ -36,48 +36,30 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/layout_bg">
 
-        <com.hbb20.CountryCodePicker
-            android:id="@+id/cpp"
-            android:layout_marginTop="60dp"
-            android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"/>
-
-
         <EditText
-            android:id="@+id/mobileNumber"
-            android:layout_below="@id/cpp"
+            android:id="@+id/getOtp"
             android:layout_width="250dp"
+            android:layout_marginTop="30dp"
             android:textColor="@color/black"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_txt_bg"
             android:layout_centerHorizontal="true"
-            android:hint="Mobile Number"
+            android:gravity="center"
+            android:hint="_ _ _ _ _ _"
             android:padding="10dp"
             android:inputType="number"
             tools:ignore="HardcodedText"
             android:autofillHints="no" />
 
         <Button
-            android:id="@+id/btnContinue"
-            android:layout_below="@id/mobileNumber"
+            android:id="@+id/btnVerifyOtp"
+            android:layout_below="@id/getOtp"
             android:layout_marginTop="20dp"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Continue"
+            android:text="Verify Otp"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/text2"
-            android:layout_width="350dp"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="By Clicking on the CONTINUE button, you agree to our Terms of Use and Privacy Policy."
-            android:layout_below="@id/btnContinue"
             tools:ignore="HardcodedText" />
 
 

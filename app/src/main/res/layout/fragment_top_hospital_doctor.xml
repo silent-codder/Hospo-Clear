@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="56dp"
+    tools:context=".UserRegister.Fragment.TopHospitalDoctorFragment">
+
+    <TextView
+        android:id="@+id/hospitalName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/purple_500"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_marginStart="20dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        tools:ignore="HardcodedText" />
+    <TextView
+        android:id="@+id/city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/purple_500"
+        android:textSize="20sp"
+        android:layout_marginBottom="2dp"
+        android:textStyle="bold"
+        android:layout_alignBottom="@id/hospitalName"
+        android:layout_toEndOf="@id/hospitalName"
+        android:fontFamily="sans-serif-condensed-medium"
+        tools:ignore="HardcodedText" />
+    <EditText
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search doctor"
+        android:drawableStart="@drawable/ic_search"
+        android:background="@drawable/search_bg"
+        android:padding="10dp"
+        android:layout_below="@id/hospitalName"
+        android:layout_margin="20dp"
+        tools:ignore="HardcodedText" />
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Top Doctors"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_below="@id/searchBar"
+        android:layout_marginStart="20dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        tools:ignore="HardcodedText" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/text"
+        android:layout_marginTop="5dp"
+        android:id="@+id/topDoctorRecycleView"/>
+</RelativeLayout>

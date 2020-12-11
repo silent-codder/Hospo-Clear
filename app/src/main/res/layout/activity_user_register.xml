@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E6FFFFFF"
-    tools:context=".HospitalRegister.HospitalRegister">
+    tools:context=".UserRegister.UserRegister">
 
 
     <com.airbnb.lottie.LottieAnimationView

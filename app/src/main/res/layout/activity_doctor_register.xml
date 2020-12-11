@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E6FFFFFF"
-    tools:context=".HospitalRegister.HospitalRegister_1">
+    tools:context=".HospitalRegister.DoctorRegister">
 
 
     <com.airbnb.lottie.LottieAnimationView
@@ -43,18 +43,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/purple_500"
-            android:text="Fill up all information to complete \nfirst step."
+            android:text="Fill up all information to complete \nLast step."
             android:textStyle="bold"
             android:textSize="17sp"
             tools:ignore="HardcodedText" />
 
         <EditText
-            android:id="@+id/hospitalName"
+            android:id="@+id/doctorName"
             android:layout_below="@id/text2"
             android:inputType="none"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="Hospital Name"
+            android:hint="Doctor Name"
             android:layout_centerHorizontal="true"
             android:background="@drawable/edit_txt_bg"
             android:padding="10dp"
@@ -62,34 +62,34 @@
             tools:ignore="HardcodedText"
             android:importantForAutofill="no" />
         <EditText
-            android:id="@+id/city"
+            android:id="@+id/doctorQualification"
             android:inputType="none"
-            android:layout_below="@id/hospitalName"
+            android:layout_below="@id/doctorName"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="City Name"
+            android:hint="qualification"
             android:layout_centerHorizontal="true"
             android:background="@drawable/edit_txt_bg"
             android:padding="10dp"
             android:layout_marginTop="15dp"
             tools:ignore="HardcodedText"
             android:importantForAutofill="no" />
-<!--        <Spinner-->
-<!--            android:id="@+id/dist"-->
-<!--            android:layout_below="@id/city"-->
-<!--            android:layout_width="300dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:inputType="none"-->
-<!--            android:hint="District Name"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:background="@drawable/edit_txt_bg"-->
-<!--            android:padding="10dp"-->
-<!--            android:layout_marginTop="15dp"-->
-<!--            tools:ignore="HardcodedText"-->
-<!--            android:importantForAutofill="no" />-->
+        <EditText
+            android:id="@+id/doctorExperience"
+            android:inputType="numberSigned"
+            android:layout_below="@id/doctorQualification"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="Experience"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/edit_txt_bg"
+            android:padding="10dp"
+            android:layout_marginTop="15dp"
+            tools:ignore="HardcodedText"
+            android:importantForAutofill="no" />
         <Spinner
-            android:id="@+id/state"
-            android:layout_below="@id/city"
+            android:id="@+id/doctorSpeciality"
+            android:layout_below="@id/doctorExperience"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -100,12 +100,12 @@
             android:importantForAutofill="no" />
 
         <Button
-            android:id="@+id/btnNext"
-            android:layout_below="@id/state"
+            android:id="@+id/btnSubmit"
+            android:layout_below="@id/doctorSpeciality"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next"
+            android:text="Submit"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
             tools:ignore="HardcodedText" />

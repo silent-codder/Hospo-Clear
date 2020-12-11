@@ -1,4 +1,4 @@
-package com.silentcodder.newhospital;
+package com.silentcodder.newhospital.UserRegister;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,10 +19,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.silentcodder.newhospital.HospitalRegister.HospitalOtp;
+import com.silentcodder.newhospital.HospitalRegister.HospitalRegister_1;
+import com.silentcodder.newhospital.R;
 
 import java.util.concurrent.TimeUnit;
 
-public class HospitalOtp extends AppCompatActivity {
+public class UserOtp extends AppCompatActivity {
 
     Button mBtnVerifyOtp;
     EditText mGetOtp;
@@ -31,10 +34,11 @@ public class HospitalOtp extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hospital_otp);
+        setContentView(R.layout.activity_user_otp);
         findIds();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -68,6 +72,7 @@ public class HospitalOtp extends AppCompatActivity {
     }
 
     private void InitiateOtp() {
+        progressDialog.dismiss();
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 MobileNumber,        // Phone number to verify
                 60,                 // Timeout duration
@@ -87,7 +92,7 @@ public class HospitalOtp extends AppCompatActivity {
                     @Override
                     public void onVerificationFailed(@NonNull FirebaseException e) {
                         progressDialog.dismiss();
-                        Toast.makeText(HospitalOtp.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(UserOtp.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });        // OnVerificationStateChangedCallbacks
 
@@ -100,13 +105,13 @@ public class HospitalOtp extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
-                            Intent intent = new Intent(HospitalOtp.this,HospitalRegister_1.class);
+                            Intent intent = new Intent(UserOtp.this, UserRegister_1.class);
                             intent.putExtra("Mobile",MobileNumber);
                             startActivity(intent);
                             finish();
                         } else {
                             progressDialog.dismiss();
-                            Toast.makeText(HospitalOtp.this, "Error...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserOtp.this, "Error...", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
