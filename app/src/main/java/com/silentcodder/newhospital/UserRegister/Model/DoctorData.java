@@ -22,8 +22,9 @@ public class DoctorData {
         return DoctorName;
     }
 
-    public void setDoctorName(String doctorName) {
+    public String setDoctorName(String doctorName) {
         DoctorName = doctorName;
+        return doctorName;
     }
 
     public String getExperience() {
@@ -46,15 +47,17 @@ public class DoctorData {
         return Speciality;
     }
 
-    public void setSpeciality(String speciality) {
+    public String setSpeciality(String speciality) {
         Speciality = speciality;
+        return speciality;
     }
 
     public String getHospitalId() {
         return HospitalId;
     }
 
-    public void setHospitalId(String hospitalId) {
+    public String setHospitalId(String hospitalId) {
         HospitalId = hospitalId;
+        return hospitalId;
     }
 }

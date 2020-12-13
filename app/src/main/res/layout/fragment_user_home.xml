@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="56dp"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".UserRegister.Fragment.UserHomeFragment">
 
     <TextView
@@ -20,59 +19,71 @@
         android:fontFamily="sans-serif-condensed-medium"
         tools:ignore="HardcodedText" />
 
-    <EditText
-        android:id="@+id/searchBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <ScrollView
         android:layout_below="@id/heading"
-        android:background="@drawable/search_bg"
-        android:inputType="textAutoCorrect"
-        android:layout_margin="20dp"
-        android:hint="Search"
-        android:padding="10dp"
-        android:drawableStart="@drawable/ic_search"
-        tools:ignore="HardcodedText"
-        android:autofillHints="no" />
-
-    <TextView
-        android:id="@+id/categoryTxt"
-        android:layout_below="@id/searchBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Top Categories"
-        android:layout_marginStart="18dp"
-        android:textSize="17sp"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        tools:ignore="HardcodedText" />
-
-    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:reverseLayout="false"
-        android:layout_below="@id/categoryTxt"
-        android:id="@+id/categoryRecycleView"/>
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/topHospital"
-        android:layout_below="@id/categoryRecycleView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Top Hospitals"
-        android:layout_marginStart="18dp"
-        android:textSize="17sp"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        tools:ignore="HardcodedText" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/topHospital"
-        android:id="@+id/hospitalRecycleView"/>
+            <EditText
+                android:id="@+id/searchBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/search_bg"
+                android:inputType="textAutoCorrect"
+                android:layout_margin="20dp"
+                android:hint="Search"
+                android:padding="10dp"
+                android:drawableStart="@drawable/ic_search"
+                tools:ignore="HardcodedText"
+                android:autofillHints="no" />
 
+            <TextView
+                android:id="@+id/categoryTxt"
+                android:layout_below="@id/searchBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Top Categories"
+                android:layout_marginStart="18dp"
+                android:textSize="17sp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:orientation="horizontal"
+                app:reverseLayout="false"
+                android:layout_below="@id/categoryTxt"
+                android:id="@+id/categoryRecycleView"/>
+
+            <TextView
+                android:id="@+id/topHospital"
+                android:layout_below="@id/categoryRecycleView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Top Hospitals"
+                android:layout_marginStart="18dp"
+                android:textSize="17sp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/topHospital"
+                android:id="@+id/hospitalRecycleView"/>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
 </RelativeLayout>

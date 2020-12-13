@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="56dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".UserRegister.Fragment.BookAppointmentFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="20dp"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/doctorImg"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/doctor"
+            app:civ_border_width="0.8dp"/>
+        <TextView
+            android:id="@+id/doctorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/doctorImg"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
+            android:textColor="@color/Primary_color"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-condensed-medium"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:id="@+id/doctorSpeciality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/doctorImg"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
+            android:layout_below="@id/doctorName"
+            android:textColor="@color/Primary_color"
+            android:fontFamily="sans-serif-condensed-medium"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:id="@+id/hospitalName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/doctorImg"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
+            android:layout_below="@id/doctorSpeciality"
+            android:textColor="@color/Primary_color"
+            android:fontFamily="sans-serif-condensed-medium"
+            tools:ignore="HardcodedText" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/ratingStarLottie"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            app:lottie_rawRes="@raw/rating_star"
+            android:layout_toEndOf="@id/doctorImg"
+            android:layout_marginStart="10dp"
+            android:layout_below="@id/hospitalName"
+            app:lottie_autoPlay="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="5.0"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:textColor="@color/Primary_color"
+            android:layout_toEndOf="@id/ratingStarLottie"
+            tools:ignore="HardcodedText"
+            android:layout_below="@id/hospitalName"/>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/Primary_color"
+            android:layout_below="@id/ratingStarLottie"
+            android:layout_marginTop="10dp"/>
+
+       <RelativeLayout
+           android:id="@+id/dateLayout"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:visibility="visible"
+           android:layout_below="@id/view">
+
+<!--           <TextView-->
+<!--               android:id="@+id/date"-->
+<!--               android:layout_width="wrap_content"-->
+<!--               android:layout_height="wrap_content"-->
+<!--               android:padding="8dp"-->
+<!--               android:layout_marginTop="10dp"-->
+<!--               android:background="@drawable/text_view_bg"-->
+<!--               android:textStyle="bold"-->
+<!--               android:layout_centerHorizontal="true"-->
+<!--               android:textSize="17sp"-->
+<!--               android:textColor="@color/white"-->
+<!--               android:fontFamily="sans-serif-condensed-medium"-->
+<!--               tools:ignore="HardcodedText" />-->
+
+           <CalendarView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="10dp"
+               android:id="@+id/appDate"/>
+
+           <Button
+               android:id="@+id/btnNext"
+               android:layout_below="@id/appDate"
+               android:layout_centerHorizontal="true"
+               android:layout_width="200dp"
+               android:layout_height="60dp"
+               android:text="Next"
+               android:textColor="@color/white"
+               android:textStyle="bold"
+               android:textAllCaps="false"
+               android:fontFamily="sans-serif-condensed-medium"
+               android:textSize="17sp"
+               tools:ignore="HardcodedText" />
+
+       </RelativeLayout>
+       <RelativeLayout
+           android:id="@+id/timeLayout"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:visibility="gone"
+           android:layout_below="@id/view">
+
+        <EditText
+            android:id="@+id/problem"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Write Problem shortly.."
+            android:textColor="@color/Primary_color"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:background="@drawable/edit_txt_problem_bg"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            tools:ignore="HardcodedText" />
+
+           <RelativeLayout
+               android:id="@+id/layout"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/problem"
+               android:background="@drawable/edit_txt_problem_bg"
+               android:padding="20dp"
+               android:layout_marginTop="10dp">
+
+               <TextView
+                   android:id="@+id/dateText"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Appointment Date :"
+                   android:textColor="@color/Primary_color"
+                   android:textStyle="bold"
+                   android:fontFamily="sans-serif-condensed-medium"
+                   tools:ignore="HardcodedText" />
+               <TextView
+                   android:id="@+id/appointmentDate"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="13 Dec 2020"
+                   android:layout_marginStart="10dp"
+                   android:layout_toEndOf="@id/dateText"
+                   android:textColor="@color/Primary_color"
+                   android:textStyle="bold"
+                   android:fontFamily="sans-serif-condensed-medium"
+                   tools:ignore="HardcodedText" />
+
+           </RelativeLayout>
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="20dp"
+               android:layout_below="@id/layout">
+
+               <androidx.recyclerview.widget.RecyclerView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="10dp"
+                   android:id="@+id/userRecycleView"/>
+
+               <com.google.android.material.floatingactionbutton.FloatingActionButton
+                   android:id="@+id/floatingAddBtn"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@id/userRecycleView"
+                   android:layout_alignParentEnd="true"
+                   android:src="@drawable/ic_add"/>
+
+           </RelativeLayout>
+
+       </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

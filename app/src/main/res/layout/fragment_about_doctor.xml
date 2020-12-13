@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="56dp"
+    tools:context=".UserRegister.Fragment.AboutDoctorFragment">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        app:lottie_rawRes="@raw/doctor"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:id="@+id/lottie"/>
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_below="@id/lottie">
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:padding="20dp"
+           android:background="@drawable/layout_bg">
+
+           <de.hdodenhof.circleimageview.CircleImageView
+               android:id="@+id/doctorImg"
+               android:layout_width="100dp"
+               android:layout_height="100dp"
+               android:src="@drawable/doctor"
+               app:civ_border_width="0.8dp"/>
+           <TextView
+               android:id="@+id/doctorName"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="5dp"
+               android:layout_toEndOf="@id/doctorImg"
+               android:layout_marginStart="10dp"
+               android:textStyle="bold"
+               android:textColor="@color/Primary_color"
+               android:textSize="20sp"
+               android:fontFamily="sans-serif-condensed-medium"
+               tools:ignore="HardcodedText" />
+           <TextView
+               android:id="@+id/doctorSpeciality"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_toEndOf="@id/doctorImg"
+               android:layout_marginStart="10dp"
+               android:textStyle="bold"
+               android:layout_below="@id/doctorName"
+               android:textColor="@color/Primary_color"
+               android:fontFamily="sans-serif-condensed-medium"
+               tools:ignore="HardcodedText" />
+           <TextView
+               android:id="@+id/hospitalName"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_toEndOf="@id/doctorImg"
+               android:layout_marginStart="10dp"
+               android:textStyle="bold"
+               android:layout_below="@id/doctorSpeciality"
+               android:textColor="@color/Primary_color"
+               android:fontFamily="sans-serif-condensed-medium"
+               tools:ignore="HardcodedText" />
+
+           <com.airbnb.lottie.LottieAnimationView
+               android:id="@+id/ratingStarLottie"
+               android:layout_width="100dp"
+               android:layout_height="30dp"
+               app:lottie_rawRes="@raw/rating_star"
+               android:layout_toEndOf="@id/doctorImg"
+               android:layout_marginStart="10dp"
+               android:layout_below="@id/hospitalName"
+               app:lottie_autoPlay="true"/>
+           <TextView
+               android:id="@+id/rating"
+               android:layout_width="wrap_content"
+               android:layout_height="30dp"
+               android:text="5.0"
+               android:gravity="center_vertical"
+               android:textStyle="bold"
+               android:textColor="@color/Primary_color"
+               android:layout_toEndOf="@id/ratingStarLottie"
+               tools:ignore="HardcodedText"
+               android:layout_below="@id/hospitalName"/>
+
+<!--           <com.airbnb.lottie.LottieAnimationView-->
+<!--               android:id="@+id/callLottie"-->
+<!--               android:layout_width="50dp"-->
+<!--               android:layout_height="50dp"-->
+<!--               app:lottie_rawRes="@raw/call"-->
+<!--               app:lottie_autoPlay="true"-->
+<!--               android:layout_marginStart="10dp"-->
+<!--               android:layout_toEndOf="@id/doctorImg"-->
+<!--               android:layout_below="@id/ratingStarLottie"-->
+<!--               app:lottie_loop="true"/>-->
+<!--           <com.airbnb.lottie.LottieAnimationView-->
+<!--               android:id="@+id/chatLottie"-->
+<!--               android:layout_width="50dp"-->
+<!--               android:layout_height="50dp"-->
+<!--               android:layout_marginStart="15dp"-->
+<!--               app:lottie_rawRes="@raw/chat"-->
+<!--               app:lottie_autoPlay="true"-->
+<!--               android:layout_toEndOf="@id/callLottie"-->
+<!--               android:layout_below="@id/ratingStarLottie"-->
+<!--               app:lottie_loop="true"/>-->
+
+           <View
+               android:id="@+id/view"
+               android:layout_width="match_parent"
+               android:layout_height="0.8dp"
+               android:background="@color/Primary_color"
+               android:layout_below="@id/ratingStarLottie"
+               android:layout_marginTop="5dp"/>
+
+           <TextView
+               android:id="@+id/aboutTxt"
+               android:layout_marginTop="20dp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="About Doctor"
+               android:textStyle="bold"
+               android:fontFamily="sans-serif-condensed-medium"
+               android:textColor="@color/black"
+               android:textSize="17sp"
+               android:layout_below="@+id/view"
+               tools:ignore="HardcodedText" />
+           <TextView
+               android:id="@+id/aboutDoctor"
+               android:layout_marginTop="5dp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+               android:layout_below="@id/aboutTxt"
+               android:textStyle="normal"
+               tools:ignore="HardcodedText" />
+
+           <Button
+               android:id="@+id/requestAppointment"
+               android:layout_below="@id/aboutDoctor"
+               android:layout_width="250dp"
+               android:layout_height="60dp"
+               android:text="Request for Appointment"
+               android:textStyle="bold"
+               android:textSize="17sp"
+               android:layout_centerHorizontal="true"
+               android:layout_marginTop="30dp"
+               android:layout_alignParentBottom="true"
+               android:fontFamily="sans-serif-condensed-medium"
+               android:textAllCaps="false"
+               android:textColor="@color/white"
+               tools:ignore="HardcodedText" />
+
+       </RelativeLayout>
+
+   </ScrollView>
+
+</RelativeLayout>

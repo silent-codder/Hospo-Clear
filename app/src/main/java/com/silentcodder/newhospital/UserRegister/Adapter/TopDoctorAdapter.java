@@ -1,6 +1,7 @@
 package com.silentcodder.newhospital.UserRegister.Adapter;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.silentcodder.newhospital.R;
+import com.silentcodder.newhospital.UserRegister.Fragment.AboutDoctorFragment;
+import com.silentcodder.newhospital.UserRegister.Fragment.TopHospitalDoctorFragment;
 import com.silentcodder.newhospital.UserRegister.Model.DoctorData;
 
 import java.util.List;
@@ -37,11 +42,24 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
         String Speciality = doctorData.get(position).getSpeciality();
         String Experience = doctorData.get(position).getExperience();
         String Qualification = doctorData.get(position).getQualification();
+        String HospitalId = doctorData.get(position).getHospitalId();
 
         holder.mDoctorName.setText(DoctorName);
         holder.mDoctorSpeciality.setText(Speciality + ",");
         holder.mDoctorExperience.setText("Ex : " + Experience);
         holder.mDoctorQualification.setText(Qualification);
+
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                Fragment fragment = new AboutDoctorFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("DoctorName" , DoctorName);
+                fragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+            }
+        });
     }
 
     @Override
