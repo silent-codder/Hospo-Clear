@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recycleView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:visibility="visible"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="10dp">
 
@@ -29,14 +31,13 @@
             android:layout_marginStart="10dp"
             android:textColor="@color/Primary_color"
             android:fontFamily="sans-serif-condensed-medium"
-            android:textSize="17sp"
             tools:ignore="HardcodedText" />
 
         <Button
-            android:id="@+id/btnConfirm"
+            android:id="@+id/btnGetAppointment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Confirm"
+            android:text="Get Appointment"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textStyle="bold"

@@ -9,7 +9,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:padding="20dp"
+        android:padding="10dp"
+        android:background="@drawable/layout_bg"
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -85,27 +86,23 @@
            android:id="@+id/dateLayout"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:visibility="visible"
            android:layout_below="@id/view">
 
-<!--           <TextView-->
-<!--               android:id="@+id/date"-->
-<!--               android:layout_width="wrap_content"-->
-<!--               android:layout_height="wrap_content"-->
-<!--               android:padding="8dp"-->
-<!--               android:layout_marginTop="10dp"-->
-<!--               android:background="@drawable/text_view_bg"-->
-<!--               android:textStyle="bold"-->
-<!--               android:layout_centerHorizontal="true"-->
-<!--               android:textSize="17sp"-->
-<!--               android:textColor="@color/white"-->
-<!--               android:fontFamily="sans-serif-condensed-medium"-->
-<!--               tools:ignore="HardcodedText" />-->
+           <EditText
+               android:id="@+id/problem"
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:padding="10dp"
+               android:layout_height="60dp"
+               android:background="@drawable/edit_txt_problem_bg"
+               android:hint="Write problem shortly.."
+               android:fontFamily="sans-serif-condensed-medium"
+               tools:ignore="HardcodedText" />
 
            <CalendarView
+               android:layout_below="@id/problem"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_marginTop="10dp"
                android:id="@+id/appDate"/>
 
            <Button
@@ -121,79 +118,6 @@
                android:fontFamily="sans-serif-condensed-medium"
                android:textSize="17sp"
                tools:ignore="HardcodedText" />
-
-       </RelativeLayout>
-       <RelativeLayout
-           android:id="@+id/timeLayout"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:visibility="gone"
-           android:layout_below="@id/view">
-
-        <EditText
-            android:id="@+id/problem"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:hint="Write Problem shortly.."
-            android:textColor="@color/Primary_color"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:background="@drawable/edit_txt_problem_bg"
-            android:padding="10dp"
-            android:layout_marginTop="20dp"
-            tools:ignore="HardcodedText" />
-
-           <RelativeLayout
-               android:id="@+id/layout"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_below="@id/problem"
-               android:background="@drawable/edit_txt_problem_bg"
-               android:padding="20dp"
-               android:layout_marginTop="10dp">
-
-               <TextView
-                   android:id="@+id/dateText"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Appointment Date :"
-                   android:textColor="@color/Primary_color"
-                   android:textStyle="bold"
-                   android:fontFamily="sans-serif-condensed-medium"
-                   tools:ignore="HardcodedText" />
-               <TextView
-                   android:id="@+id/appointmentDate"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="13 Dec 2020"
-                   android:layout_marginStart="10dp"
-                   android:layout_toEndOf="@id/dateText"
-                   android:textColor="@color/Primary_color"
-                   android:textStyle="bold"
-                   android:fontFamily="sans-serif-condensed-medium"
-                   tools:ignore="HardcodedText" />
-
-           </RelativeLayout>
-           <RelativeLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:padding="20dp"
-               android:layout_below="@id/layout">
-
-               <androidx.recyclerview.widget.RecyclerView
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="10dp"
-                   android:id="@+id/userRecycleView"/>
-
-               <com.google.android.material.floatingactionbutton.FloatingActionButton
-                   android:id="@+id/floatingAddBtn"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_below="@id/userRecycleView"
-                   android:layout_alignParentEnd="true"
-                   android:src="@drawable/ic_add"/>
-
-           </RelativeLayout>
 
        </RelativeLayout>
 

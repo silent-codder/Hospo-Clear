@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="56dp"
+    android:padding="20dp"
+    android:background="@drawable/layout_bg"
+    tools:context=".UserRegister.Fragment.SelectUserFragment">
+
+   <TextView
+       android:id="@+id/appoDetails"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Appointment Details"
+       android:textColor="@color/Primary_color"
+       android:fontFamily="sans-serif-condensed-medium"
+       android:textSize="20sp"
+       android:layout_centerHorizontal="true"
+       tools:ignore="HardcodedText" />
+   <RelativeLayout
+       android:id="@+id/details"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="10dp"
+       android:padding="10dp"
+       android:layout_below="@id/appoDetails"
+       android:background="@drawable/edit_txt_problem_bg"
+       android:layout_centerHorizontal="true">
+
+       <TextView
+           android:id="@+id/date"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Appointment Date : "
+           android:textColor="@color/Primary_color"
+           android:fontFamily="sans-serif-condensed-medium"
+           android:textStyle="bold"
+           android:textSize="17sp"
+           tools:ignore="HardcodedText" />
+       <TextView
+           android:id="@+id/appointmentDate"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_toRightOf="@id/date"
+           android:layout_marginTop="2dp"
+           android:layout_marginStart="10dp"
+           android:textColor="@color/Primary_color"
+           android:textStyle="normal"
+           tools:ignore="HardcodedText" />
+
+       <TextView
+           android:id="@+id/prob"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Problem : "
+           android:textStyle="bold"
+           android:layout_marginTop="20dp"
+           android:textSize="17sp"
+           android:fontFamily="sans-serif-condensed-medium"
+           android:layout_below="@id/date"
+           android:textColor="@color/Primary_color"
+           tools:ignore="HardcodedText" />
+       <TextView
+           android:id="@+id/problem"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textStyle="normal"
+           android:layout_toRightOf="@id/prob"
+           android:layout_below="@id/date"
+           android:layout_marginTop="22dp"
+           android:layout_marginStart="10dp"
+           android:textColor="@color/Primary_color"
+           tools:ignore="HardcodedText" />
+
+   </RelativeLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:background="@drawable/edit_txt_problem_bg"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/details"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You"
+            android:id="@+id/you"
+            android:textStyle="bold"
+            android:textColor="@color/Primary_color"
+            android:fontFamily="sans-serif-condensed-medium"
+            tools:ignore="HardcodedText" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="Someone else"
+            android:id="@+id/someoneElse"
+            android:textStyle="bold"
+            android:textColor="@color/Primary_color"
+            android:fontFamily="sans-serif-condensed-medium"
+            tools:ignore="HardcodedText" />
+
+
+    </RadioGroup>
+
+    <RelativeLayout
+        android:id="@+id/name_layout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_txt_problem_bg"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_below="@+id/radioGroup">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Patient Name : "
+            android:textColor="@color/Primary_color"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/patientName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/Primary_color"/>
+
+    </RelativeLayout>
+
+   <RelativeLayout
+       android:id="@+id/anotherPatient"
+       android:visibility="gone"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@id/radioGroup"
+       android:layout_marginTop="10dp"
+       android:padding="10dp"
+       android:background="@drawable/edit_txt_problem_bg">
+
+       <TextView
+           android:id="@+id/name_1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Patient Name : "
+           android:textColor="@color/Primary_color"
+           android:textStyle="bold"
+           android:fontFamily="sans-serif-condensed-medium"
+           android:textSize="16sp"
+           tools:ignore="HardcodedText" />
+
+       <EditText
+           android:id="@+id/anotherPatientName"
+           android:layout_below="@id/name_1"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:textColor="@color/Primary_color"
+           tools:ignore="HardcodedText" />
+
+       <TextView
+           android:id="@+id/name_2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Relationship with you : "
+           android:layout_below="@+id/anotherPatientName"
+           android:textColor="@color/Primary_color"
+           android:textStyle="bold"
+           android:fontFamily="sans-serif-condensed-medium"
+           android:textSize="16sp"
+           tools:ignore="HardcodedText" />
+
+       <EditText
+           android:id="@+id/relation"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:textColor="@color/Primary_color"
+           android:hint="e.g son"
+           android:layout_below="@id/name_2"
+           tools:ignore="HardcodedText" />
+
+   </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:visibility="gone"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/name_layout"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true"
+        android:text="Submit"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textSize="17sp"
+        tools:ignore="HardcodedText" />
+
+</RelativeLayout>

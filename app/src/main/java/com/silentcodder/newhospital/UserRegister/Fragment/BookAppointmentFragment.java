@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,15 +52,14 @@ public class BookAppointmentFragment extends Fragment {
 
     CalendarView calendarView;
     TextView textView,mDoctorName,mSpeciality,mHospitalName;
+    EditText mProblem;
     Calendar calendar;
     Button mBtnNext;
     RelativeLayout mDateLayout,mTimeLayout;
-    String DoctorName,UserId;
+    String DoctorName,UserId,date;
     ProgressDialog progressDialog;
     RecyclerView recyclerView;
 
-    List<UserData> userData;
-    UserAdapter userAdapter;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
     @SuppressLint("SetTextI18n")
@@ -68,14 +68,12 @@ public class BookAppointmentFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_appointment, container, false);
         calendarView = view.findViewById(R.id.appDate);
-        textView = view.findViewById(R.id.appointmentDate);
         mBtnNext = view.findViewById(R.id.btnNext);
+        mProblem = view.findViewById(R.id.problem);
         mDateLayout = view.findViewById(R.id.dateLayout);
-        mTimeLayout = view.findViewById(R.id.timeLayout);
         mDoctorName = view.findViewById(R.id.doctorName);
         mSpeciality = view.findViewById(R.id.doctorSpeciality);
         mHospitalName = view.findViewById(R.id.hospitalName);
-        recyclerView = view.findViewById(R.id.userRecycleView);
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         UserId = firebaseAuth.getCurrentUser().getUid();
@@ -84,27 +82,6 @@ public class BookAppointmentFragment extends Fragment {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         calendar = Calendar.getInstance();
-
-        //Recycle view
-
-        userData = new ArrayList<>();
-        userAdapter = new UserAdapter(userData);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(userAdapter);
-
-        firebaseFirestore.collection("Users").whereEqualTo("UserId",UserId)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        for (DocumentChange doc : value.getDocumentChanges()){
-                            if (doc.getType() == DocumentChange.Type.ADDED){
-                                UserData mUserData = doc.getDocument().toObject(UserData.class);
-                                userData.add(mUserData);
-                                userAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    }
-                });
 
         Bundle bundle = this.getArguments();
         if (bundle!=null){
@@ -147,31 +124,35 @@ public class BookAppointmentFragment extends Fragment {
         });
 
         Date c = Calendar.getInstance().getTime();
-
         SimpleDateFormat df = new SimpleDateFormat("dd / MM /yyyy", Locale.getDefault());
         String formattedDate = df.format(c);
 
-        textView.setText("Appointment Date :" + formattedDate);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String date = dayOfMonth + " / " +month+ " / " +year;
-                if (date.equals(null)){
-                    Toast.makeText(getContext(), "Please select date", Toast.LENGTH_SHORT).show();
+                date = dayOfMonth + " / " +month+ " / " +year;
+
+            }
+        });
+        mBtnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String problem = mProblem.getText().toString();
+                if (TextUtils.isEmpty(problem)){
+                    mProblem.setError("Please mention problem");
+                }else if (formattedDate == null || date == null){
+                    Toast.makeText(getContext(), "Choose appointment date", Toast.LENGTH_SHORT).show();
                 }else {
-                    textView.setText("Appointment Date : " + date);
-                    mBtnNext.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mTimeLayout.setVisibility(View.VISIBLE);
-                            mDateLayout.setVisibility(View.INVISIBLE);
-                        }
-                    });
+                    Fragment fragment = new SelectUserFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Problem",problem);
+                    bundle.putString("Date",date);
+                    fragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
                 }
             }
         });
-
         return view;
     }
 
