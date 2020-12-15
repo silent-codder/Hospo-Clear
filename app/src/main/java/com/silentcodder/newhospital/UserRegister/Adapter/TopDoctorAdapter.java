@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,7 +43,7 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
         String Speciality = doctorData.get(position).getSpeciality();
         String Experience = doctorData.get(position).getExperience();
         String Qualification = doctorData.get(position).getQualification();
-        String HospitalId = doctorData.get(position).getHospitalId();
+        String DoctorId = doctorData.get(position).DoctorId;
 
         holder.mDoctorName.setText(DoctorName);
         holder.mDoctorSpeciality.setText(Speciality + ",");
@@ -55,7 +56,7 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 Fragment fragment = new AboutDoctorFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("DoctorName" , DoctorName);
+                bundle.putString("DoctorId",DoctorId);
                 fragment.setArguments(bundle);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }

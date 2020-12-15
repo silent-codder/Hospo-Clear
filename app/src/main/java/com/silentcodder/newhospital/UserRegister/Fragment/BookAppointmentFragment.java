@@ -51,14 +51,13 @@ import java.util.Locale;
 public class BookAppointmentFragment extends Fragment {
 
     CalendarView calendarView;
-    TextView textView,mDoctorName,mSpeciality,mHospitalName;
+    TextView mDoctorName,mSpeciality,mHospitalName;
     EditText mProblem;
     Calendar calendar;
     Button mBtnNext;
-    RelativeLayout mDateLayout,mTimeLayout;
-    String DoctorName,UserId,date;
+    RelativeLayout mDateLayout;
+    String DoctorId,UserId,date,HospitalName,HospitalId;
     ProgressDialog progressDialog;
-    RecyclerView recyclerView;
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
@@ -85,43 +84,26 @@ public class BookAppointmentFragment extends Fragment {
 
         Bundle bundle = this.getArguments();
         if (bundle!=null){
-            DoctorName = bundle.getString("DoctorName");
+            DoctorId = bundle.getString("DoctorId");
+            HospitalName = bundle.getString("HospitalName");
+            mHospitalName.setText(HospitalName);
         }
 
-        firebaseFirestore.collection("Doctors").whereEqualTo("DoctorName",DoctorName)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                if (task.isSuccessful()){
-                    List<DocumentSnapshot> list = task.getResult().getDocuments();
-                    if (list != null && list.size()>0){
-                        for (DocumentSnapshot doc : list){
-                            DoctorData doctorData = new DoctorData();
-                            String DoctorName = doctorData.setDoctorName(doc.getString("DoctorName"));
-                            String Specialist = doctorData.setSpeciality(doc.getString("Speciality"));
-                            String HospitalId = doctorData.setHospitalId(doc.getString("HospitalId"));
+        firebaseFirestore.collection("Doctors").document(DoctorId).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            String DoctorName = task.getResult().getString("DoctorName");
+                            String Specialist = task.getResult().getString("Speciality");
+                            HospitalId = task.getResult().getString("HospitalId");
 
                             mDoctorName.setText(DoctorName);
                             mSpeciality.setText(Specialist);
-
-                            firebaseFirestore.collection("Hospitals").document(HospitalId)
-                                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()){
-                                        progressDialog.dismiss();
-                                        String HospitalName = task.getResult().getString("HospitalName");
-                                        mHospitalName.setText(HospitalName);
-                                    }
-                                }
-                            });
+                            progressDialog.dismiss();
                         }
                     }
-                }
-
-            }
-        });
+                });
 
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd / MM /yyyy", Locale.getDefault());
@@ -148,6 +130,8 @@ public class BookAppointmentFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putString("Problem",problem);
                     bundle.putString("Date",date);
+                    bundle.putString("DoctorId",DoctorId);
+                    bundle.putString("HospitalId",HospitalId);
                     fragment.setArguments(bundle);
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
                 }

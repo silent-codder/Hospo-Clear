@@ -1,6 +1,6 @@
 package com.silentcodder.newhospital.UserRegister.Model;
 
-public class DoctorData {
+public class DoctorData extends DoctorId {
     String DoctorName;
     String Experience;
     String Qualification;

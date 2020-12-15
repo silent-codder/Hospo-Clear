@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingStart="5dp"
+    android:paddingRight="5dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_circle"
+        android:id="@+id/circleImg"/>
+    <View
+        android:id="@+id/view"
+        android:layout_width="1dp"
+        android:layout_height="100dp"
+        android:background="#747474"
+        android:layout_below="@id/circleImg"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="-3dp"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="300dp"
+        android:layout_height="90dp"
+        android:layout_toEndOf="@id/circleImg"
+        app:cardBackgroundColor="#E0F2F1"
+        app:cardCornerRadius="10dp"
+        android:layout_marginStart="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="90dp"
+                android:gravity="center"
+                android:text="July 9 \n2020"
+                android:textStyle="bold"
+                android:textColor="@color/Primary_color"
+                android:fontFamily="sans-serif-condensed-medium"
+                tools:ignore="HardcodedText" />
+
+            <View
+                android:id="@+id/insideView"
+                android:layout_width="1dp"
+                android:layout_height="90dp"
+                android:background="@color/Primary_color"
+                android:layout_toEndOf="@id/date"
+                android:layout_marginStart="5dp"/>
+
+            <TextView
+                android:id="@+id/patientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ajinkya Shinde"
+                android:layout_toEndOf="@id/insideView"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/Primary_color"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/problem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Problem testing propose"
+                android:textColor="@color/Primary_color"
+                android:textStyle="normal"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:layout_marginStart="10dp"
+                android:layout_toRightOf="@id/insideView"
+                android:layout_below="@id/patientName"
+                tools:ignore="HardcodedText" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

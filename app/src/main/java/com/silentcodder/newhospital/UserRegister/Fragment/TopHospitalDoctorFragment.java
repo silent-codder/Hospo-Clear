@@ -77,7 +77,8 @@ public class TopHospitalDoctorFragment extends Fragment {
 
                 for (DocumentChange doc : value.getDocumentChanges()){
                     if (doc.getType() == DocumentChange.Type.ADDED){
-                        DoctorData mDoctorData = doc.getDocument().toObject(DoctorData.class);
+                        String DoctorId = doc.getDocument().getId();
+                        DoctorData mDoctorData = doc.getDocument().toObject(DoctorData.class).withId(DoctorId);
                         doctorData.add(mDoctorData);
                         topDoctorAdapter.notifyDataSetChanged();
                     }

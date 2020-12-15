@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,7 +26,7 @@ import java.util.List;
 
 public class AboutDoctorFragment extends Fragment {
 
-    String DoctorName;
+    String HospitalName,DoctorId;
     FirebaseFirestore firebaseFirestore;
     ProgressDialog progressDialog;
     TextView mDoctorName,mSpeciality,mHospitalName;
@@ -48,22 +49,17 @@ public class AboutDoctorFragment extends Fragment {
 
         Bundle bundle = this.getArguments();
         if (bundle!=null){
-            DoctorName = bundle.getString("DoctorName");
+            DoctorId = bundle.getString("DoctorId");
         }
 
-        firebaseFirestore.collection("Doctors").whereEqualTo("DoctorName",DoctorName)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                if (task.isSuccessful()){
-                    List<DocumentSnapshot> list = task.getResult().getDocuments();
-                    if (list != null && list.size()>0){
-                        for (DocumentSnapshot doc : list){
-                            DoctorData doctorData = new DoctorData();
-                            String DoctorName = doctorData.setDoctorName(doc.getString("DoctorName"));
-                            String Specialist = doctorData.setSpeciality(doc.getString("Speciality"));
-                            String HospitalId = doctorData.setHospitalId(doc.getString("HospitalId"));
+        firebaseFirestore.collection("Doctors").document(DoctorId).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            String DoctorName = task.getResult().getString("DoctorName");
+                            String Specialist = task.getResult().getString("Speciality");
+                            String HospitalId = task.getResult().getString("HospitalId");
 
                             mDoctorName.setText(DoctorName);
                             mSpeciality.setText(Specialist);
@@ -74,17 +70,14 @@ public class AboutDoctorFragment extends Fragment {
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()){
                                         progressDialog.dismiss();
-                                        String HospitalName = task.getResult().getString("HospitalName");
+                                        HospitalName = task.getResult().getString("HospitalName");
                                         mHospitalName.setText(HospitalName);
                                     }
                                 }
                             });
                         }
                     }
-                }
-
-            }
-        });
+                });
 
         btnRequestAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +85,8 @@ public class AboutDoctorFragment extends Fragment {
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 Fragment fragment = new BookAppointmentFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("DoctorName" , DoctorName);
+                bundle.putString("DoctorId" ,DoctorId);
+                bundle.putString("HospitalName",HospitalName);
                 fragment.setArguments(bundle);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
