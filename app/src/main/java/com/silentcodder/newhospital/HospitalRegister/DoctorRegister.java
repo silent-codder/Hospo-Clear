@@ -31,7 +31,7 @@ public class DoctorRegister extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
-    String[] Speciality = {"Select your speciality","Women's Health","Skin & Hair","Child Specialist","General Physician","Dental Care","Ear, Nose, Throat(ENT)",
+    String[] Speciality = {"Select your speciality","Women's Health","Skin & Hair","Child Specialist","General Physician","Dental Surgeon","Ear, Nose, Throat(ENT)",
             "Homoeopathy","Bone & Joints","Sex Specialist","Eye Specialist","Digestive Issues","Mental Wellness","Physiotherapy","Diabetes Management",
             "Brain & Nerves","Urinary Issues","Kidney Issues","Ayurveda","General Surgery","Lungs & Breathing","Heart Specialist","Cancer Specialist"};
     @Override

@@ -11,10 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Adapter.AppointmentAdapter;
@@ -29,6 +32,8 @@ public class UserAppointmentsFragment extends Fragment {
     AppointmentAdapter appointmentAdapter;
     List<AppointmentData> appointmentData;
     FirebaseFirestore firebaseFirestore;
+    FirebaseAuth firebaseAuth;
+    String UserId;
     RecyclerView recyclerView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,19 +42,22 @@ public class UserAppointmentsFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.appointmentRecycleView);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        UserId = firebaseAuth.getCurrentUser().getUid();
 
         appointmentData = new ArrayList<>();
         appointmentAdapter = new AppointmentAdapter(appointmentData);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(appointmentAdapter);
 
-        firebaseFirestore.collection("Appointments")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+        Query query = firebaseFirestore.collection("Appointments").whereEqualTo("UserId",UserId);
+                query.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         for (DocumentChange doc : value.getDocumentChanges()){
                             if (doc.getType() == DocumentChange.Type.ADDED){
-                                AppointmentData mAppointmentData = doc.getDocument().toObject(AppointmentData.class);
+                                String AppointmentId = doc.getDocument().getId();
+                                AppointmentData mAppointmentData = doc.getDocument().toObject(AppointmentData.class).withId(AppointmentId);
                                 appointmentData.add(mAppointmentData);
                                 appointmentAdapter.notifyDataSetChanged();
                             }

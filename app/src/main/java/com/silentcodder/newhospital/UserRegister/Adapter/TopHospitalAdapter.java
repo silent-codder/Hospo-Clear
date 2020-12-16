@@ -63,7 +63,7 @@ public class TopHospitalAdapter extends RecyclerView.Adapter<TopHospitalAdapter.
                 Bundle bundle = new Bundle();
                 bundle.putString("HospitalId" , HospitalId);
                 fragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
             }
         });
     }

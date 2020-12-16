@@ -8,19 +8,29 @@ public class AppointmentData extends AppointmentId{
     String Relationship;
     String Problem;
     String AppointmentDate;
+    String Status;
 
     public AppointmentData() {
     }
 
     public AppointmentData(String hospitalId, String doctorId, String userId, String patientName, String relationship,
-                           String problem, String appointmentDate) {
+                           String problem, String appointmentDate ,String status) {
         HospitalId = hospitalId;
         DoctorId = doctorId;
         UserId = userId;
+        Status = status;
         PatientName = patientName;
         Relationship = relationship;
         Problem = problem;
         AppointmentDate = appointmentDate;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
     }
 
     public String getHospitalId() {

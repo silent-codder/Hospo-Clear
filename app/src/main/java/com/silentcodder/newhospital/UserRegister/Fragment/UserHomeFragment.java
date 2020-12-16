@@ -66,10 +66,10 @@ public class UserHomeFragment extends Fragment {
 
         MyCategories[] myCategory = new MyCategories[] {
                new MyCategories("General \nPhysician",R.drawable.stethoscope),
-               new MyCategories("Cardiac \nSurgeons",R.drawable.cardiology),
+               new MyCategories("Heart \nSpecialist",R.drawable.cardiology),
                new MyCategories("Eye \nSpecialist",R.drawable.eye),
                new MyCategories("Dental \nSurgeon",R.drawable.dental),
-               new MyCategories("Ayurvedic \nPractioner",R.drawable.leaves)
+               new MyCategories("Ayurveda",R.drawable.leaves)
         };
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.categoryRecycleView);

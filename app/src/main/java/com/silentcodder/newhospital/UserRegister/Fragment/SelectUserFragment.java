@@ -114,6 +114,10 @@ public class SelectUserFragment extends Fragment {
                         map.put("Problem",Problem);
                         map.put("TimeStamp",System.currentTimeMillis());
                         map.put("UserId",UserId);
+                        map.put("Status","3");
+                        //pending status code 2
+                        //complete status code 1
+                        //request status code 3
                         map.put("Relationship","My Self");
                         map.put("HospitalId",HospitalId);
                         map.put("DoctorId",DoctorId);
@@ -166,6 +170,7 @@ public class SelectUserFragment extends Fragment {
                             map.put("PatientName",PatientName);
                             map.put("AppointmentDate",AppointmentDate);
                             map.put("Problem",Problem);
+                            map.put("Status","3");
                             map.put("TimeStamp",System.currentTimeMillis());
                             map.put("UserId",UserId);
                             map.put("Relationship",Relationship);

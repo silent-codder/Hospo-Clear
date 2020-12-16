@@ -10,15 +10,22 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Fragment.UserAppointmentsFragment;
 import com.silentcodder.newhospital.UserRegister.Fragment.UserHomeFragment;
 import com.silentcodder.newhospital.UserRegister.Fragment.UserProfileFragment;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserMainActivity extends AppCompatActivity{
 
@@ -29,6 +36,7 @@ public class UserMainActivity extends AppCompatActivity{
     Fragment selectFragment;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
+    String ProfileUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +50,15 @@ public class UserMainActivity extends AppCompatActivity{
         drawerLayout = findViewById(R.id.drawer);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
+        CircleImageView UserImg = findViewById(R.id.userImg);
+
+        UserImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new UserProfileFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+            }
+        });
 
         String UserId = firebaseAuth.getCurrentUser().getUid();
 
@@ -51,6 +68,25 @@ public class UserMainActivity extends AppCompatActivity{
         toggle.syncState();
 
         toggle.getDrawerArrowDrawable().setColor(getColor(R.color.purple_700));
+
+        firebaseFirestore.collection("Users").document(UserId)
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                ProfileUrl = documentSnapshot.getString("ProfileImgUrl");
+                String UserName = documentSnapshot.getString("UserName");
+                String MobileNumber = documentSnapshot.getString("MobileNumber");
+                View view = nav.inflateHeaderView(R.layout.header_view);
+                CircleImageView profile = view.findViewById(R.id.profileImg);
+                TextView name = view.findViewById(R.id.userName);
+                TextView mobileNumber = view.findViewById(R.id.mobileNumber);
+                name.setText(UserName);
+                mobileNumber.setText(MobileNumber);
+                Picasso.get().load(ProfileUrl).into(profile);
+                Picasso.get().load(ProfileUrl).into(UserImg);
+            }
+        });
 
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

@@ -1,5 +1,6 @@
 package com.silentcodder.newhospital.UserRegister.Adapter;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.silentcodder.newhospital.R;
+import com.silentcodder.newhospital.UserRegister.Fragment.CategoryDoctorFragment;
 import com.silentcodder.newhospital.UserRegister.Model.MyCategories;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -36,7 +40,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(),"click on item: "+myCategories[position].getCategory(),Toast.LENGTH_SHORT).show();
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                Fragment fragment = new CategoryDoctorFragment();
+                Bundle bundle = new Bundle();
+                String category = myCategories[position].getCategory();
+                bundle.putString("Category",category.replace("\n",""));
+                fragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
             }
         });
     }
