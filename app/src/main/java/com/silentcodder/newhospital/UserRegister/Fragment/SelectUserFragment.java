@@ -129,6 +129,8 @@ public class SelectUserFragment extends Fragment {
                                         if (task.isSuccessful()){
                                             progressDialog.dismiss();
                                             Toast.makeText(getContext(), "Requesting appointment", Toast.LENGTH_SHORT).show();
+                                            Fragment fragment = new UserAppointmentsFragment();
+                                            getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
                                         }
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -183,6 +185,8 @@ public class SelectUserFragment extends Fragment {
                                             if (task.isSuccessful()){
                                                 progressDialog.dismiss();
                                                 Toast.makeText(getContext(), "Requesting appointment", Toast.LENGTH_SHORT).show();
+                                                Fragment fragment = new UserAppointmentsFragment();
+                                                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
                                             }
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {

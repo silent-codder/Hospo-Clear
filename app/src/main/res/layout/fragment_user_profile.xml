@@ -104,6 +104,65 @@
             android:layout_below="@id/btnEditProfile"
             android:layout_marginTop="10dp"/>
 
+        <RelativeLayout
+            android:id="@+id/favHospital"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/view"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:background="@drawable/view_bg">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/hospital"
+                android:id="@+id/hospitalImg"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Favorite Hospital"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/white"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_toEndOf="@id/hospitalImg"
+                tools:ignore="HardcodedText" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/favDoctor"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/favHospital"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:background="@drawable/view_bg">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/doctor"
+                android:id="@+id/doctorImg"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Favorite Doctor"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/white"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_toEndOf="@id/doctorImg"
+                tools:ignore="HardcodedText" />
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>

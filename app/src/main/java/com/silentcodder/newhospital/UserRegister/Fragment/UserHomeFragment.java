@@ -40,8 +40,8 @@ public class UserHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_home, container, false);
         recyclerView1 = view.findViewById(R.id.hospitalRecycleView);
         firebaseFirestore = FirebaseFirestore.getInstance();
-        //Recycle view
 
+        //Recycle view
         hospitalData = new ArrayList<>();
         topHospitalAdapter = new TopHospitalAdapter(hospitalData);
 

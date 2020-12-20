@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class UserProfileFragment extends Fragment {
     ProgressDialog progressDialog;
     Uri profileImgUri;
     StorageReference storageReference;
+    RelativeLayout mFavHospital,mFavDoctor;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,8 +66,20 @@ public class UserProfileFragment extends Fragment {
         progressDialog.setMessage("Fetching data..");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+        mFavDoctor = view.findViewById(R.id.favDoctor);
+        mFavHospital = view.findViewById(R.id.favHospital);
         mUserImg = view.findViewById(R.id.userImg);
         mBtnEditProfile = view.findViewById(R.id.btnEditProfile);
+
+        mFavHospital.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new BookMarkHospitalFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+            }
+        });
+
+        //edit profile button
         mBtnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

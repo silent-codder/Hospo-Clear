@@ -1,7 +1,10 @@
 package com.silentcodder.newhospital.UserRegister.Adapter;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     FirebaseFirestore firebaseFirestore;
     Context context;
     Dialog dialog;
+    String DoctorName,HospitalName,ProfileUrl;
+    ProgressDialog progressDialog;
 
     public AppointmentAdapter(List<AppointmentData> appointmentData) {
         this.appointmentData = appointmentData;
@@ -41,6 +46,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         firebaseFirestore = FirebaseFirestore.getInstance();
         context = parent.getContext();
         dialog = new Dialog(context);
+        progressDialog = new ProgressDialog(context);
         return new ViewHolder(view);
     }
 
@@ -51,13 +57,15 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         String Status = appointmentData.get(position).getStatus();
         String Date = appointmentData.get(position).getAppointmentDate();
         String UserId = appointmentData.get(position).getUserId();
+        String HospitalId = appointmentData.get(position).getHospitalId();
+        String DoctorId = appointmentData.get(position).getDoctorId();
 
         firebaseFirestore.collection("Users").document(UserId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()){
-                            String ProfileUrl = task.getResult().getString("ProfileImgUrl");
+                            ProfileUrl = task.getResult().getString("ProfileImgUrl");
                             Picasso.get().load(ProfileUrl).into(holder.mUserImg);
                         }
                     }
@@ -83,7 +91,40 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.mMoreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.setContentView(R.layout.appointment_more_info);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
 
+                CircleImageView userImg = dialog.findViewById(R.id.userImg);
+                TextView patientName = dialog.findViewById(R.id.patientName);
+                TextView appointmentDate = dialog.findViewById(R.id.appointmentDate);
+                TextView hospitalName = dialog.findViewById(R.id.hospitalName);
+                TextView doctorName = dialog.findViewById(R.id.doctorName);
+
+                firebaseFirestore.collection("Doctors").document(DoctorId).get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()){
+                                    DoctorName = task.getResult().getString("DoctorName");
+                                    doctorName.setText(DoctorName);
+                                }
+                            }
+                        });
+                firebaseFirestore.collection("Hospitals").document(HospitalId).get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()){
+                                    HospitalName = task.getResult().getString("HospitalName");
+                                    hospitalName.setText(HospitalName);
+                                }
+                            }
+                        });
+
+                patientName.setText(PatientName);
+                appointmentDate.setText(Date);
+                Picasso.get().load(ProfileUrl).into(userImg);
             }
         });
     }

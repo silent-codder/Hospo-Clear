@@ -50,8 +50,11 @@ public class UserAppointmentsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(appointmentAdapter);
 
-        Query query = firebaseFirestore.collection("Appointments").whereEqualTo("UserId",UserId);
-                query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+        Query query1 = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("UserId",UserId)
+                .orderBy("TimeStamp", Query.Direction.DESCENDING);
+
+                query1.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         for (DocumentChange doc : value.getDocumentChanges()){
@@ -64,6 +67,7 @@ public class UserAppointmentsFragment extends Fragment {
                         }
                     }
                 });
+
 
         return view;
     }
