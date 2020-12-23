@@ -1,5 +1,6 @@
 package com.silentcodder.newhospital.UserRegister.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,10 +22,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Fragment.TopHospitalDoctorFragment;
+import com.silentcodder.newhospital.UserRegister.Model.BookmarkHospitalData;
 import com.silentcodder.newhospital.UserRegister.Model.HospitalData;
 
 import java.util.HashMap;
@@ -31,14 +36,14 @@ import java.util.List;
 
 public class BookmarkHospitalAdapter extends RecyclerView.Adapter<BookmarkHospitalAdapter.ViewHolder>{
 
-    List<HospitalData> hospitalData;
+    List<BookmarkHospitalData> bookmarkHospitalData;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
-    String UserId,HospitalId;
+    String UserId;
     Context context;
 
-    public BookmarkHospitalAdapter(List<HospitalData> hospitalData) {
-        this.hospitalData = hospitalData;
+    public BookmarkHospitalAdapter(List<BookmarkHospitalData> bookmarkHospitalData) {
+        this.bookmarkHospitalData = bookmarkHospitalData;
     }
 
     @NonNull
@@ -52,14 +57,15 @@ public class BookmarkHospitalAdapter extends RecyclerView.Adapter<BookmarkHospit
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        String HospitalName = hospitalData.get(position).getHospitalName();
-        String City = hospitalData.get(position).getCity();
-        String State = hospitalData.get(position).getState();
-        String Contact = hospitalData.get(position).getContactNumber();
-        String HospitalId = hospitalData.get(position).getUserId();
+        String HospitalName = bookmarkHospitalData.get(position).getHospitalName();
+        String City = bookmarkHospitalData.get(position).getCity();
+        String State = bookmarkHospitalData.get(position).getState();
+        String Contact = bookmarkHospitalData.get(position).getContactNumber();
+        String HospitalId = bookmarkHospitalData.get(position).getHospitalId();
 
 
         holder.mHospitalName.setText(HospitalName);
@@ -67,55 +73,37 @@ public class BookmarkHospitalAdapter extends RecyclerView.Adapter<BookmarkHospit
         holder.mState.setText(State);
         holder.mContact.setText(Contact);
 
-        //Bookmark hospital
-        holder.mBookMark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HashMap<String , Object> map = new HashMap<>();
-                map.put("HospitalId",HospitalId);
-                map.put("UserId",UserId);
-                map.put("TimeStamp",System.currentTimeMillis());
-
-                firebaseFirestore.collection("Users").document(UserId).collection("Hospital-Bookmark").document(HospitalId).set(map)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(context, "BookMark Hospital", Toast.LENGTH_SHORT).show();
-                                holder.mBookMarkWhite.setVisibility(View.VISIBLE);
-                                holder.mBookMark.setVisibility(View.INVISIBLE);
-                            }
-                        });
-            }
-        });
-        //Remove Bookmark
+        holder.mBookMarkWhite.setVisibility(View.VISIBLE);
+        //remove bookmark
         holder.mBookMarkWhite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firebaseFirestore.collection("Users").document(UserId).collection("Hospital-Bookmark").document(HospitalId)
+                firebaseFirestore.collection("Bookmark-Hospital").document(HospitalId)
                         .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        holder.mBookMark.setVisibility(View.VISIBLE);
-                        holder.mBookMarkWhite.setVisibility(View.INVISIBLE);
+                        if (task.isSuccessful()){
+                            Toast.makeText(context, "Remove successfully..", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             }
         });
 
-        //show bookmark hospital or not
-        firebaseFirestore.collection("Users").document(UserId).collection("Hospital-Bookmark").document(HospitalId)
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (!documentSnapshot.exists()){
-                    holder.mBookMarkWhite.setVisibility(View.INVISIBLE);
-                    holder.mBookMark.setVisibility(View.VISIBLE);
-                }else {
-                    holder.mBookMark.setVisibility(View.INVISIBLE);
-                    holder.mBookMarkWhite.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+        //show bookmark or not
+        firebaseFirestore.collection("Bookmark-Hospital").document(HospitalId)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (value.exists()){
+                            holder.mBookMarkWhite.setVisibility(View.VISIBLE);
+                            holder.mBookMark.setVisibility(View.INVISIBLE);
+                        }else {
+                            holder.mBookMarkWhite.setVisibility(View.INVISIBLE);
+                            holder.mBookMark.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
 
         //button for view hospital doctors
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +121,7 @@ public class BookmarkHospitalAdapter extends RecyclerView.Adapter<BookmarkHospit
 
     @Override
     public int getItemCount() {
-        return hospitalData.size();
+        return bookmarkHospitalData.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

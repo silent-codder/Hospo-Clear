@@ -84,34 +84,37 @@ public class TopHospitalAdapter extends RecyclerView.Adapter<TopHospitalAdapter.
                map.put("UserId",UserId);
                map.put("TimeStamp",System.currentTimeMillis());
 
-               firebaseFirestore.collection("Users").document(UserId).collection("Hospital-Bookmark").document(HospitalId).set(map)
+               firebaseFirestore.collection("Bookmark-Hospital").document(HospitalId).set(map)
                        .addOnCompleteListener(new OnCompleteListener<Void>() {
                            @Override
                            public void onComplete(@NonNull Task<Void> task) {
-                               Toast.makeText(context, "BookMark Hospital", Toast.LENGTH_SHORT).show();
-                               holder.mBookMarkWhite.setVisibility(View.VISIBLE);
-                               holder.mBookMark.setVisibility(View.INVISIBLE);
+                               if (task.isSuccessful()){
+                                   Toast.makeText(context, "Add to favorite", Toast.LENGTH_SHORT).show();
+                                   holder.mBookMarkWhite.setVisibility(View.VISIBLE);
+                                   holder.mBookMark.setVisibility(View.INVISIBLE);
+                               }
                            }
                        });
-           }
+              }
        });
        //Remove Bookmark
        holder.mBookMarkWhite.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               firebaseFirestore.collection("Users").document(UserId).collection("Hospital-Bookmark").document(HospitalId)
+               firebaseFirestore.collection("Bookmark-Hospital").document(HospitalId)
                        .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                    @Override
                    public void onComplete(@NonNull Task<Void> task) {
                        holder.mBookMark.setVisibility(View.VISIBLE);
                        holder.mBookMarkWhite.setVisibility(View.INVISIBLE);
+                       Toast.makeText(context, "Remove to favorite", Toast.LENGTH_SHORT).show();
                    }
                });
            }
        });
-
+//
        //show bookmark hospital or not
-        firebaseFirestore.collection("Users").document(UserId).collection("Hospital-Bookmark").document(HospitalId)
+        firebaseFirestore.collection("Bookmark-Hospital").document(HospitalId)
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {

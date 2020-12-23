@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,6 +101,9 @@ public class TopHospitalDoctorFragment extends Fragment {
                             String City = task.getResult().getString("City");
                             mHospitalName.setText(HospitalName);
                             mCity.setText(", "+City);
+                            mHospitalName.setSelected(true);
+                            mHospitalName.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                            mHospitalName.setSingleLine(true);
                         }
                     }
                 });

@@ -24,21 +24,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Fragment.AboutDoctorFragment;
-import com.silentcodder.newhospital.UserRegister.Fragment.TopHospitalDoctorFragment;
-import com.silentcodder.newhospital.UserRegister.Model.DoctorData;
+import com.silentcodder.newhospital.UserRegister.Model.BookmarkDoctorData;
 
-import java.util.HashMap;
 import java.util.List;
 
-public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.ViewHolder> {
+public class BookmarkDoctorAdapter extends RecyclerView.Adapter<BookmarkDoctorAdapter.ViewHolder>{
 
-    List<DoctorData> doctorData;
+    List<BookmarkDoctorData> bookmarkDoctorData;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
     String UserId;
     Context context;
-    public TopDoctorAdapter(List<DoctorData> doctorData) {
-        this.doctorData = doctorData;
+
+    public BookmarkDoctorAdapter(List<BookmarkDoctorData> bookmarkDoctorData) {
+        this.bookmarkDoctorData = bookmarkDoctorData;
     }
 
     @NonNull
@@ -55,42 +54,18 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String DoctorName = doctorData.get(position).getDoctorName();
-        String Speciality = doctorData.get(position).getSpeciality();
-        String Experience = doctorData.get(position).getExperience();
-        String Qualification = doctorData.get(position).getQualification();
-        String DoctorId = doctorData.get(position).DoctorId;
+
+        String DoctorName = bookmarkDoctorData.get(position).getDoctorName();
+        String Speciality = bookmarkDoctorData.get(position).getSpeciality();
+        String Experience = bookmarkDoctorData.get(position).getExperience();
+        String Qualification = bookmarkDoctorData.get(position).getQualification();
+        String DoctorId = bookmarkDoctorData.get(position).getDoctorId();
 
         holder.mDoctorName.setText(DoctorName);
         holder.mDoctorSpeciality.setText(Speciality + ",");
         holder.mDoctorExperience.setText("Ex : " + Experience);
         holder.mDoctorQualification.setText(Qualification);
 
-        //Bookmark hospital
-        holder.mBookMark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HashMap<String , Object> map = new HashMap<>();
-                map.put("DoctorName",DoctorName);
-                map.put("Speciality",Speciality);
-                map.put("Experience",Experience);
-                map.put("Qualification",Qualification);
-                map.put("DoctorId",DoctorId);
-                map.put("UserId",UserId);
-                map.put("TimeStamp",System.currentTimeMillis());
-
-                firebaseFirestore.collection("Bookmark-Doctor").document(DoctorId)
-                        .set(map)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(context, "Add to favorite successfully", Toast.LENGTH_SHORT).show();
-                                holder.mBookMarkWhite.setVisibility(View.VISIBLE);
-                                holder.mBookMark.setVisibility(View.INVISIBLE);
-                            }
-                        });
-            }
-        });
         //Remove Bookmark
         holder.mBookMarkWhite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,12 +108,14 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
             }
         });
+
     }
 
     @Override
     public int getItemCount() {
-        return doctorData.size();
+        return bookmarkDoctorData.size();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView mDoctorName,mDoctorSpeciality,mDoctorExperience,mDoctorQualification;

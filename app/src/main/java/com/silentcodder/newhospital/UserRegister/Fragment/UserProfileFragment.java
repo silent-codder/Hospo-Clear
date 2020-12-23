@@ -78,6 +78,13 @@ public class UserProfileFragment extends Fragment {
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
             }
         });
+        mFavDoctor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new BookmarkDoctorFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+            }
+        });
 
         //edit profile button
         mBtnEditProfile.setOnClickListener(new View.OnClickListener() {
