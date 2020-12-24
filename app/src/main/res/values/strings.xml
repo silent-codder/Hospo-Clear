@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">New Hospital</string>
+    <string name="app_name">Hospo Clear</string>
     <string name="hospo_clear">Hospo Clear</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

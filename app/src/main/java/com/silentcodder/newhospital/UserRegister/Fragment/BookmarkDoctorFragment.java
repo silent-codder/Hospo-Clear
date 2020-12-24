@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -27,6 +28,8 @@ import com.silentcodder.newhospital.UserRegister.Model.BookmarkHospitalData;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BookmarkDoctorFragment extends Fragment {
 
@@ -56,6 +59,14 @@ public class BookmarkDoctorFragment extends Fragment {
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                if (value.isEmpty()){
+                    CircleImageView circleImageView = view.findViewById(R.id.hospitalImg);
+                    TextView textView = view.findViewById(R.id.notFoundText);
+                    circleImageView.setVisibility(View.VISIBLE);
+                    textView.setVisibility(View.VISIBLE);
+                }
+
                 for (DocumentChange doc : value.getDocumentChanges()){
                     if (doc.getType() == DocumentChange.Type.ADDED){
                         BookmarkDoctorData mDoctorData = doc.getDocument().toObject(BookmarkDoctorData.class);

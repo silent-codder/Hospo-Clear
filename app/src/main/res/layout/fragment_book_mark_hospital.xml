@@ -28,8 +28,28 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/favHospitalRecycleView"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/hospital"
+            android:id="@+id/hospitalImg"/>
+        <TextView
+            android:id="@+id/notFoundText"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yet Not Saved Hospital"
+            android:layout_below="@id/hospitalImg"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-medium"
+            tools:ignore="HardcodedText" />
 
     </RelativeLayout>
 

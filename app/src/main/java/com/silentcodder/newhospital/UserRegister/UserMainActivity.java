@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.silentcodder.newhospital.MainActivity;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Fragment.UserAppointmentsFragment;
 import com.silentcodder.newhospital.UserRegister.Fragment.UserHomeFragment;
@@ -125,6 +127,9 @@ public class UserMainActivity extends AppCompatActivity{
     }
 
     private void logOut() {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(UserMainActivity.this, MainActivity.class));
+        finish();
     }
 
     private void removeColor(NavigationView view) {

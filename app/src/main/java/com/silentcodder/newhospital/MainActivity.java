@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.silentcodder.newhospital.HospitalRegister.DoctorRegister;
 import com.silentcodder.newhospital.HospitalRegister.HospitalRegister;
+import com.silentcodder.newhospital.UserRegister.UserLogin;
 import com.silentcodder.newhospital.UserRegister.UserMainActivity;
 import com.silentcodder.newhospital.UserRegister.UserRegister;
 
@@ -69,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
                         btnNext.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(MainActivity.this, "User", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(MainActivity.this, UserLogin.class));
+                                finish();
                             }
                         });
                     }
