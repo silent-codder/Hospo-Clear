@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewHospital">
-        <activity android:name=".HospitalRegister.HospitalLoginOtp"></activity>
+        <activity android:name=".HospitalRegister.Fragment.EditHospitalProfile"></activity>
+        <activity android:name=".HospitalRegister.HospitalLoginOtp" />
         <activity android:name=".HospitalRegister.HospitalLogin" />
         <activity android:name=".HospitalRegister.HospitalMainActivity" />
         <activity android:name=".UserRegister.UserLoginOtp" />

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_txt_problem_bg"
+        android:padding="10dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userImg"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/user"
+            app:civ_border_width="0.5dp"/>
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ajinkya Shinde"
+            android:layout_toRightOf="@id/userImg"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/Primary_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-medium"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+        <TextView
+            android:id="@+id/appointmentDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9 July 2020"
+            android:layout_toRightOf="@id/userImg"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/Primary_color"
+            android:maxLines="2"
+            android:textSize="13sp"
+            android:layout_below="@id/userName"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+        <TextView
+            android:id="@+id/problem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Testing propose.."
+            android:layout_toRightOf="@id/userImg"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/Primary_color"
+            android:maxLines="2"
+            android:textSize="16sp"
+            android:layout_below="@id/appointmentDate"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+        <Button
+            android:id="@+id/btnCompleteAppointment"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Complete"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:layout_below="@id/problem"
+            android:layout_alignParentEnd="true"
+            android:textAllCaps="false"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

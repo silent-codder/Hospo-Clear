@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,13 +44,20 @@ public class RequestAppointmentFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(requestAppointmentAdapter);
 
-//        Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("Status","3")
-//                .orderBy("TimeStamp", Query.Direction.DESCENDING);
-        Query query = firebaseFirestore.collection("Appointments").whereEqualTo("Status","3");
+        Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("Status","3")
+                .orderBy("TimeStamp", Query.Direction.ASCENDING);
 
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                if (value.isEmpty()){
+                    LottieAnimationView lottieAnimationView = view.findViewById(R.id.lottie);
+                    TextView textView = view.findViewById(R.id.notFoundText);
+                    lottieAnimationView.setVisibility(View.VISIBLE);
+                    textView.setVisibility(View.VISIBLE);
+                }
+
                 for (DocumentChange doc : value.getDocumentChanges()){
                     if (doc.getType() == DocumentChange.Type.ADDED){
                         String AppointmentId = doc.getDocument().getId();

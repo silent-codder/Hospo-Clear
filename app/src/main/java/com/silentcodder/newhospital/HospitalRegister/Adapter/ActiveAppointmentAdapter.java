@@ -24,20 +24,21 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppointmentAdapter.ViewHolder> {
+public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppointmentAdapter.ViewHolder> {
+
 
     List<AppointmentData> appointmentData;
     FirebaseFirestore firebaseFirestore;
     Context context;
 
-    public RequestAppointmentAdapter(List<AppointmentData> appointmentData) {
+    public ActiveAppointmentAdapter(List<AppointmentData> appointmentData) {
         this.appointmentData = appointmentData;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.request_appointment_view,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.active_appointment_view,parent,false);
         firebaseFirestore = FirebaseFirestore.getInstance();
         context = parent.getContext();
         return new ViewHolder(view);
@@ -63,43 +64,24 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
         holder.mAppointmentDate.setText(AppointmentDate);
         holder.mProblem.setText(Problem);
 
-        holder.mBtnAcceptRequest.setOnClickListener(new View.OnClickListener() {
+        holder.mBtnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HashMap<String,Object> map = new HashMap<>();
-                map.put("Status","2");
+                map.put("Status","1");
                 firebaseFirestore.collection("Appointments").document(AppointmentId)
                         .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
-                            Toast.makeText(context, "Accepted", Toast.LENGTH_SHORT).show();
-                            holder.mBtnAcceptRequest.setVisibility(View.INVISIBLE);
-                            holder.mBtnCancelRequest.setVisibility(View.VISIBLE);
+                            Toast.makeText(context, "Complete Appointment", Toast.LENGTH_SHORT).show();
+                            holder.mBtnCompleteAppointment.setVisibility(View.GONE);
                         }
                     }
                 });
             }
         });
 
-        holder.mBtnCancelRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HashMap<String,Object> map = new HashMap<>();
-                map.put("Status","3");
-                firebaseFirestore.collection("Appointments").document(AppointmentId)
-                        .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            Toast.makeText(context, "Cancel request", Toast.LENGTH_SHORT).show();
-                            holder.mBtnAcceptRequest.setVisibility(View.VISIBLE);
-                            holder.mBtnCancelRequest.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                });
-            }
-        });
     }
 
     @Override
@@ -110,15 +92,14 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
     public class ViewHolder extends RecyclerView.ViewHolder {
         CircleImageView mUserImg;
         TextView mUserName,mAppointmentDate,mProblem;
-        Button mBtnAcceptRequest,mBtnCancelRequest;
+        Button mBtnCompleteAppointment;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mUserImg = itemView.findViewById(R.id.userImg);
             mUserName = itemView.findViewById(R.id.userName);
             mAppointmentDate = itemView.findViewById(R.id.appointmentDate);
             mProblem = itemView.findViewById(R.id.problem);
-            mBtnAcceptRequest = itemView.findViewById(R.id.btnRequestAccept);
-            mBtnCancelRequest = itemView.findViewById(R.id.btnRequestCancel);
+            mBtnCompleteAppointment = itemView.findViewById(R.id.btnCompleteAppointment);
         }
     }
 }

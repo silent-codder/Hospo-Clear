@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.silentcodder.newhospital.HospitalRegister.Fragment.HospitalHomeFragment;
+import com.silentcodder.newhospital.HospitalRegister.Fragment.HospitalProfileFragment;
 import com.silentcodder.newhospital.MainActivity;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Fragment.UserAppointmentsFragment;
@@ -66,8 +67,7 @@ public class HospitalMainActivity extends AppCompatActivity {
                         Toast.makeText(HospitalMainActivity.this, "Appointment", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.hospital_profile :
-//                        selectFragment = new UserProfileFragment();
-                        Toast.makeText(HospitalMainActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+                        selectFragment = new HospitalProfileFragment();
                         break;
                     case R.id.hospital_logout :
 //                        logOut();
