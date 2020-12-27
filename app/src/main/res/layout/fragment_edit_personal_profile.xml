@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="56dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HospitalRegister.Fragment.EditPersonalProfileFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/btnDone"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_done"
+            android:layout_alignParentRight="true"
+            tools:ignore="ContentDescription,RtlHardcoded" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:textColor="@color/purple_500"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="Edit Profile"
+            android:layout_centerHorizontal="true"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/btnCancel"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_close"
+            android:layout_alignParentLeft="true"
+            tools:ignore="ContentDescription,RtlHardcoded" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/layout_bg"
+        android:layout_below="@id/btnCancel"
+        android:padding="10dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/doctorImg"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:civ_border_width="0.5dp"
+            android:src="@drawable/blank_img"
+            android:layout_centerHorizontal="true"/>
+
+        <EditText
+            android:id="@+id/doctorName"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/doctorImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_edit"
+            android:padding="10dp"
+            android:hint="Name"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/doctorExperience"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/doctorName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_edit"
+            android:padding="10dp"
+            android:hint="Experience"
+            android:inputType="numberDecimal"
+            tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/doctorQualification"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/doctorExperience"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_edit"
+            android:padding="10dp"
+            android:hint="Qualification"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/doctorBio"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/doctorQualification"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:drawableEnd="@drawable/ic_edit"
+            android:padding="10dp"
+            android:hint="What about you.."
+            tools:ignore="HardcodedText"
+            android:importantForAutofill="no" />
+
+    </RelativeLayout>
+    </RelativeLayout>
+</FrameLayout>

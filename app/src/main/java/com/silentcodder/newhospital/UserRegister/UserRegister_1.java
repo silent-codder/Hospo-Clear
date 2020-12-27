@@ -98,6 +98,7 @@ public class UserRegister_1 extends AppCompatActivity {
             //isUser = 2 means User is patient
             map.put("TimeStamp",System.currentTimeMillis());
 
+            firebaseFirestore.collection("AppUsers").document(userId).set(map);
             firebaseFirestore.collection("Users").document(userId)
                     .set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

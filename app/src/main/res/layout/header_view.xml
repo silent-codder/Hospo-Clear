@@ -26,6 +26,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="User Name"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:ellipsize="start"
+
         android:textColor="@color/Primary_color"
         android:layout_below="@id/profileImg"
         android:layout_centerHorizontal="true"

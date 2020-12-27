@@ -7,6 +7,31 @@ public class DoctorData extends DoctorId {
     String Speciality;
     String HospitalId;
 
+    public String getDoctorBio() {
+        return DoctorBio;
+    }
+
+    public String setDoctorBio(String doctorBio) {
+        DoctorBio = doctorBio;
+        return doctorBio;
+    }
+
+    String DoctorBio;
+
+    public String getProfileImgUrl() {
+        return ProfileImgUrl;
+    }
+
+    public String setProfileImgUrl(String profileImgUrl) {
+        ProfileImgUrl = profileImgUrl;
+        return profileImgUrl;
+    }
+
+    public DoctorData(String profileImgUrl) {
+        ProfileImgUrl = profileImgUrl;
+    }
+
+    String ProfileImgUrl;
     public DoctorData() {
     }
 
@@ -31,16 +56,18 @@ public class DoctorData extends DoctorId {
         return Experience;
     }
 
-    public void setExperience(String experience) {
+    public String setExperience(String experience) {
         Experience = experience;
+        return experience;
     }
 
     public String getQualification() {
         return Qualification;
     }
 
-    public void setQualification(String qualification) {
+    public String setQualification(String qualification) {
         Qualification = qualification;
+        return qualification;
     }
 
     public String getSpeciality() {

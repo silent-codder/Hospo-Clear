@@ -1,6 +1,7 @@
 package com.silentcodder.newhospital.HospitalRegister;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -17,17 +18,27 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.silentcodder.newhospital.R;
+import com.silentcodder.newhospital.UserRegister.Model.HospitalData;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DoctorRegister extends AppCompatActivity {
 
     EditText mDoctorName,mQualification,mExperience;
     Button mBtnSubmit;
     String mSpecialty,UserId;
+
+    List<HospitalData> hospitalData;
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
@@ -47,7 +58,11 @@ public class DoctorRegister extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         UserId = firebaseAuth.getCurrentUser().getUid();
 
+        hospitalData = new ArrayList<>();
         Spinner speciality = findViewById(R.id.doctorSpeciality);
+
+
+
         speciality.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -85,6 +100,8 @@ public class DoctorRegister extends AppCompatActivity {
                     map.put("Experience",Experience + " yr");
                     map.put("Speciality",mSpecialty);
                     map.put("HospitalId",UserId);
+                    map.put("isUser","3");
+                    //doctor user id '3'
                     map.put("TimeStamp",System.currentTimeMillis());
 
                     firebaseFirestore.collection("Doctors").add(map)

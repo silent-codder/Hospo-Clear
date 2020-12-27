@@ -1,8 +1,10 @@
 package com.silentcodder.newhospital.HospitalRegister.Fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -32,6 +35,7 @@ public class RequestAppointmentFragment extends Fragment {
     List<AppointmentData> appointmentData;
     RequestAppointmentAdapter requestAppointmentAdapter;
     FirebaseFirestore firebaseFirestore;
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +47,9 @@ public class RequestAppointmentFragment extends Fragment {
         requestAppointmentAdapter = new RequestAppointmentAdapter(appointmentData);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(requestAppointmentAdapter);
+        progressBar = view.findViewById(R.id.progressCircular);
+
+
 
         Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("Status","3")
                 .orderBy("TimeStamp", Query.Direction.ASCENDING);
@@ -56,6 +63,7 @@ public class RequestAppointmentFragment extends Fragment {
                     TextView textView = view.findViewById(R.id.notFoundText);
                     lottieAnimationView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
                 }
 
                 for (DocumentChange doc : value.getDocumentChanges()){
@@ -64,6 +72,7 @@ public class RequestAppointmentFragment extends Fragment {
                         AppointmentData mAppointmentData = doc.getDocument().toObject(AppointmentData.class).withId(AppointmentId);
                         appointmentData.add(mAppointmentData);
                         requestAppointmentAdapter.notifyDataSetChanged();
+                        progressBar.setVisibility(View.GONE);
                     }
                 }
             }

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="56dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HospitalRegister.Fragment.PersonalProfileFragment">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="@color/purple_500"
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"
+        tools:ignore="HardcodedText" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:background="@drawable/layout_bg"
+        android:layout_below="@+id/text"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/user"
+            app:civ_border_width="0.4dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/doctor"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/user"
+            app:civ_border_width="0.4dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/doctorImg"/>
+
+        <TextView
+            android:id="@+id/doctorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textColor="@color/Primary_color"
+            android:layout_toEndOf="@id/doctorImg"
+            android:layout_marginStart="20dp"
+            android:layout_centerHorizontal="true"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:id="@+id/doctorSpeciality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/Primary_color"
+            android:textSize="17sp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:layout_toEndOf="@id/doctorImg"
+            android:layout_marginStart="20dp"
+            android:layout_below="@+id/doctorName"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:id="@+id/doctorQualification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/doctorImg"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/Primary_color"
+            android:textSize="15sp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:layout_below="@+id/doctorSpeciality"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/doctorBio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/Primary_color"
+            android:textSize="15sp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:layout_below="@+id/doctorImg"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btnEditProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit profile"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:layout_below="@id/doctorBio"
+            tools:ignore="HardcodedText" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#747474"
+            android:layout_below="@id/btnEditProfile"
+            android:layout_marginTop="10dp"/>
+
+    </RelativeLayout>
+</RelativeLayout>

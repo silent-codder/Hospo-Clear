@@ -97,6 +97,8 @@ public class HospitalRegister_1 extends AppCompatActivity {
             map.put("isUser","1");
             map.put("TimeStamp",System.currentTimeMillis());
 
+            firebaseFirestore.collection("AppUsers").document(userId).set(map);
+
             firebaseFirestore.collection("Hospitals").document(userId)
                     .set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
