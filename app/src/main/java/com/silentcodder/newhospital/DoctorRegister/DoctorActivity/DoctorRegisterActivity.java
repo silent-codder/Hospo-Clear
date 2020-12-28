@@ -1,7 +1,6 @@
-package com.silentcodder.newhospital.HospitalRegister;
+package com.silentcodder.newhospital.DoctorRegister.DoctorActivity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -19,13 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Model.HospitalData;
 
@@ -33,11 +26,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class DoctorRegister extends AppCompatActivity {
+public class DoctorRegisterActivity extends AppCompatActivity {
 
     EditText mDoctorName,mQualification,mExperience;
     Button mBtnSubmit;
-    String mSpecialty,UserId;
+    String mSpecialty,UserId,Email,Password,HospitalId;
 
     List<HospitalData> hospitalData;
 
@@ -46,10 +39,12 @@ public class DoctorRegister extends AppCompatActivity {
     String[] Speciality = {"Select your speciality","Women's Health","Skin & Hair","Child Specialist","General Physician","Dental Surgeon","Ear, Nose, Throat(ENT)",
             "Homoeopathy","Bone & Joints","Sex Specialist","Eye Specialist","Digestive Issues","Mental Wellness","Physiotherapy","Diabetes Management",
             "Brain & Nerves","Urinary Issues","Kidney Issues","Ayurveda","General Surgery","Lungs & Breathing","Heart Specialist","Cancer Specialist"};
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_register);
+        setContentView(R.layout.activity_doctor_register2);
 
         mDoctorName = findViewById(R.id.doctorName);
         mQualification = findViewById(R.id.doctorQualification);
@@ -59,11 +54,13 @@ public class DoctorRegister extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         UserId = firebaseAuth.getCurrentUser().getUid();
 
+        HospitalId = getIntent().getStringExtra("HospitalId");
+        Email = getIntent().getStringExtra("Email");
+        Password = getIntent().getStringExtra("Password");
+
         hospitalData = new ArrayList<>();
         Spinner speciality = findViewById(R.id.doctorSpeciality);
-
-
-
+        Toast.makeText(this, "Current Id : " + UserId, Toast.LENGTH_SHORT).show();
         speciality.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -93,32 +90,35 @@ public class DoctorRegister extends AppCompatActivity {
                 }else if (TextUtils.isEmpty(Experience)){
                     mExperience.setError("Experience");
                 }else if (mSpecialty.equals("Select your speciality")){
-                    Toast.makeText(DoctorRegister.this, "Select speciality", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DoctorRegisterActivity.this, "Select speciality", Toast.LENGTH_SHORT).show();
                 }else {
                     HashMap<String,Object> map = new HashMap<>();
                     map.put("DoctorName","Dr. " + DoctorName);
                     map.put("Qualification",Qualification);
                     map.put("Experience",Experience + " yr");
                     map.put("Speciality",mSpecialty);
-                    map.put("HospitalId",UserId);
+                    map.put("HospitalId",HospitalId);
                     map.put("isUser","3");
+                    map.put("Email",Email);
+                    map.put("Password",Password);
                     //doctor user id '3'
                     map.put("TimeStamp",System.currentTimeMillis());
+
+                    firebaseFirestore.collection("AppUsers").add(map);
 
                     firebaseFirestore.collection("Doctors").document(UserId).set(map)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
-                                        Toast.makeText(DoctorRegister.this, "Upload", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(DoctorRegister.this,HospitalMainActivity.class));
-                                        finish();
-                                    }
+                                    Toast.makeText(DoctorRegisterActivity.this, "Create doctor login", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(DoctorRegisterActivity.this,AddDoctorActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                    finish();
+                                    Toast.makeText(DoctorRegisterActivity.this, "UserId : " + UserId, Toast.LENGTH_SHORT).show();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(DoctorRegister.this, "Error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DoctorRegisterActivity.this, "Error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

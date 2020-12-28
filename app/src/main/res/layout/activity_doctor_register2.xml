@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6FFFFFF"
-    tools:context=".HospitalRegister.DoctorRegister">
-
+    tools:context=".DoctorRegister.DoctorActivity.DoctorRegisterActivity">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie"
@@ -80,7 +78,7 @@
             android:layout_below="@id/doctorQualification"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="Experience (In year)"
+            android:hint="Experience"
             android:layout_centerHorizontal="true"
             android:background="@drawable/edit_txt_bg"
             android:padding="10dp"

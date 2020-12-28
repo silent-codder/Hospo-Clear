@@ -1,5 +1,6 @@
 package com.silentcodder.newhospital.HospitalRegister.Fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -21,36 +22,36 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.silentcodder.newhospital.HospitalRegister.Adapter.ActiveAppointmentAdapter;
-import com.silentcodder.newhospital.HospitalRegister.Adapter.RequestAppointmentAdapter;
+import com.silentcodder.newhospital.HospitalRegister.Adapter.CompleteAppointmentAdapter;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Model.AppointmentData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppointmentFragment extends Fragment {
+public class CompleteAppointmentFragment extends Fragment {
 
     RecyclerView recyclerView;
     List<AppointmentData> appointmentData;
-    ActiveAppointmentAdapter activeAppointmentAdapter;
+    CompleteAppointmentAdapter completeAppointmentAdapter;
     FirebaseFirestore firebaseFirestore;
 
     ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_appointment, container, false);
-        recyclerView = view.findViewById(R.id.requestAppointmentRecycleView);
+        View view = inflater.inflate(R.layout.fragment_complete_appointment, container, false);
+
+        recyclerView = view.findViewById(R.id.CompleteAppointmentRecycleView);
         firebaseFirestore = FirebaseFirestore.getInstance();
         appointmentData = new ArrayList<>();
-        activeAppointmentAdapter = new ActiveAppointmentAdapter(appointmentData);
+        completeAppointmentAdapter = new CompleteAppointmentAdapter(appointmentData);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(activeAppointmentAdapter);
+        recyclerView.setAdapter(completeAppointmentAdapter);
+
         progressBar = view.findViewById(R.id.progressCircular);
 
-//        Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("Status","3")
-//                .orderBy("TimeStamp", Query.Direction.ASCENDING);
-        Query query = firebaseFirestore.collection("Appointments").whereEqualTo("Status","2");
+        Query query = firebaseFirestore.collection("Appointments").whereEqualTo("Status","1");
 
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -69,12 +70,13 @@ public class AppointmentFragment extends Fragment {
                         String AppointmentId = doc.getDocument().getId();
                         AppointmentData mAppointmentData = doc.getDocument().toObject(AppointmentData.class).withId(AppointmentId);
                         appointmentData.add(mAppointmentData);
-                        activeAppointmentAdapter.notifyDataSetChanged();
+                        completeAppointmentAdapter.notifyDataSetChanged();
                         progressBar.setVisibility(View.GONE);
                     }
                 }
             }
         });
+
         return view;
     }
 }

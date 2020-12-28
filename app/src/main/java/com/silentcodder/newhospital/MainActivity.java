@@ -94,8 +94,16 @@ public class MainActivity extends AppCompatActivity {
                         circleImageView3.setVisibility(View.INVISIBLE);
 
                         LinearLayout linearLayout = dialog.findViewById(R.id.linear);
-                        linearLayout.setVisibility(View.INVISIBLE);
+                        linearLayout.setVisibility(View.VISIBLE);
 
+                        TextView register = dialog.findViewById(R.id.register);
+                        register.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(MainActivity.this, UserRegister.class));
+                                finish();
+                            }
+                        });
 
                         Button btnNext = dialog.findViewById(R.id.btnNext);
                         btnNext.setVisibility(View.VISIBLE);

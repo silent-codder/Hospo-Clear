@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.silentcodder.newhospital.HospitalRegister.Fragment.AppointmentFragment;
+import com.silentcodder.newhospital.HospitalRegister.Fragment.CompleteAppointmentFragment;
 import com.silentcodder.newhospital.HospitalRegister.Fragment.RequestAppointmentFragment;
 
 public class TabAdapter extends FragmentPagerAdapter {
@@ -26,6 +27,8 @@ public class TabAdapter extends FragmentPagerAdapter {
                 return new RequestAppointmentFragment();
             case 1 :
                 return new AppointmentFragment();
+            case 2 :
+                return new CompleteAppointmentFragment();
             default:
                 return null;
         }

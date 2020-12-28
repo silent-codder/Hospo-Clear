@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,37 +57,33 @@ public class PersonalProfileFragment extends Fragment {
         mDoctorImg = view.findViewById(R.id.doctorImg);
         mBtnEditProfile = view.findViewById(R.id.btnEditProfile);
 
-        firebaseFirestore.collection("Doctors").whereEqualTo("HospitalId",UserId)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<DocumentSnapshot> list = task.getResult().getDocuments();
-                if (list!=null && list.size()>0){
-                    for (DocumentSnapshot doc : list) {
-                        DoctorData doctorData = new DoctorData();
-                        String DoctorName = doctorData.setDoctorName(doc.getString("DoctorName"));
-                        String Speciality = doctorData.setSpeciality(doc.getString("Speciality"));
-                        String Qualification = doctorData.setQualification(doc.getString("Qualification"));
-                        String Experience = doctorData.setExperience(doc.getString("Experience"));
-                        String ProfileUrl = doctorData.setProfileImgUrl(doc.getString("ProfileImgUrl"));
-                        String DoctorBio = doctorData.setDoctorBio(doc.getString("DoctorBio"));
-                        mDoctorName.setText(DoctorName);
-                        mDoctorSpeciality.setText(Speciality+ ", " + Experience);
-                        mDoctorQualification.setText(Qualification);
-                        if (DoctorBio.isEmpty()){
-                            mDoctorBio.setText("Nothing about you..");
-                        }else {
-                            mDoctorBio.setText(DoctorBio);
+        firebaseFirestore.collection("Doctors").document(UserId).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            String DoctorName = task.getResult().getString("DoctorName");
+                            String Speciality = task.getResult().getString("Speciality");
+                            String Qualification = task.getResult().getString("Qualification");
+                            String Experience = task.getResult().getString("Experience");
+                            String ProfileUrl = task.getResult().getString("ProfileImgUrl");
+                            String DoctorBio = task.getResult().getString("DoctorBio");
+                            mDoctorName.setText(DoctorName);
+                            mDoctorSpeciality.setText(Speciality+ ", " + Experience);
+                            mDoctorQualification.setText(Qualification);
+                            if (TextUtils.isEmpty(DoctorBio)){
+                                mDoctorBio.setText("Nothing about you..");
+                            }else {
+                                mDoctorBio.setText(DoctorBio);
+                            }
+                            if (ProfileUrl!=null){
+                                Picasso.get().load(ProfileUrl).into(mDoctorImg);
+                            }
+                            progressDialog.dismiss();
                         }
-                        if (ProfileUrl!=null){
-                            Picasso.get().load(ProfileUrl).into(mDoctorImg);
-                        }
-                        progressDialog.dismiss();
                     }
-                    }
-            }
-        });
+                });
 
         mBtnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
