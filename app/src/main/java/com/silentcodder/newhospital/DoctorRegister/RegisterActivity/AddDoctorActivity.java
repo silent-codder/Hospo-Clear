@@ -1,4 +1,4 @@
-package com.silentcodder.newhospital.DoctorRegister.DoctorActivity;
+package com.silentcodder.newhospital.DoctorRegister.RegisterActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +38,6 @@ public class AddDoctorActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         HospitalId = getIntent().getStringExtra("HospitalId");
-        Toast.makeText(this, "Current Id  : " + firebaseAuth.getCurrentUser().getUid() , Toast.LENGTH_LONG).show();
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

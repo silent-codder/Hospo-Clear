@@ -62,7 +62,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 bundle.putString("DoctorName" ,DoctorName);
                 Toast.makeText(context, DoctorName, Toast.LENGTH_SHORT).show();
                 fragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
 
             }
         });

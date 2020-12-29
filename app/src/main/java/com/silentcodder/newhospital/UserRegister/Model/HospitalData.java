@@ -56,8 +56,9 @@ public class HospitalData {
         return UserId;
     }
 
-    public void setUserId(String userId) {
+    public String setUserId(String userId) {
         UserId = userId;
+        return userId;
     }
 
     public String getAmbulance() {

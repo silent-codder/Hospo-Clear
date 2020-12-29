@@ -30,9 +30,9 @@ public class HospitalHomeFragment extends Fragment {
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Request Appointments"));
-        tabLayout.addTab(tabLayout.newTab().setText("Active Appointments"));
-        tabLayout.addTab(tabLayout.newTab().setText("Complete Appointment"));
+        tabLayout.addTab(tabLayout.newTab().setText("Request \nAppointments"));
+        tabLayout.addTab(tabLayout.newTab().setText("Active \nAppointments"));
+        tabLayout.addTab(tabLayout.newTab().setText("Complete \nAppointment"));
 
         TabAdapter adapter = new TabAdapter(getChildFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,tabLayout.getTabCount());
         viewPager.setAdapter(adapter);

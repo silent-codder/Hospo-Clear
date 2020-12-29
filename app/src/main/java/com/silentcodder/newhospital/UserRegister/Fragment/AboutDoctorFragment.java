@@ -88,7 +88,7 @@ public class AboutDoctorFragment extends Fragment {
                 bundle.putString("DoctorId" ,DoctorId);
                 bundle.putString("HospitalName",HospitalName);
                 fragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
         });
 

@@ -1,5 +1,6 @@
 package com.silentcodder.newhospital;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
@@ -14,8 +15,15 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.silentcodder.newhospital.DoctorRegister.DoctorMainActivity;
+import com.silentcodder.newhospital.DoctorRegister.RegisterActivity.DoctorLoginActivity;
+import com.silentcodder.newhospital.DoctorRegister.RegisterActivity.SelectHospitalActivity;
 import com.silentcodder.newhospital.HospitalRegister.DoctorRegister;
 import com.silentcodder.newhospital.HospitalRegister.HospitalLogin;
 import com.silentcodder.newhospital.HospitalRegister.HospitalMainActivity;
@@ -44,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
 
+                //User Login
                 RadioButton user = dialog.findViewById(R.id.user);
                 user.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -80,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+                //Doctor Login
                 RadioButton doctor = dialog.findViewById(R.id.doctor);
                 doctor.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -100,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         register.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                startActivity(new Intent(MainActivity.this, UserRegister.class));
+                                startActivity(new Intent(MainActivity.this, SelectHospitalActivity.class));
                                 finish();
                             }
                         });
@@ -110,12 +120,14 @@ public class MainActivity extends AppCompatActivity {
                         btnNext.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(MainActivity.this, "Doctor", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(MainActivity.this, DoctorLoginActivity.class));
+                                finish();
                             }
                         });
                     }
                 });
 
+                //Hospital Login
                 RadioButton hospital = dialog.findViewById(R.id.hospital);
                 hospital.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -159,9 +171,36 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore  firebaseFirestore = FirebaseFirestore.getInstance();
 
         if (user!=null){
-            startActivity(new Intent(MainActivity.this, HospitalMainActivity.class));
+            mBtnStart.setVisibility(View.INVISIBLE);
+            String UserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            firebaseFirestore.collection("AppUsers").document(UserId).get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()){
+                                    String isUser = task.getResult().getString("isUser");
+                                    if (isUser.equals("1")){
+                                        //Hospital Section open
+                                        startActivity(new Intent(MainActivity.this,HospitalMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
+                                                Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                        finish();
+                                    }else if (isUser.equals("2")){
+                                        //User Section open
+                                        startActivity(new Intent(MainActivity.this,UserMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
+                                                Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                        finish();
+                                    }else if (isUser.equals("3")){
+                                        //Doctor Section open
+                                        startActivity(new Intent(MainActivity.this, DoctorMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
+                                                Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                        finish();
+                                    }
+                            }
+                        }
+                    });
         }
     }
 }

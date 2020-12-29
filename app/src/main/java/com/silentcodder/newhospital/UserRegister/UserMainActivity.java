@@ -58,7 +58,7 @@ public class UserMainActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Fragment fragment = new UserProfileFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
         });
 
@@ -115,7 +115,7 @@ public class UserMainActivity extends AppCompatActivity{
                 }
 
                 if (selectFragment != null){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectFragment).addToBackStack(null).commit();
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;

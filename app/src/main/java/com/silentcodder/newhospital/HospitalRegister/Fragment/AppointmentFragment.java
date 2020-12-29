@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,7 +35,7 @@ public class AppointmentFragment extends Fragment {
     List<AppointmentData> appointmentData;
     ActiveAppointmentAdapter activeAppointmentAdapter;
     FirebaseFirestore firebaseFirestore;
-
+    FirebaseAuth firebaseAuth;
     ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,16 +43,17 @@ public class AppointmentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_appointment, container, false);
         recyclerView = view.findViewById(R.id.requestAppointmentRecycleView);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        String HospitalId = firebaseAuth.getCurrentUser().getUid();
         appointmentData = new ArrayList<>();
         activeAppointmentAdapter = new ActiveAppointmentAdapter(appointmentData);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(activeAppointmentAdapter);
         progressBar = view.findViewById(R.id.progressCircular);
 
-//        Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("Status","3")
-//                .orderBy("TimeStamp", Query.Direction.ASCENDING);
-        Query query = firebaseFirestore.collection("Appointments").whereEqualTo("Status","2");
-
+      Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("HospitalId",HospitalId)
+                .whereEqualTo("Status","2")
+                .orderBy("TimeStamp", Query.Direction.ASCENDING);
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

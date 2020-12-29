@@ -38,6 +38,7 @@
 
     <Button
         android:id="@+id/btnStart"
+        android:visibility="visible"
         android:layout_width="320dp"
         android:layout_height="55dp"
         android:textSize="18sp"

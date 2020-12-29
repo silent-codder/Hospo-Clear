@@ -1,4 +1,4 @@
-package com.silentcodder.newhospital.DoctorRegister.DoctorActivity;
+package com.silentcodder.newhospital.DoctorRegister.RegisterActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.silentcodder.newhospital.DoctorRegister.DoctorMainActivity;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Model.HospitalData;
 
@@ -104,16 +105,15 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                     //doctor user id '3'
                     map.put("TimeStamp",System.currentTimeMillis());
 
-                    firebaseFirestore.collection("AppUsers").add(map);
+                    firebaseFirestore.collection("AppUsers").document(UserId).set(map);
 
                     firebaseFirestore.collection("Doctors").document(UserId).set(map)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Toast.makeText(DoctorRegisterActivity.this, "Create doctor login", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(DoctorRegisterActivity.this,AddDoctorActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                    startActivity(new Intent(DoctorRegisterActivity.this, DoctorMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK));
                                     finish();
-                                    Toast.makeText(DoctorRegisterActivity.this, "UserId : " + UserId, Toast.LENGTH_SHORT).show();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override

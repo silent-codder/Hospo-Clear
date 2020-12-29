@@ -77,29 +77,27 @@ public class EditPersonalProfileFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         HospitalId = firebaseAuth.getCurrentUser().getUid();
 
-        firebaseFirestore.collection("Doctors").whereEqualTo("HospitalId", HospitalId)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<DocumentSnapshot> list = task.getResult().getDocuments();
-                if (list!=null && list.size()>0){
-                    for (DocumentSnapshot doc : list) {
-                        DoctorData doctorData = new DoctorData();
-                        DoctorId = doc.getId();
-                        String DoctorName = doctorData.setDoctorName(doc.getString("DoctorName"));
-                        String Qualification = doctorData.setQualification(doc.getString("Qualification"));
-                        String Experience = doctorData.setExperience(doc.getString("Experience"));
-                        String Bio = doctorData.setDoctorBio(doc.getString("DoctorBio"));
-                        mDoctorName.setText(DoctorName);
-                        mExperience.setText(Experience);
-                        mQualification.setText(Qualification);
-                        mDoctorBio.setText(Bio);
-                        progressDialog.dismiss();
+        firebaseFirestore.collection("Doctors").document(HospitalId).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            String DoctorName = task.getResult().getString("DoctorName");
+                            String Qualification = task.getResult().getString("Qualification");
+                            String Experience = task.getResult().getString("Experience");
+                            String Bio = task.getResult().getString("DoctorBio");
+                            String ProfileUrl = task.getResult().getString("ProfileImgUrl");
+                            mDoctorName.setText(DoctorName);
+                            mExperience.setText(Experience);
+                            mQualification.setText(Qualification);
+                            mDoctorBio.setText(Bio);
+                            if (ProfileUrl != null){
+                                Picasso.get().load(ProfileUrl).into(mDoctorImg);
+                            }
+                            progressDialog.dismiss();
+                        }
                     }
-                }
-            }
-        });
+                });
 
         mDoctorImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +118,7 @@ public class EditPersonalProfileFragment extends Fragment {
                 map.put("Experience",Experience);
                 map.put("Qualification",Qualification);
                 map.put("DoctorBio",DoctorBio);
-                firebaseFirestore.collection("Doctors").document(DoctorId).update(map)
+                firebaseFirestore.collection("Doctors").document(HospitalId).update(map)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -180,7 +178,7 @@ public class EditPersonalProfileFragment extends Fragment {
 
     private void AddImg() {
 
-        StorageReference profileImgPath = storageReference.child("Profile").child(DoctorId + ".jpg");
+        StorageReference profileImgPath = storageReference.child("Profile").child(HospitalId + ".jpg");
 
         profileImgPath.putFile(profileImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -193,7 +191,7 @@ public class EditPersonalProfileFragment extends Fragment {
                         HashMap<String,Object> map = new HashMap<>();
                         map.put("ProfileImgUrl" , ProfileUri);
 
-                        firebaseFirestore.collection("Doctors").document(DoctorId).update(map)
+                        firebaseFirestore.collection("Doctors").document(HospitalId).update(map)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {

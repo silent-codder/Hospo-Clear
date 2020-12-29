@@ -15,7 +15,7 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:layout_centerHorizontal="true"
         android:textSize="25sp"
-        android:textColor="@color/Primary_color"
+        android:textColor="@color/purple_500"
         tools:ignore="HardcodedText" />
 
     <RelativeLayout

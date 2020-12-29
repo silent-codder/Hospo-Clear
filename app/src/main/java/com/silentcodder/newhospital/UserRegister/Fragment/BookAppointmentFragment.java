@@ -133,7 +133,7 @@ public class BookAppointmentFragment extends Fragment {
                     bundle.putString("DoctorId",DoctorId);
                     bundle.putString("HospitalId",HospitalId);
                     fragment.setArguments(bundle);
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
                 }
             }
         });

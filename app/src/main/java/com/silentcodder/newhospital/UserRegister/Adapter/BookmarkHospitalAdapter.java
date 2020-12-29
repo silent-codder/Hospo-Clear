@@ -114,7 +114,7 @@ public class BookmarkHospitalAdapter extends RecyclerView.Adapter<BookmarkHospit
                 Bundle bundle = new Bundle();
                 bundle.putString("HospitalId" , HospitalId);
                 fragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
         });
     }

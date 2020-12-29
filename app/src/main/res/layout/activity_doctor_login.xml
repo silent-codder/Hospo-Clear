@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DoctorRegister.RegisterActivity.AddDoctorActivity">
+    tools:context=".DoctorRegister.RegisterActivity.DoctorLoginActivity">
 
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create Doctor Login"
+        android:text="Doctor Login"
         android:textSize="20sp"
         android:layout_marginTop="56dp"
         android:textStyle="bold"

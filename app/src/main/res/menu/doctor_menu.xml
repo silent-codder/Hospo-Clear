@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item android:id="@+id/doctor_home"
+        android:icon="@drawable/ic_home"
+        android:checked="true"
+        android:title="Home"
+        android:fontFamily="sans-serif-condensed-medium"
+        tools:ignore="HardcodedText" />
+    <item android:id="@+id/doctor_profile"
+        android:icon="@drawable/ic_person"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:title="Profile"
+        tools:ignore="HardcodedText" />
+    <item android:id="@+id/doctor_logout"
+        android:icon="@drawable/ic_logout"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:title="Log Out"
+        tools:ignore="HardcodedText" />
+
+</menu>

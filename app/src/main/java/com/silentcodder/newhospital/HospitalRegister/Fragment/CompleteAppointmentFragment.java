@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,7 +36,7 @@ public class CompleteAppointmentFragment extends Fragment {
     List<AppointmentData> appointmentData;
     CompleteAppointmentAdapter completeAppointmentAdapter;
     FirebaseFirestore firebaseFirestore;
-
+    FirebaseAuth firebaseAuth;
     ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +45,8 @@ public class CompleteAppointmentFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.CompleteAppointmentRecycleView);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        String HospitalId = firebaseAuth.getCurrentUser().getUid();
         appointmentData = new ArrayList<>();
         completeAppointmentAdapter = new CompleteAppointmentAdapter(appointmentData);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -51,7 +54,9 @@ public class CompleteAppointmentFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressCircular);
 
-        Query query = firebaseFirestore.collection("Appointments").whereEqualTo("Status","1");
+        Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("HospitalId",HospitalId)
+                .whereEqualTo("Status","1")
+                .orderBy("TimeStamp", Query.Direction.ASCENDING);
 
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override

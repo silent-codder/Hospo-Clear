@@ -130,7 +130,7 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
                 Bundle bundle = new Bundle();
                 bundle.putString("DoctorId",DoctorId);
                 fragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
         });
     }

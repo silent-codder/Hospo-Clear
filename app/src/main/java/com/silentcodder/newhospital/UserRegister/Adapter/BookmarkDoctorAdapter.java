@@ -105,7 +105,7 @@ public class BookmarkDoctorAdapter extends RecyclerView.Adapter<BookmarkDoctorAd
                 Bundle bundle = new Bundle();
                 bundle.putString("DoctorId",DoctorId);
                 fragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
         });
 
