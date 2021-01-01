@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,6 +33,7 @@ public class UserLoginOtp extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +56,11 @@ public class UserLoginOtp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (mGetOtp.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Please enter OTP", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Please enter OTP", Toast.LENGTH_SHORT).show();
+                    mGetOtp.setError("Please enter otp");
                 }else if (mGetOtp.getText().toString().length()!=6){
-                    Toast.makeText(getApplicationContext(), "Incorrect OTP", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Incorrect OTP", Toast.LENGTH_SHORT).show();
+                    mGetOtp.setError("Short OTP");
                 }else {
                     PhoneAuthCredential credential = PhoneAuthProvider.getCredential(OtpId,mGetOtp.getText().toString());
                     signInWithPhoneAuthCredential(credential);
@@ -68,6 +72,7 @@ public class UserLoginOtp extends AppCompatActivity {
     private void findIds() {
         mBtnVerifyOtp = findViewById(R.id.btnVerifyOtp);
         mGetOtp = findViewById(R.id.getOtp);
+        progressBar = findViewById(R.id.loader);
     }
 
     private void InitiateOtp() {
@@ -98,19 +103,25 @@ public class UserLoginOtp extends AppCompatActivity {
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        mBtnVerifyOtp.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
+                            progressBar.setVisibility(View.INVISIBLE);
                             Intent intent = new Intent(UserLoginOtp.this, UserMainActivity.class);
                             intent.putExtra("Mobile",MobileNumber);
                             startActivity(intent);
                             finish();
                         } else {
                             progressDialog.dismiss();
-                            Toast.makeText(UserLoginOtp.this, "Error...", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+                            mBtnVerifyOtp.setVisibility(View.VISIBLE);
+//                            Toast.makeText(UserLoginOtp.this, "Error...", Toast.LENGTH_SHORT).show();
+                            mGetOtp.setError("Incorrect OTP");
                         }
                     }
                 });

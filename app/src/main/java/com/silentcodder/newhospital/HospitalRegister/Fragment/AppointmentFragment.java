@@ -66,6 +66,8 @@ public class AppointmentFragment extends Fragment {
                     progressBar.setVisibility(View.GONE);
                 }
 
+                Fragment fragment = new CompleteAppointmentFragment();
+
                 for (DocumentChange doc : value.getDocumentChanges()){
                     if (doc.getType() == DocumentChange.Type.ADDED){
                         String AppointmentId = doc.getDocument().getId();

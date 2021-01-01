@@ -7,6 +7,7 @@ public class DoctorData extends DoctorId {
     String Speciality;
     String HospitalId;
 
+
     public String getDoctorBio() {
         return DoctorBio;
     }

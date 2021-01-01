@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,9 +27,12 @@ import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Fragment.AboutDoctorFragment;
 import com.silentcodder.newhospital.UserRegister.Fragment.TopHospitalDoctorFragment;
 import com.silentcodder.newhospital.UserRegister.Model.DoctorData;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.ViewHolder> {
 
@@ -59,12 +63,21 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
         String Speciality = doctorData.get(position).getSpeciality();
         String Experience = doctorData.get(position).getExperience();
         String Qualification = doctorData.get(position).getQualification();
+        String ProfileUrl = doctorData.get(position).getProfileImgUrl();
         String DoctorId = doctorData.get(position).DoctorId;
 
         holder.mDoctorName.setText(DoctorName);
         holder.mDoctorSpeciality.setText(Speciality + ",");
         holder.mDoctorExperience.setText("Ex : " + Experience);
         holder.mDoctorQualification.setText(Qualification);
+
+        holder.progressBar.setVisibility(View.VISIBLE);
+        if(ProfileUrl != null){
+            holder.mDoctor.setVisibility(View.INVISIBLE);
+            Picasso.get().load(ProfileUrl).into(holder.mDoctorImg);
+        }else {
+            holder.progressBar.setVisibility(View.INVISIBLE);
+        }
 
         //Bookmark hospital
         holder.mBookMark.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +157,8 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
         TextView mDoctorName,mDoctorSpeciality,mDoctorExperience,mDoctorQualification;
         RelativeLayout relativeLayout;
         ImageView mBookMark,mBookMarkWhite;
+        ProgressBar progressBar;
+        CircleImageView mDoctorImg,mDoctor;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mDoctorName = itemView.findViewById(R.id.doctorName);
@@ -153,6 +168,9 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
             relativeLayout = itemView.findViewById(R.id.relativeLayout);
             mBookMark = itemView.findViewById(R.id.bookmark);
             mBookMarkWhite = itemView.findViewById(R.id.bookmark_white);
+            progressBar = itemView.findViewById(R.id.ImgLoader);
+            mDoctorImg = itemView.findViewById(R.id.doctorImg);
+            mDoctor = itemView.findViewById(R.id.doctor);
         }
     }
 }

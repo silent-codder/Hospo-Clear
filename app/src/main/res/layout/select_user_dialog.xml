@@ -12,7 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_close"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/btnCancel"/>
+
         <RelativeLayout
+            android:layout_below="@id/btnCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/images">
@@ -81,7 +89,7 @@
             android:id="@+id/btnNext"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Next"
+            android:text="Login"
             android:textStyle="bold"
             android:visibility="gone"
             android:layout_centerHorizontal="true"

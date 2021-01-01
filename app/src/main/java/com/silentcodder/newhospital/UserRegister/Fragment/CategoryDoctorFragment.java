@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -35,13 +36,15 @@ public class CategoryDoctorFragment extends Fragment {
     FirebaseFirestore firebaseFirestore;
     TopDoctorAdapter topDoctorAdapter;
     List<DoctorData> doctorData;
+    ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_category_doctor, container, false);
         recyclerView = view.findViewById(R.id.categoryDoctorRecycleView);
         firebaseFirestore = FirebaseFirestore.getInstance();
-
+        progressBar = view.findViewById(R.id.loader);
+        progressBar.setVisibility(View.VISIBLE);
          Bundle bundle = this.getArguments();
          if (bundle != null){
              Category = bundle.getString("Category");
@@ -68,6 +71,7 @@ public class CategoryDoctorFragment extends Fragment {
                     TextView textView = view.findViewById(R.id.notFoundText);
                     lottieAnimationView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
 
                 for (DocumentChange doc : value.getDocumentChanges()){
@@ -76,6 +80,7 @@ public class CategoryDoctorFragment extends Fragment {
                         DoctorData mDoctorData = doc.getDocument().toObject(DoctorData.class).withId(DoctorId);
                         doctorData.add(mDoctorData);
                         topDoctorAdapter.notifyDataSetChanged();
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 }
             }

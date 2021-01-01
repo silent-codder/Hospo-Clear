@@ -10,7 +10,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity {
     Button mBtnStart;
     Dialog dialog;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +47,21 @@ public class MainActivity extends AppCompatActivity {
         mBtnStart = findViewById(R.id.btnStart);
         dialog = new Dialog(this);
 
-
         mBtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.setContentView(R.layout.select_user_dialog);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.setCanceledOnTouchOutside(false);
                 dialog.show();
+
+                ImageView btnClose = dialog.findViewById(R.id.btnCancel);
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
 
                 //User Login
                 RadioButton user = dialog.findViewById(R.id.user);
@@ -104,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                         circleImageView3.setVisibility(View.INVISIBLE);
 
                         LinearLayout linearLayout = dialog.findViewById(R.id.linear);
-                        linearLayout.setVisibility(View.VISIBLE);
+                        linearLayout.setVisibility(View.INVISIBLE);
 
                         TextView register = dialog.findViewById(R.id.register);
                         register.setOnClickListener(new View.OnClickListener() {
@@ -172,8 +183,9 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore  firebaseFirestore = FirebaseFirestore.getInstance();
-
+        progressBar = findViewById(R.id.loader);
         if (user!=null){
+            progressBar.setVisibility(View.VISIBLE);
             mBtnStart.setVisibility(View.INVISIBLE);
             String UserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
             firebaseFirestore.collection("AppUsers").document(UserId).get()
@@ -184,16 +196,19 @@ public class MainActivity extends AppCompatActivity {
                                     String isUser = task.getResult().getString("isUser");
                                     if (isUser.equals("1")){
                                         //Hospital Section open
+                                        progressBar.setVisibility(View.GONE);
                                         startActivity(new Intent(MainActivity.this,HospitalMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
                                                 Intent.FLAG_ACTIVITY_CLEAR_TASK));
                                         finish();
                                     }else if (isUser.equals("2")){
                                         //User Section open
+                                        progressBar.setVisibility(View.GONE);
                                         startActivity(new Intent(MainActivity.this,UserMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
                                                 Intent.FLAG_ACTIVITY_CLEAR_TASK));
                                         finish();
                                     }else if (isUser.equals("3")){
                                         //Doctor Section open
+                                        progressBar.setVisibility(View.GONE);
                                         startActivity(new Intent(MainActivity.this, DoctorMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
                                                 Intent.FLAG_ACTIVITY_CLEAR_TASK));
                                         finish();

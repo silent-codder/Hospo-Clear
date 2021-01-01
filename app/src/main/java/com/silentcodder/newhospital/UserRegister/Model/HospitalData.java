@@ -7,17 +7,27 @@ public class HospitalData {
     String ContactNumber;
     String UserId;
     String Ambulance;
+    String ProfileImgUrl;
 
     public HospitalData() {
     }
 
-    public HospitalData(String hospitalName, String city, String state, String contactNumber, String userId, String ambulance) {
+    public HospitalData(String hospitalName, String city, String state, String contactNumber, String userId, String ambulance,String profileImgUrl) {
         HospitalName = hospitalName;
         City = city;
         State = state;
         ContactNumber = contactNumber;
         UserId = userId;
+        ProfileImgUrl = profileImgUrl;
         Ambulance = ambulance;
+    }
+
+    public String getProfileImgUrl() {
+        return ProfileImgUrl;
+    }
+
+    public void setProfileImgUrl(String profileImgUrl) {
+        ProfileImgUrl = profileImgUrl;
     }
 
     public String getHospitalName() {

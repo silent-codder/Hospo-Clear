@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,9 +29,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Fragment.TopHospitalDoctorFragment;
 import com.silentcodder.newhospital.UserRegister.Model.HospitalData;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.content.ContentValues.TAG;
 
@@ -64,12 +68,19 @@ public class TopHospitalAdapter extends RecyclerView.Adapter<TopHospitalAdapter.
         String State = hospitalData.get(position).getState();
         String Contact = hospitalData.get(position).getContactNumber();
         String HospitalId = hospitalData.get(position).getUserId();
-
+        String ProfileUrl = hospitalData.get(position).getProfileImgUrl();
 
         holder.mHospitalName.setText(HospitalName);
         holder.mCity.setText(City + ",");
         holder.mState.setText(State);
         holder.mContact.setText(Contact);
+        holder.progressBar.setVisibility(View.VISIBLE);
+        if(ProfileUrl != null){
+            holder.mImg.setVisibility(View.INVISIBLE);
+            Picasso.get().load(ProfileUrl).into(holder.mHospitalProfileImg);
+        }else {
+            holder.progressBar.setVisibility(View.INVISIBLE);
+        }
 
         //Bookmark hospital
        holder.mBookMark.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +162,8 @@ public class TopHospitalAdapter extends RecyclerView.Adapter<TopHospitalAdapter.
         TextView mHospitalName,mCity,mState,mContact;
         RelativeLayout relativeLayout;
         ImageView mBookMark,mBookMarkWhite;
+        CircleImageView mHospitalProfileImg,mImg;
+        ProgressBar progressBar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mHospitalName = itemView.findViewById(R.id.hospitalName);
@@ -160,6 +173,9 @@ public class TopHospitalAdapter extends RecyclerView.Adapter<TopHospitalAdapter.
             relativeLayout = itemView.findViewById(R.id.relativeLayout);
             mBookMark = itemView.findViewById(R.id.bookmark);
             mBookMarkWhite = itemView.findViewById(R.id.bookmark_white);
+            mHospitalProfileImg = itemView.findViewById(R.id.hospitalImg);
+            mImg = itemView.findViewById(R.id.hospitalIm);
+            progressBar = itemView.findViewById(R.id.ImgLoader);
         }
     }
 }

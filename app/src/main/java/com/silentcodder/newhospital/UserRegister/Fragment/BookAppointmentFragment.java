@@ -35,6 +35,7 @@ import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Adapter.UserAdapter;
 import com.silentcodder.newhospital.UserRegister.Model.DoctorData;
 import com.silentcodder.newhospital.UserRegister.Model.UserData;
+import com.squareup.picasso.Picasso;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -47,6 +48,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BookAppointmentFragment extends Fragment {
 
@@ -96,7 +99,13 @@ public class BookAppointmentFragment extends Fragment {
                         if (task.isSuccessful()){
                             String DoctorName = task.getResult().getString("DoctorName");
                             String Specialist = task.getResult().getString("Speciality");
+                            String ProfileUrl = task.getResult().getString("ProfileImgUrl");
                             HospitalId = task.getResult().getString("HospitalId");
+
+                            if (ProfileUrl != null){
+                                CircleImageView circleImageView = view.findViewById(R.id.doctorImg);
+                                Picasso.get().load(ProfileUrl).into(circleImageView);
+                            }
 
                             mDoctorName.setText(DoctorName);
                             mSpeciality.setText(Specialist);

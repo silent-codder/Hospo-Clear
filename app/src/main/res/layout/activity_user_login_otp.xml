@@ -46,12 +46,14 @@
             android:gravity="center"
             android:hint="_ _ _ _ _ _"
             android:padding="10dp"
-            android:inputType="number"
+            android:maxLength="6"
+            android:inputType="numberSigned"
             tools:ignore="HardcodedText"
             android:autofillHints="no" />
 
         <Button
             android:id="@+id/btnVerifyOtp"
+            android:visibility="visible"
             android:layout_below="@id/getOtp"
             android:layout_marginTop="20dp"
             android:layout_width="300dp"
@@ -60,7 +62,14 @@
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
             tools:ignore="HardcodedText" />
-
+        <ProgressBar
+            android:id="@+id/loader"
+            android:visibility="invisible"
+            android:layout_below="@id/getOtp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </RelativeLayout>
 
