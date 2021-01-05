@@ -113,6 +113,16 @@
                 android:layout_toRightOf="@id/insideView"
                 android:layout_below="@id/patientName"
                 tools:ignore="HardcodedText" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textColor="#BDBEBF"
+                android:layout_marginStart="10dp"
+                android:text="Tab to see more information"
+                android:layout_below="@id/problem"
+                android:layout_toEndOf="@id/insideView"
+                tools:ignore="HardcodedText" />
 
         </RelativeLayout>
 

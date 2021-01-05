@@ -1,5 +1,6 @@
 package com.silentcodder.newhospital.UserRegister.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -89,6 +90,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.mProblem.setText(Problem);
         holder.mDate.setText(Date);
         holder.mMoreInfo.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 dialog.setContentView(R.layout.appointment_more_info);
@@ -100,6 +102,27 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 TextView appointmentDate = dialog.findViewById(R.id.appointmentDate);
                 TextView hospitalName = dialog.findViewById(R.id.hospitalName);
                 TextView doctorName = dialog.findViewById(R.id.doctorName);
+                TextView status = dialog.findViewById(R.id.status);
+                CircleImageView requestImg = dialog.findViewById(R.id.requestImg);
+                CircleImageView pendingImg = dialog.findViewById(R.id.pendingImg);
+                CircleImageView completeImg = dialog.findViewById(R.id.completeImg);
+
+                if (Status.equals("1")){
+                    completeImg.setVisibility(View.VISIBLE);
+                    status.setText("Appointment was complete");
+                    requestImg.setVisibility(View.INVISIBLE);
+                    pendingImg.setVisibility(View.INVISIBLE);
+                }else if(Status.equals("2")){
+                    completeImg.setVisibility(View.INVISIBLE);
+                    requestImg.setVisibility(View.INVISIBLE);
+                    pendingImg.setVisibility(View.VISIBLE);
+                    status.setText("Appointment is pending");
+                }else if(Status.equals("3")){
+                    completeImg.setVisibility(View.INVISIBLE);
+                    requestImg.setVisibility(View.VISIBLE);
+                    pendingImg.setVisibility(View.INVISIBLE);
+                    status.setText("Requesting Appointment");
+                }
 
                 firebaseFirestore.collection("Doctors").document(DoctorId).get()
                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

@@ -75,11 +75,7 @@ public class AboutDoctorFragment extends Fragment {
                             String ProfileUrl = task.getResult().getString("ProfileImgUrl");
                             progressBar.setVisibility(View.VISIBLE);
 
-                           if (About == null){
-                               mAboutDoctor.setText("Nothing more about..");
-                           }else if (About != null){
-                               mAboutDoctor.setText(About);
-                           }
+                            mAboutDoctor.setText(About);
 
                             if(ProfileUrl != null){
                                 mDoctor.setVisibility(View.INVISIBLE);

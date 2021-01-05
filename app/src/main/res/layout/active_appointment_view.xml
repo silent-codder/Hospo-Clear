@@ -70,6 +70,19 @@
             android:layout_alignParentEnd="true"
             android:textAllCaps="false"
             tools:ignore="HardcodedText" />
+        <Button
+            android:id="@+id/btnAddPrescription"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Prescription"
+            android:drawableRight="@drawable/ic_camera"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:layout_below="@id/problem"
+            android:layout_alignParentEnd="true"
+            android:textAllCaps="false"
+            tools:ignore="HardcodedText" />
 
     </RelativeLayout>
 

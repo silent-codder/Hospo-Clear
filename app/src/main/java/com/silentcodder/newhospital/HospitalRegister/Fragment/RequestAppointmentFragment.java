@@ -54,8 +54,7 @@ public class RequestAppointmentFragment extends Fragment {
         recyclerView.setAdapter(requestAppointmentAdapter);
         progressBar = view.findViewById(R.id.progressCircular);
 
-
-
+        //Status value is "3" means request for appointment
         Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("HospitalId",HospitalId)
                 .whereEqualTo("Status","3")
                 .orderBy("TimeStamp", Query.Direction.ASCENDING);

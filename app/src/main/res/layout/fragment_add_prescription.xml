@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/layout_bg"
+    android:layout_marginTop="56dp"
+    tools:context=".DoctorRegister.Fragment.AddPrescriptionFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/btnDone"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_done"
+            android:layout_alignParentRight="true"
+            tools:ignore="ContentDescription,RtlHardcoded" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:textColor="@color/purple_500"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="Add Prescription"
+            android:layout_centerHorizontal="true"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/btnCancel"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_close"
+            android:layout_alignParentLeft="true"
+            tools:ignore="ContentDescription,RtlHardcoded" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/layout_bg"
+            android:layout_below="@id/btnCancel"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/textPrescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="200dp"
+                android:background="@drawable/edit_txt_problem_bg"
+                android:hint="Add Prescription here"
+                android:padding="10dp"
+                android:text="-\n-\n-\n-"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Or"
+                android:layout_below="@id/textPrescription"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <Button
+                android:id="@+id/btnAddPrescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Prescription"
+                android:layout_below="@id/text"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textAllCaps="false"
+                android:layout_centerHorizontal="true"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/btnAddPrescription"
+                android:scaleType="fitXY"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

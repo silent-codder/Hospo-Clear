@@ -1,4 +1,4 @@
-package com.silentcodder.newhospital.DoctorRegister.Fragement;
+package com.silentcodder.newhospital.DoctorRegister.Fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;

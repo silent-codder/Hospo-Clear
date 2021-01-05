@@ -70,6 +70,9 @@ public class BookAppointmentFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_appointment, container, false);
         calendarView = view.findViewById(R.id.appDate);
+        long dat = calendarView.getDate()+7;
+        calendarView.setMinDate(calendarView.getDate());
+        calendarView.setMaxDate(dat);
         mBtnNext = view.findViewById(R.id.btnNext);
         mProblem = view.findViewById(R.id.problem);
         mDateLayout = view.findViewById(R.id.dateLayout);
@@ -122,6 +125,7 @@ public class BookAppointmentFragment extends Fragment {
             @SuppressLint("SetTextI18n")
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                month += 1;
                 date = dayOfMonth + " / " +month+ " / " +year;
 
             }

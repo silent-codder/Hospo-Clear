@@ -1,4 +1,4 @@
-package com.silentcodder.newhospital.UserRegister.Fragment;
+package com.silentcodder.newhospital.DoctorRegister.Fragment;
 
 import android.os.Bundle;
 
@@ -11,42 +11,47 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.silentcodder.newhospital.HospitalRegister.Adapter.CompleteAppointmentAdapter;
 import com.silentcodder.newhospital.R;
-import com.silentcodder.newhospital.UserRegister.Adapter.AppointmentAdapter;
 import com.silentcodder.newhospital.UserRegister.Model.AppointmentData;
-import com.silentcodder.newhospital.UserRegister.Model.DoctorData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserAppointmentsFragment extends Fragment {
+public class DoctorCompleteAppointmentFragment extends Fragment {
 
-    AppointmentAdapter appointmentAdapter;
+    RecyclerView recyclerView;
     List<AppointmentData> appointmentData;
+    CompleteAppointmentAdapter completeAppointmentAdapter;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
-    String UserId;
-    RecyclerView recyclerView;
+    ProgressBar progressBar;
     SwipeRefreshLayout swipeRefreshLayout;
+    String UserId;
+    LottieAnimationView lottieAnimationView;
+    TextView textView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_appointments, container, false);
-
-        recyclerView = view.findViewById(R.id.appointmentRecycleView);
+        View view = inflater.inflate(R.layout.fragment_doctor_complete_appointment, container, false);
+        recyclerView = view.findViewById(R.id.CompleteAppointmentRecycleView);
+        lottieAnimationView = view.findViewById(R.id.lottie);
+        textView = view.findViewById(R.id.notFoundText);
+        progressBar = view.findViewById(R.id.progressCircular);
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         UserId = firebaseAuth.getCurrentUser().getUid();
-
         swipeRefreshLayout = view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -54,6 +59,7 @@ public class UserAppointmentsFragment extends Fragment {
                 refreshData();
             }
         });
+
         loadData();
         return view;
     }
@@ -63,24 +69,33 @@ public class UserAppointmentsFragment extends Fragment {
     }
 
     private void loadData() {
-        appointmentData = new ArrayList<>();
-        appointmentAdapter = new AppointmentAdapter(appointmentData);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(appointmentAdapter);
-
         swipeRefreshLayout.setRefreshing(false);
-        Query query1 = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("UserId",UserId)
-                .orderBy("TimeStamp", Query.Direction.DESCENDING);
+        appointmentData = new ArrayList<>();
+        completeAppointmentAdapter = new CompleteAppointmentAdapter(appointmentData);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(completeAppointmentAdapter);
 
-        query1.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("DoctorId",UserId)
+                .whereEqualTo("Status","1")
+                .orderBy("TimeStamp", Query.Direction.ASCENDING);
+
+        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                if (value.isEmpty()){
+                    lottieAnimationView.setVisibility(View.VISIBLE);
+                    textView.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                }
+
                 for (DocumentChange doc : value.getDocumentChanges()){
                     if (doc.getType() == DocumentChange.Type.ADDED){
                         String AppointmentId = doc.getDocument().getId();
                         AppointmentData mAppointmentData = doc.getDocument().toObject(AppointmentData.class).withId(AppointmentId);
                         appointmentData.add(mAppointmentData);
-                        appointmentAdapter.notifyDataSetChanged();
+                        completeAppointmentAdapter.notifyDataSetChanged();
+                        progressBar.setVisibility(View.GONE);
                     }
                 }
             }

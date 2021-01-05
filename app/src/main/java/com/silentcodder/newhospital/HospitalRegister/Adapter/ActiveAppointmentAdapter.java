@@ -1,5 +1,6 @@
 package com.silentcodder.newhospital.HospitalRegister.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,6 +20,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Model.AppointmentData;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +55,7 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
         String AppointmentDate = appointmentData.get(position).getAppointmentDate();
         String Problem = appointmentData.get(position).getProblem();
         String AppointmentId = appointmentData.get(position).AppointmentId;
+        String Status = appointmentData.get(position).getStatus();
 
         firebaseFirestore.collection("Users").document(UserId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -64,24 +69,59 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
         holder.mAppointmentDate.setText(AppointmentDate);
         holder.mProblem.setText(Problem);
 
-        holder.mBtnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HashMap<String,Object> map = new HashMap<>();
-                map.put("Status","1");
-                firebaseFirestore.collection("Appointments").document(AppointmentId)
-                        .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            Toast.makeText(context, "Complete Appointment", Toast.LENGTH_SHORT).show();
-                            holder.mBtnCompleteAppointment.setVisibility(View.GONE);
-                        }
-                    }
-                });
-            }
-        });
+        //for add prescription
+        if (Status.equals("2")){
+            holder.mBtnAddPrescription.setVisibility(View.VISIBLE);
+            holder.mBtnCompleteAppointment.setVisibility(View.INVISIBLE);
+            holder.mBtnAddPrescription.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                }
+            });
+        }
+        
+        //for complete appointment
+        if (Status.equals("4")){
+            holder.mBtnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HashMap<String,Object> map = new HashMap<>();
+                    map.put("Status","1");
+
+                    firebaseFirestore.collection("Appointments").document(AppointmentId)
+                            .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                Toast.makeText(context, "Complete Appointment", Toast.LENGTH_SHORT).show();
+                                holder.mBtnCompleteAppointment.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                }
+            });
+        }else {
+            holder.mBtnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HashMap<String,Object> map = new HashMap<>();
+                    map.put("Status","4");
+
+                    firebaseFirestore.collection("Appointments").document(AppointmentId)
+                            .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                Toast.makeText(context, "Request to Complete Appointment", Toast.LENGTH_SHORT).show();
+                                holder.mBtnCompleteAppointment.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        
     }
 
     @Override
@@ -92,7 +132,7 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
     public class ViewHolder extends RecyclerView.ViewHolder {
         CircleImageView mUserImg;
         TextView mUserName,mAppointmentDate,mProblem;
-        Button mBtnCompleteAppointment;
+        Button mBtnCompleteAppointment,mBtnAddPrescription;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mUserImg = itemView.findViewById(R.id.userImg);
@@ -100,6 +140,8 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
             mAppointmentDate = itemView.findViewById(R.id.appointmentDate);
             mProblem = itemView.findViewById(R.id.problem);
             mBtnCompleteAppointment = itemView.findViewById(R.id.btnCompleteAppointment);
+            mBtnAddPrescription = itemView.findViewById(R.id.btnAddPrescription);
         }
     }
+
 }

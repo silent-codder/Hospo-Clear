@@ -21,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
 import com.silentcodder.newhospital.HospitalRegister.Adapter.ActiveAppointmentAdapter;
 import com.silentcodder.newhospital.HospitalRegister.Adapter.RequestAppointmentAdapter;
 import com.silentcodder.newhospital.R;
@@ -44,15 +45,15 @@ public class AppointmentFragment extends Fragment {
         recyclerView = view.findViewById(R.id.requestAppointmentRecycleView);
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-        String HospitalId = firebaseAuth.getCurrentUser().getUid();
+        String UserId = firebaseAuth.getCurrentUser().getUid();
         appointmentData = new ArrayList<>();
         activeAppointmentAdapter = new ActiveAppointmentAdapter(appointmentData);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(activeAppointmentAdapter);
         progressBar = view.findViewById(R.id.progressCircular);
 
-      Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("HospitalId",HospitalId)
-                .whereEqualTo("Status","2")
+      Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("HospitalId", UserId)
+                .whereEqualTo("Status","4")
                 .orderBy("TimeStamp", Query.Direction.ASCENDING);
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -65,8 +66,7 @@ public class AppointmentFragment extends Fragment {
                     textView.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
                 }
-
-                Fragment fragment = new CompleteAppointmentFragment();
+                
 
                 for (DocumentChange doc : value.getDocumentChanges()){
                     if (doc.getType() == DocumentChange.Type.ADDED){
