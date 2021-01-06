@@ -59,6 +59,14 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_marginTop="10dp"
             android:layout_below="@id/view2"
+            android:id="@+id/userIm"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/user"
+            app:civ_border_width="0.5dp"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/view2"
             android:id="@+id/userImg"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -125,6 +133,28 @@
             android:textSize="16sp"
             tools:ignore="HardcodedText"
             app:drawableStartCompat="@drawable/ic_doctor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No prescription here"
+            android:layout_below="@id/doctorName"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textColor="#D7D5DA"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            tools:ignore="HardcodedText" />
+        <Button
+            android:id="@+id/btnSeePrescription"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="See Prescription"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:layout_below="@id/doctorName"
+            tools:ignore="HardcodedText" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

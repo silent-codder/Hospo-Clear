@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,7 +53,13 @@ public class CompleteAppointmentAdapter extends RecyclerView.Adapter<CompleteApp
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         String ProfileUrl = task.getResult().getString("ProfileImgUrl");
-                        Picasso.get().load(ProfileUrl).into(holder.mUserImg);
+                        holder.progressBar.setVisibility(View.VISIBLE);
+                        if(ProfileUrl != null){
+                            holder.mUser.setVisibility(View.INVISIBLE);
+                            Picasso.get().load(ProfileUrl).into(holder.mUserImg);
+                        }else {
+                            holder.progressBar.setVisibility(View.INVISIBLE);
+                        }
                     }
                 });
         holder.mUserName.setText(PatientName);
@@ -66,7 +73,8 @@ public class CompleteAppointmentAdapter extends RecyclerView.Adapter<CompleteApp
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView mUserImg;
+        CircleImageView mUserImg,mUser;
+        ProgressBar progressBar;
         TextView mUserName,mAppointmentDate,mProblem;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,6 +82,8 @@ public class CompleteAppointmentAdapter extends RecyclerView.Adapter<CompleteApp
             mUserName = itemView.findViewById(R.id.userName);
             mAppointmentDate = itemView.findViewById(R.id.appointmentDate);
             mProblem = itemView.findViewById(R.id.problem);
+            progressBar = itemView.findViewById(R.id.loader);
+            mUser = itemView.findViewById(R.id.userIm);
         }
     }
 

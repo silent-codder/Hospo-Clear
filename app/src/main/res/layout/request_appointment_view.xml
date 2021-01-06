@@ -14,10 +14,21 @@
         android:padding="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userImg"
+            android:id="@+id/userIm"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/user"
+            app:civ_border_width="0.5dp"/>
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:id="@+id/loader"
+            android:visibility="invisible"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userImg"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             app:civ_border_width="0.5dp"/>
         <TextView
             android:id="@+id/userName"

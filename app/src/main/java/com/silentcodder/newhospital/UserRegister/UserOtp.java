@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,10 +32,9 @@ public class UserOtp extends AppCompatActivity {
     EditText mGetOtp;
     String MobileNumber,OtpId;
     ProgressDialog progressDialog;
-
+    ProgressBar progressBar;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +55,12 @@ public class UserOtp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (mGetOtp.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Please enter OTP", Toast.LENGTH_SHORT).show();
+                    mGetOtp.setError("Enter OTP");
                 }else if (mGetOtp.getText().toString().length()!=6){
-                    Toast.makeText(getApplicationContext(), "Incorrect OTP", Toast.LENGTH_SHORT).show();
+                    mGetOtp.setError("OTP will be 6 digit");
                 }else {
+                    mBtnVerifyOtp.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
                     PhoneAuthCredential credential = PhoneAuthProvider.getCredential(OtpId,mGetOtp.getText().toString());
                     signInWithPhoneAuthCredential(credential);
                 }
@@ -69,6 +71,7 @@ public class UserOtp extends AppCompatActivity {
     private void findIds() {
         mBtnVerifyOtp = findViewById(R.id.btnVerifyOtp);
         mGetOtp = findViewById(R.id.getOtp);
+        progressBar = findViewById(R.id.loader);
     }
 
     private void InitiateOtp() {
@@ -111,7 +114,9 @@ public class UserOtp extends AppCompatActivity {
                             finish();
                         } else {
                             progressDialog.dismiss();
-                            Toast.makeText(UserOtp.this, "Error...", Toast.LENGTH_SHORT).show();
+                            mBtnVerifyOtp.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            mGetOtp.setError("Re-Enter OTP");
                         }
                     }
                 });

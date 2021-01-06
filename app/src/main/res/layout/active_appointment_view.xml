@@ -12,12 +12,22 @@
         android:layout_height="wrap_content"
         android:background="@drawable/edit_txt_problem_bg"
         android:padding="10dp">
-
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userIm"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/user"
+            app:civ_border_width="0.5dp"/>
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:id="@+id/loader"
+            android:visibility="invisible"/>
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userImg"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/user"
             app:civ_border_width="0.5dp"/>
         <TextView
             android:id="@+id/userName"
@@ -66,21 +76,23 @@
             android:text="Complete"
             android:textStyle="bold"
             android:fontFamily="sans-serif-condensed-medium"
-            android:layout_below="@id/problem"
+            android:layout_below="@id/userImg"
+            android:layout_marginTop="10dp"
             android:layout_alignParentEnd="true"
             android:textAllCaps="false"
             tools:ignore="HardcodedText" />
         <Button
             android:id="@+id/btnAddPrescription"
             android:visibility="invisible"
+            android:layout_alignParentLeft="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add Prescription"
             android:drawableRight="@drawable/ic_camera"
             android:textStyle="bold"
             android:fontFamily="sans-serif-condensed-medium"
-            android:layout_below="@id/problem"
-            android:layout_alignParentEnd="true"
+            android:layout_below="@id/userImg"
+            android:layout_marginTop="10dp"
             android:textAllCaps="false"
             tools:ignore="HardcodedText" />
 

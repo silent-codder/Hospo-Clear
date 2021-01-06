@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +57,13 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         String ProfileUrl = task.getResult().getString("ProfileImgUrl");
-                        Picasso.get().load(ProfileUrl).into(holder.mUserImg);
+                        holder.progressBar.setVisibility(View.VISIBLE);
+                        if(ProfileUrl != null){
+                            holder.mUser.setVisibility(View.INVISIBLE);
+                            Picasso.get().load(ProfileUrl).into(holder.mUserImg);
+                        }else {
+                            holder.progressBar.setVisibility(View.INVISIBLE);
+                        }
                     }
                 });
         holder.mUserName.setText(PatientName);
@@ -108,7 +115,8 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView mUserImg;
+        CircleImageView mUserImg,mUser;
+        ProgressBar progressBar;
         TextView mUserName,mAppointmentDate,mProblem;
         Button mBtnAcceptRequest,mBtnCancelRequest;
         public ViewHolder(@NonNull View itemView) {
@@ -117,6 +125,8 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
             mUserName = itemView.findViewById(R.id.userName);
             mAppointmentDate = itemView.findViewById(R.id.appointmentDate);
             mProblem = itemView.findViewById(R.id.problem);
+            mUser = itemView.findViewById(R.id.userIm);
+            progressBar = itemView.findViewById(R.id.loader);
             mBtnAcceptRequest = itemView.findViewById(R.id.btnRequestAccept);
             mBtnCancelRequest = itemView.findViewById(R.id.btnRequestCancel);
         }

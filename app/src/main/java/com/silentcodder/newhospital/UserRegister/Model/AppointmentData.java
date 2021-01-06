@@ -9,12 +9,14 @@ public class AppointmentData extends AppointmentId{
     String Problem;
     String AppointmentDate;
     String Status;
+    String PrescriptionImgUrl;
+
 
     public AppointmentData() {
     }
 
     public AppointmentData(String hospitalId, String doctorId, String userId, String patientName, String relationship,
-                           String problem, String appointmentDate ,String status) {
+                           String problem, String appointmentDate ,String status,String prescriptionImgUrl) {
         HospitalId = hospitalId;
         DoctorId = doctorId;
         UserId = userId;
@@ -23,6 +25,15 @@ public class AppointmentData extends AppointmentId{
         Relationship = relationship;
         Problem = problem;
         AppointmentDate = appointmentDate;
+        PrescriptionImgUrl = prescriptionImgUrl;
+    }
+
+    public String getPrescriptionImgUrl() {
+        return PrescriptionImgUrl;
+    }
+
+    public void setPrescriptionImgUrl(String prescriptionImgUrl) {
+        PrescriptionImgUrl = prescriptionImgUrl;
     }
 
     public String getStatus() {

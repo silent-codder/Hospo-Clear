@@ -7,20 +7,7 @@
     android:layout_marginTop="56dp"
     tools:context=".UserRegister.Fragment.UserHomeFragment">
 
-    <TextView
-        android:id="@+id/heading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Find Your Desired \nHospital"
-        android:textStyle="bold"
-        android:textSize="30sp"
-        android:layout_marginStart="25dp"
-        android:textColor="@color/purple_700"
-        android:fontFamily="sans-serif-condensed-medium"
-        tools:ignore="HardcodedText" />
-
     <ScrollView
-        android:layout_below="@id/heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -28,7 +15,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Find Your Desired \nHospital"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:layout_marginStart="25dp"
+                android:textColor="@color/purple_700"
+                android:fontFamily="sans-serif-condensed-medium"
+                tools:ignore="HardcodedText" />
+
             <EditText
+                android:layout_below="@id/heading"
                 android:id="@+id/searchBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

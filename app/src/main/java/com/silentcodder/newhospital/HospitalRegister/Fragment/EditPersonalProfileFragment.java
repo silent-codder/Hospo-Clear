@@ -178,7 +178,7 @@ public class EditPersonalProfileFragment extends Fragment {
 
     private void AddImg() {
 
-        StorageReference profileImgPath = storageReference.child("Profile").child(HospitalId + ".jpg");
+        StorageReference profileImgPath = storageReference.child("Profile").child(System.currentTimeMillis() + ".jpg");
 
         profileImgPath.putFile(profileImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override

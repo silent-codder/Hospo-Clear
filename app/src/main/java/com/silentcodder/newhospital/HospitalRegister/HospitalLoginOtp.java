@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,8 +28,7 @@ public class HospitalLoginOtp extends AppCompatActivity {
     Button mBtnVerifyOtp;
     EditText mGetOtp;
     String MobileNumber,OtpId;
-    ProgressDialog progressDialog;
-
+    ProgressBar progressBar;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
     @Override
@@ -38,10 +38,6 @@ public class HospitalLoginOtp extends AppCompatActivity {
         findIds();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Please wait..");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
 
         MobileNumber = getIntent().getStringExtra("MobileNumber");
 
@@ -51,10 +47,12 @@ public class HospitalLoginOtp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (mGetOtp.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Please enter OTP", Toast.LENGTH_SHORT).show();
+                    mGetOtp.setError("Enter OTP");
                 }else if (mGetOtp.getText().toString().length()!=6){
-                    Toast.makeText(getApplicationContext(), "Incorrect OTP", Toast.LENGTH_SHORT).show();
+                    mGetOtp.setError("OTP will be 6 digit");
                 }else {
+                    progressBar.setVisibility(View.VISIBLE);
+                    mBtnVerifyOtp.setVisibility(View.INVISIBLE);
                     PhoneAuthCredential credential = PhoneAuthProvider.getCredential(OtpId,mGetOtp.getText().toString());
                     signInWithPhoneAuthCredential(credential);
                 }
@@ -65,10 +63,11 @@ public class HospitalLoginOtp extends AppCompatActivity {
     private void findIds() {
         mBtnVerifyOtp = findViewById(R.id.btnVerifyOtp);
         mGetOtp = findViewById(R.id.getOtp);
+        progressBar = findViewById(R.id.loader);
     }
 
     private void InitiateOtp() {
-        progressDialog.dismiss();
+
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 MobileNumber,        // Phone number to verify
                 60,                 // Timeout duration
@@ -87,7 +86,6 @@ public class HospitalLoginOtp extends AppCompatActivity {
 
                     @Override
                     public void onVerificationFailed(@NonNull FirebaseException e) {
-                        progressDialog.dismiss();
                         Toast.makeText(HospitalLoginOtp.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });        // OnVerificationStateChangedCallbacks
@@ -100,14 +98,14 @@ public class HospitalLoginOtp extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            progressDialog.dismiss();
                             Intent intent = new Intent(HospitalLoginOtp.this,HospitalMainActivity.class);
                             intent.putExtra("Mobile",MobileNumber);
                             startActivity(intent);
                             finish();
                         } else {
-                            progressDialog.dismiss();
-                            Toast.makeText(HospitalLoginOtp.this, "Error...", Toast.LENGTH_SHORT).show();
+                            mGetOtp.setError("Re-enter OTP");
+                            mBtnVerifyOtp.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     }
                 });

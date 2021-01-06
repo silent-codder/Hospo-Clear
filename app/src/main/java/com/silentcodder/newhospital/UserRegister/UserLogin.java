@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,15 +38,19 @@ public class UserLogin extends AppCompatActivity {
 
         findIDs();
         mCpp.registerCarrierNumberEditText(mMobileNumber);
-
+        ProgressBar progressBar = findViewById(R.id.loader);
        mBtnContinue.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+               mBtnContinue.setVisibility(View.INVISIBLE);
+               progressBar.setVisibility(View.VISIBLE);
                firebaseFirestore.collection("Users").whereEqualTo("MobileNumber",mCpp.getFullNumberWithPlus()).addSnapshotListener(new EventListener<QuerySnapshot>() {
                    @Override
                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                        if (value.isEmpty()){
-                           Toast.makeText(UserLogin.this, "Opps..Mobile Number not registered", Toast.LENGTH_SHORT).show();
+                           mMobileNumber.setError("mobile number not register");
+                           mBtnContinue.setVisibility(View.VISIBLE);
+                           progressBar.setVisibility(View.INVISIBLE);
                        }else {
                            Intent intent = new Intent(UserLogin.this, UserLoginOtp.class);
                            intent.putExtra("MobileNumber",mCpp.getFullNumberWithPlus().replace(" ",""));

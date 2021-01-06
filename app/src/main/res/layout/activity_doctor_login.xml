@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:hint="Create password"
+            android:hint="Password"
             android:layout_below="@+id/emailAddress"
             android:layout_marginTop="20sp"
             android:background="@drawable/edit_txt_bg"
@@ -68,7 +68,16 @@
             android:textStyle="bold"
             android:fontFamily="sans-serif-condensed-medium"
             android:textSize="17sp"
+            android:visibility="visible"
             tools:ignore="HardcodedText" />
+        <ProgressBar
+            android:id="@+id/loader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/password"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"/>
 
     </RelativeLayout>
 

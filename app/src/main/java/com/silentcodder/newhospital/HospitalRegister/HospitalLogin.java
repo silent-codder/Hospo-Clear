@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.firestore.EventListener;
@@ -22,7 +23,6 @@ public class HospitalLogin extends AppCompatActivity {
     CountryCodePicker mCpp;
     EditText mMobileNumber;
     Button mBtnContinue;
-
     FirebaseFirestore firebaseFirestore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +31,24 @@ public class HospitalLogin extends AppCompatActivity {
         findIDs();
         firebaseFirestore = FirebaseFirestore.getInstance();
         mCpp.registerCarrierNumberEditText(mMobileNumber);
-
+        ProgressBar progressBar = findViewById(R.id.loader);
         mBtnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mBtnContinue.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
 
                 firebaseFirestore.collection("Hospitals").whereEqualTo("MobileNumber",mCpp.getFullNumberWithPlus())
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                                 if (value.isEmpty()){
-                                    Toast.makeText(HospitalLogin.this, "Mobile number not register", Toast.LENGTH_SHORT).show();
+                                    mMobileNumber.setError("Mobile number not register");
+                                    mBtnContinue.setVisibility(View.VISIBLE);
+                                    progressBar.setVisibility(View.INVISIBLE);
                                 }else {
+                                    mBtnContinue.setVisibility(View.VISIBLE);
+                                    progressBar.setVisibility(View.INVISIBLE);
                                     Intent intent = new Intent(HospitalLogin.this,HospitalLoginOtp.class);
                                     intent.putExtra("MobileNumber",mCpp.getFullNumberWithPlus().replace(" ",""));
                                     startActivity(intent);

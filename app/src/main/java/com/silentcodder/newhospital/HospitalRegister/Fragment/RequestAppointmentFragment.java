@@ -8,6 +8,7 @@ import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,20 +40,43 @@ public class RequestAppointmentFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     ProgressBar progressBar;
     String HospitalId;
+    LottieAnimationView lottieAnimationView;
+    TextView textView;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_request_appointment, container, false);
         recyclerView = view.findViewById(R.id.requestAppointmentRecycleView);
+        lottieAnimationView = view.findViewById(R.id.lottie);
+        textView = view.findViewById(R.id.notFoundText);
+        progressBar = view.findViewById(R.id.progressCircular);
+        swipeRefreshLayout = view.findViewById(R.id.refresh);
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         HospitalId = firebaseAuth.getCurrentUser().getUid();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+            }
+        });
+        loadData();
+        return view;
+    }
+
+    private void refreshData() {
+        loadData();
+    }
+
+    private void loadData() {
+        swipeRefreshLayout.setRefreshing(false);
         appointmentData = new ArrayList<>();
         requestAppointmentAdapter = new RequestAppointmentAdapter(appointmentData);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(requestAppointmentAdapter);
-        progressBar = view.findViewById(R.id.progressCircular);
 
         //Status value is "3" means request for appointment
         Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("HospitalId",HospitalId)
@@ -64,8 +88,6 @@ public class RequestAppointmentFragment extends Fragment {
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
                 if (value.isEmpty()){
-                    LottieAnimationView lottieAnimationView = view.findViewById(R.id.lottie);
-                    TextView textView = view.findViewById(R.id.notFoundText);
                     lottieAnimationView.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
@@ -83,6 +105,5 @@ public class RequestAppointmentFragment extends Fragment {
             }
         });
 
-        return view;
     }
 }

@@ -1,18 +1,24 @@
 package com.silentcodder.newhospital.UserRegister.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +26,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.silentcodder.newhospital.R;
+import com.silentcodder.newhospital.UserRegister.Fragment.SeePrescriptionFragment;
+import com.silentcodder.newhospital.UserRegister.Fragment.TopHospitalDoctorFragment;
 import com.silentcodder.newhospital.UserRegister.Model.AppointmentData;
 import com.squareup.picasso.Picasso;
 
@@ -60,6 +68,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         String UserId = appointmentData.get(position).getUserId();
         String HospitalId = appointmentData.get(position).getHospitalId();
         String DoctorId = appointmentData.get(position).getDoctorId();
+        String PrescriptionImgUrl = appointmentData.get(position).getPrescriptionImgUrl();
 
         firebaseFirestore.collection("Users").document(UserId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -76,7 +85,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             holder.mComplete.setVisibility(View.VISIBLE);
             holder.mRequest.setVisibility(View.INVISIBLE);
             holder.mPending.setVisibility(View.INVISIBLE);
-        }else if(Status.equals("2")){
+        }else if(Status.equals("2") || Status.equals("4")){
             holder.mComplete.setVisibility(View.INVISIBLE);
             holder.mRequest.setVisibility(View.INVISIBLE);
             holder.mPending.setVisibility(View.VISIBLE);
@@ -106,6 +115,24 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 CircleImageView requestImg = dialog.findViewById(R.id.requestImg);
                 CircleImageView pendingImg = dialog.findViewById(R.id.pendingImg);
                 CircleImageView completeImg = dialog.findViewById(R.id.completeImg);
+
+                if (PrescriptionImgUrl != null){
+                    Button BtnSeePrescription = dialog.findViewById(R.id.btnSeePrescription);
+                    BtnSeePrescription.setVisibility(View.VISIBLE);
+                    BtnSeePrescription.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            AppCompatActivity activity = (AppCompatActivity) context;
+                            activity.getApplication().getApplicationContext();
+                            Fragment fragment = new SeePrescriptionFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("ImageUrl" , PrescriptionImgUrl);
+                            fragment.setArguments(bundle);
+                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+                        }
+                    });
+                }
 
                 if (Status.equals("1")){
                     completeImg.setVisibility(View.VISIBLE);

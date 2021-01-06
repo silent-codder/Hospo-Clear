@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="56dp"
+    android:background="@drawable/layout_bg"
+    tools:context=".UserRegister.Fragment.SeePrescriptionFragment">
+
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="10dp"
+       android:text="Prescription Photo"
+       android:textStyle="bold"
+       android:textSize="17sp"
+       android:textColor="@color/purple_500"
+       android:fontFamily="sans-serif-condensed-medium"
+       android:layout_centerHorizontal="true"
+       tools:ignore="HardcodedText" />
+
+   <ProgressBar
+       android:id="@+id/loader"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:layout_centerVertical="true"
+       android:visibility="visible"/>
+
+   <com.github.chrisbanes.photoview.PhotoView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/photoView"/>
+
+
+</RelativeLayout>

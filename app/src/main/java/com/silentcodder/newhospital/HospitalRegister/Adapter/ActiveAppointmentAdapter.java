@@ -2,21 +2,26 @@ package com.silentcodder.newhospital.HospitalRegister.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.silentcodder.newhospital.DoctorRegister.Fragment.AddPrescriptionFragment;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Model.AppointmentData;
 import com.squareup.picasso.Picasso;
@@ -62,7 +67,13 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         String ProfileUrl = task.getResult().getString("ProfileImgUrl");
-                        Picasso.get().load(ProfileUrl).into(holder.mUserImg);
+                        holder.progressBar.setVisibility(View.VISIBLE);
+                        if(ProfileUrl != null){
+                            holder.mUser.setVisibility(View.INVISIBLE);
+                            Picasso.get().load(ProfileUrl).into(holder.mUserImg);
+                        }else {
+                            holder.progressBar.setVisibility(View.INVISIBLE);
+                        }
                     }
                 });
         holder.mUserName.setText(PatientName);
@@ -72,14 +83,37 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
         //for add prescription
         if (Status.equals("2")){
             holder.mBtnAddPrescription.setVisibility(View.VISIBLE);
-            holder.mBtnCompleteAppointment.setVisibility(View.INVISIBLE);
             holder.mBtnAddPrescription.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Bundle bundle = new Bundle();
+                    bundle.putString("AppointmentId",AppointmentId);
+                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                    Fragment fragment = new AddPrescriptionFragment();
+                    fragment.setArguments(bundle);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
                 }
             });
         }
+
+        holder.mBtnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String,Object> map = new HashMap<>();
+                map.put("Status","4");
+
+                firebaseFirestore.collection("Appointments").document(AppointmentId)
+                        .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(context, " Requesting for Complete Appointment", Toast.LENGTH_SHORT).show();
+                            holder.mBtnCompleteAppointment.setVisibility(View.GONE);
+                        }
+                    }
+                });
+            }
+        });
         
         //for complete appointment
         if (Status.equals("4")){
@@ -130,7 +164,8 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView mUserImg;
+        CircleImageView mUserImg,mUser;
+        ProgressBar progressBar;
         TextView mUserName,mAppointmentDate,mProblem;
         Button mBtnCompleteAppointment,mBtnAddPrescription;
         public ViewHolder(@NonNull View itemView) {
@@ -139,6 +174,8 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
             mUserName = itemView.findViewById(R.id.userName);
             mAppointmentDate = itemView.findViewById(R.id.appointmentDate);
             mProblem = itemView.findViewById(R.id.problem);
+            mUser = itemView.findViewById(R.id.userIm);
+            progressBar = itemView.findViewById(R.id.loader);
             mBtnCompleteAppointment = itemView.findViewById(R.id.btnCompleteAppointment);
             mBtnAddPrescription = itemView.findViewById(R.id.btnAddPrescription);
         }

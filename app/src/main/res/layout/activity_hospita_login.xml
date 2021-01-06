@@ -52,7 +52,8 @@
             android:layout_centerHorizontal="true"
             android:hint="Mobile Number"
             android:padding="10dp"
-            android:inputType="number"
+            android:maxLength="11"
+            android:inputType="phone"
             tools:ignore="HardcodedText"
             android:autofillHints="no" />
 
@@ -63,9 +64,18 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Continue"
+            android:visibility="visible"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
             tools:ignore="HardcodedText" />
+        <ProgressBar
+            android:id="@+id/loader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mobileNumber"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/text2"

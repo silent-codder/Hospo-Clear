@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,10 +46,13 @@ public class DoctorLoginActivity extends AppCompatActivity {
                 String Password = mPassword.getText().toString();
 
                 if (TextUtils.isEmpty(Email)){
-                    mEmail.setError("Email");
+                    mEmail.setError("fill up email");
                 }else if (TextUtils.isEmpty(Password) && Password.length()<6){
-                    mPassword.setError(" Create password is greater than 6 digit");
+                    mPassword.setError("Wrong password");
                 }else {
+                    ProgressBar progressBar = findViewById(R.id.loader);
+                    progressBar.setVisibility(View.VISIBLE);
+                    mBtnNext.setVisibility(View.INVISIBLE);
                     LoginUser(Email,Password);
                 }
             }
@@ -68,7 +72,12 @@ public class DoctorLoginActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(DoctorLoginActivity.this, "Error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                ProgressBar progressBar = findViewById(R.id.loader);
+                progressBar.setVisibility(View.INVISIBLE);
+                mBtnNext.setVisibility(View.VISIBLE);
+                mEmail.setError("Please enter correct information");
+                mEmail.setText("");
+                mPassword.setText("");
             }
         });
     }
