@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.silentcodder.newhospital.R;
+import com.silentcodder.newhospital.UserRegister.Fragment.AppointmentDetailsFragment;
 import com.silentcodder.newhospital.UserRegister.Fragment.SeePrescriptionFragment;
 import com.silentcodder.newhospital.UserRegister.Fragment.TopHospitalDoctorFragment;
 import com.silentcodder.newhospital.UserRegister.Model.AppointmentData;
@@ -68,7 +69,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         String UserId = appointmentData.get(position).getUserId();
         String HospitalId = appointmentData.get(position).getHospitalId();
         String DoctorId = appointmentData.get(position).getDoctorId();
-        String PrescriptionImgUrl = appointmentData.get(position).getPrescriptionImgUrl();
+        String AppointmentId = appointmentData.get(position).AppointmentId;
 
         firebaseFirestore.collection("Users").document(UserId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -102,79 +103,19 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
-                dialog.setContentView(R.layout.appointment_more_info);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-
-                CircleImageView userImg = dialog.findViewById(R.id.userImg);
-                TextView patientName = dialog.findViewById(R.id.patientName);
-                TextView appointmentDate = dialog.findViewById(R.id.appointmentDate);
-                TextView hospitalName = dialog.findViewById(R.id.hospitalName);
-                TextView doctorName = dialog.findViewById(R.id.doctorName);
-                TextView status = dialog.findViewById(R.id.status);
-                CircleImageView requestImg = dialog.findViewById(R.id.requestImg);
-                CircleImageView pendingImg = dialog.findViewById(R.id.pendingImg);
-                CircleImageView completeImg = dialog.findViewById(R.id.completeImg);
-
-                if (PrescriptionImgUrl != null){
-                    Button BtnSeePrescription = dialog.findViewById(R.id.btnSeePrescription);
-                    BtnSeePrescription.setVisibility(View.VISIBLE);
-                    BtnSeePrescription.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                            AppCompatActivity activity = (AppCompatActivity) context;
-                            activity.getApplication().getApplicationContext();
-                            Fragment fragment = new SeePrescriptionFragment();
-                            Bundle bundle = new Bundle();
-                            bundle.putString("ImageUrl" , PrescriptionImgUrl);
-                            fragment.setArguments(bundle);
-                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
-                        }
-                    });
-                }
-
-                if (Status.equals("1")){
-                    completeImg.setVisibility(View.VISIBLE);
-                    status.setText("Appointment was complete");
-                    requestImg.setVisibility(View.INVISIBLE);
-                    pendingImg.setVisibility(View.INVISIBLE);
-                }else if(Status.equals("2")){
-                    completeImg.setVisibility(View.INVISIBLE);
-                    requestImg.setVisibility(View.INVISIBLE);
-                    pendingImg.setVisibility(View.VISIBLE);
-                    status.setText("Appointment is pending");
-                }else if(Status.equals("3")){
-                    completeImg.setVisibility(View.INVISIBLE);
-                    requestImg.setVisibility(View.VISIBLE);
-                    pendingImg.setVisibility(View.INVISIBLE);
-                    status.setText("Requesting Appointment");
-                }
-
-                firebaseFirestore.collection("Doctors").document(DoctorId).get()
-                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if (task.isSuccessful()){
-                                    DoctorName = task.getResult().getString("DoctorName");
-                                    doctorName.setText(DoctorName);
-                                }
-                            }
-                        });
-                firebaseFirestore.collection("Hospitals").document(HospitalId).get()
-                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if (task.isSuccessful()){
-                                    HospitalName = task.getResult().getString("HospitalName");
-                                    hospitalName.setText(HospitalName);
-                                }
-                            }
-                        });
-
-                patientName.setText(PatientName);
-                appointmentDate.setText(Date);
-                Picasso.get().load(ProfileUrl).into(userImg);
+                Bundle bundle = new Bundle();
+                bundle.putString("UserName",PatientName);
+                bundle.putString("AppointmentDate",Date);
+                bundle.putString("DoctorId",DoctorId);
+                bundle.putString("HospitalId",HospitalId);
+                bundle.putString("Status",Status);
+                bundle.putString("ProfileUrl",ProfileUrl);
+                bundle.putString("AppointmentId",AppointmentId);
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                Fragment fragment = new AppointmentDetailsFragment();
+                fragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null)
+                        .commit();
             }
         });
     }

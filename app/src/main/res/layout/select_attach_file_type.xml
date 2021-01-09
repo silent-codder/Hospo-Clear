@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/edit_txt_problem_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Attach type"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textColor="@color/Primary_color"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textSize="17sp"
+            tools:ignore="HardcodedText" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/Primary_color"/>
+
+      <RadioGroup
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+          <RadioButton
+              android:id="@+id/report"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Add report file"
+              android:textStyle="bold"
+              android:textColor="@color/Primary_color"
+              tools:ignore="HardcodedText" />
+          <RadioButton
+              android:id="@+id/xRay"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Add x-Ray file"
+              android:textStyle="bold"
+              android:textColor="@color/Primary_color"
+              tools:ignore="HardcodedText" />
+          <RadioButton
+              android:id="@+id/labReport"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Add lab report"
+              android:textStyle="bold"
+              android:textColor="@color/Primary_color"
+              tools:ignore="HardcodedText" />
+          <RadioButton
+              android:id="@+id/prescription"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Add prescription"
+              android:textStyle="bold"
+              android:textColor="@color/Primary_color"
+              tools:ignore="HardcodedText" />
+          <RadioButton
+              android:id="@+id/other"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Add other file"
+              android:textStyle="bold"
+              android:textColor="@color/Primary_color"
+              tools:ignore="HardcodedText" />
+
+      </RadioGroup>
+    </LinearLayout>
+
+</RelativeLayout>

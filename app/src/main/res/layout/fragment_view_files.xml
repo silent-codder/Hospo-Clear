@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="56dp"
+    tools:context=".UserRegister.Fragment.ViewFilesFragment">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reports"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="@color/purple_500"
+        tools:ignore="HardcodedText" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/layout_bg"
+        android:padding="20dp"
+        android:layout_below="@+id/text">
+
+       <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/refresh">
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/recycleView"/>
+
+       </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+        <ImageView
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:src="@drawable/ic_search"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/notFoundText"
+            android:visibility="invisible"
+            android:layout_below="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No document found"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
