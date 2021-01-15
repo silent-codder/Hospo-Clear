@@ -24,7 +24,7 @@
         <ProgressBar
             android:visibility="visible"
             android:layout_width="40dp"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
             android:layout_height="40dp"
             android:src="@drawable/hospital"
@@ -82,7 +82,20 @@
             android:layout_toEndOf="@id/doctorImg"
             android:layout_below="@id/doctorSpeciality"
             tools:ignore="HardcodedText" />
-
+        <TextView
+            android:id="@+id/btnBookAppointment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Book Appointment"
+            android:gravity="center"
+            android:textColor="@color/Primary_color"
+            android:background="@drawable/edit_txt_problem_bg"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:layout_below="@id/doctorImg"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            tools:ignore="HardcodedText" />
     </RelativeLayout>
 
     <RelativeLayout

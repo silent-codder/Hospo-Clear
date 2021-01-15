@@ -135,7 +135,7 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
             }
         });
 
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        holder.mBtnBookAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
@@ -146,6 +146,7 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
         });
+
     }
 
     @Override
@@ -154,7 +155,7 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView mDoctorName,mDoctorSpeciality,mDoctorExperience,mDoctorQualification;
+        TextView mDoctorName,mDoctorSpeciality,mDoctorExperience,mDoctorQualification,mBtnBookAppointment;
         RelativeLayout relativeLayout;
         ImageView mBookMark,mBookMarkWhite;
         ProgressBar progressBar;
@@ -171,6 +172,7 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
             progressBar = itemView.findViewById(R.id.ImgLoader);
             mDoctorImg = itemView.findViewById(R.id.doctorImg);
             mDoctor = itemView.findViewById(R.id.doctor);
+            mBtnBookAppointment = itemView.findViewById(R.id.btnBookAppointment);
         }
     }
 }

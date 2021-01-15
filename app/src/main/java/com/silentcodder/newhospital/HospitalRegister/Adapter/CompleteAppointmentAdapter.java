@@ -1,6 +1,7 @@
 package com.silentcodder.newhospital.HospitalRegister.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -16,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.silentcodder.newhospital.R;
+import com.silentcodder.newhospital.UserRegister.Fragment.AppointmentDetailsFragment;
 import com.silentcodder.newhospital.UserRegister.Model.AppointmentData;
 import com.squareup.picasso.Picasso;
 
@@ -28,6 +32,7 @@ public class CompleteAppointmentAdapter extends RecyclerView.Adapter<CompleteApp
     List<AppointmentData> appointmentData;
     FirebaseFirestore firebaseFirestore;
     Context context;
+    String ProfileUrl;
     public CompleteAppointmentAdapter(List<AppointmentData> appointmentData) {
         this.appointmentData = appointmentData;
     }
@@ -47,12 +52,15 @@ public class CompleteAppointmentAdapter extends RecyclerView.Adapter<CompleteApp
         String AppointmentDate = appointmentData.get(position).getAppointmentDate();
         String Problem = appointmentData.get(position).getProblem();
         String AppointmentId = appointmentData.get(position).AppointmentId;
+        String DoctorId = appointmentData.get(position).getDoctorId();
+        String HospitalId = appointmentData.get(position).getHospitalId();
+        String Status = appointmentData.get(position).getStatus();
 
         firebaseFirestore.collection("Users").document(UserId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        String ProfileUrl = task.getResult().getString("ProfileImgUrl");
+                        ProfileUrl = task.getResult().getString("ProfileImgUrl");
                         holder.progressBar.setVisibility(View.VISIBLE);
                         if(ProfileUrl != null){
                             holder.mUser.setVisibility(View.INVISIBLE);
@@ -65,6 +73,25 @@ public class CompleteAppointmentAdapter extends RecyclerView.Adapter<CompleteApp
         holder.mUserName.setText(PatientName);
         holder.mAppointmentDate.setText(AppointmentDate);
         holder.mProblem.setText(Problem);
+
+        holder.mBtnViewDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("UserName",PatientName);
+                bundle.putString("AppointmentDate",AppointmentDate);
+                bundle.putString("DoctorId",DoctorId);
+                bundle.putString("HospitalId",HospitalId);
+                bundle.putString("Status",Status);
+                bundle.putString("ProfileUrl",ProfileUrl);
+                bundle.putString("AppointmentId",AppointmentId);
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                Fragment fragment = new AppointmentDetailsFragment();
+                fragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 
     @Override
@@ -75,7 +102,7 @@ public class CompleteAppointmentAdapter extends RecyclerView.Adapter<CompleteApp
     public class ViewHolder extends RecyclerView.ViewHolder {
         CircleImageView mUserImg,mUser;
         ProgressBar progressBar;
-        TextView mUserName,mAppointmentDate,mProblem;
+        TextView mUserName,mAppointmentDate,mProblem,mBtnViewDetails;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mUserImg = itemView.findViewById(R.id.userImg);
@@ -84,6 +111,7 @@ public class CompleteAppointmentAdapter extends RecyclerView.Adapter<CompleteApp
             mProblem = itemView.findViewById(R.id.problem);
             progressBar = itemView.findViewById(R.id.loader);
             mUser = itemView.findViewById(R.id.userIm);
+            mBtnViewDetails = itemView.findViewById(R.id.btnViewDetails);
         }
     }
 

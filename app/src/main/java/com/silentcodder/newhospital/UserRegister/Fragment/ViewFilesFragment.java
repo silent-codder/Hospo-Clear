@@ -34,21 +34,43 @@ public class ViewFilesFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private FirebaseFirestore firebaseFirestore;
+    private TextView textView;
+    private ImageView imageView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_files, container, false);
         swipeRefreshLayout = view.findViewById(R.id.refresh);
         recyclerView = view.findViewById(R.id.recycleView);
+        imageView = view.findViewById(R.id.search);
+        textView = view.findViewById(R.id.notFoundText);
         firebaseFirestore = FirebaseFirestore.getInstance();
         Bundle bundle = this.getArguments();
         if (bundle != null){
             type = bundle.getString("Type");
             appointmentId = bundle.getString("AppointmentId");
-            TextView textView = view.findViewById(R.id.text);
-            textView.setText(type);
+            TextView textView1 = view.findViewById(R.id.text);
+            textView1.setText(type);
         }
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+            }
+        });
+
+        loadData();
+
+        return view;
+    }
+
+    private void refreshData() {
+        loadData();
+    }
+
+    private void loadData() {
+        swipeRefreshLayout.setRefreshing(false);
         appointmentData = new ArrayList<>();
         viewFilesAdapter = new ViewFilesAdapter(appointmentData);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
@@ -60,8 +82,6 @@ public class ViewFilesFragment extends Fragment {
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
                         if (value.isEmpty()){
-                            ImageView imageView = view.findViewById(R.id.search);
-                            TextView textView = view.findViewById(R.id.notFoundText);
                             imageView.setVisibility(View.VISIBLE);
                             textView.setVisibility(View.VISIBLE);
                         }
@@ -75,7 +95,5 @@ public class ViewFilesFragment extends Fragment {
                         }
                     }
                 });
-
-        return view;
     }
 }

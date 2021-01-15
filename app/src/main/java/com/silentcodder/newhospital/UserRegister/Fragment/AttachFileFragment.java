@@ -1,12 +1,14 @@
 package com.silentcodder.newhospital.UserRegister.Fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,6 +41,7 @@ import com.silentcodder.newhospital.UserRegister.Adapter.UploadImgAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -86,6 +89,7 @@ public class AttachFileFragment extends Fragment {
        recyclerView.setHasFixedSize(false);
        recyclerView.setAdapter(uploadImgAdapter);
         ExtendedFloatingActionButton floatingActionButton = view.findViewById(R.id.floatingBtn);
+        floatingActionButton.setBackgroundColor(Color.parseColor("#150441"));
        floatingActionButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -107,6 +111,9 @@ public class AttachFileFragment extends Fragment {
         if (requestCode == PICK_IMG && resultCode == RESULT_OK){
             if (data.getClipData()!=null){
                 int imgCount = data.getClipData().getItemCount();
+                if (imgCount > 0){
+                    btnUpload.setVisibility(View.VISIBLE);
+                }
                 for (int i = 0 ; i < imgCount ; i++){
                     Uri ImgUri = data.getClipData().getItemAt(i).getUri();
                     String ImgUrl = String.valueOf(ImgUri);
@@ -142,10 +149,12 @@ public class AttachFileFragment extends Fragment {
                                             progressBar.setVisibility(View.INVISIBLE);
                                             btnUpload.setVisibility(View.VISIBLE);
                                             textView.setVisibility(View.INVISIBLE);
-                                            Toast.makeText(getContext(), "Upload successfully !!", Toast.LENGTH_SHORT).show();
-                                            Fragment fragment = new UserAppointmentsFragment();
-                                            getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null)
-                                                    .commit();
+                                            try {
+                                                Objects.requireNonNull(getActivity()).getSupportFragmentManager().popBackStack();
+                                                Snackbar.make(getView(),"Upload Successfully !!",Snackbar.LENGTH_LONG).show();
+                                            }catch (Exception ignored){
+
+                                            }
                                         }
                                     }
                                 });

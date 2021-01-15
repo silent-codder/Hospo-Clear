@@ -1,6 +1,5 @@
 package com.silentcodder.newhospital.HospitalRegister.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,12 +19,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.silentcodder.newhospital.DoctorRegister.Fragment.AddPrescriptionFragment;
+import com.silentcodder.newhospital.HospitalRegister.Fragment.BillFragment;
 import com.silentcodder.newhospital.R;
+import com.silentcodder.newhospital.UserRegister.Fragment.AppointmentDetailsFragment;
 import com.silentcodder.newhospital.UserRegister.Model.AppointmentData;
 import com.squareup.picasso.Picasso;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +36,7 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
     List<AppointmentData> appointmentData;
     FirebaseFirestore firebaseFirestore;
     Context context;
+    String ProfileUrl;
 
     public ActiveAppointmentAdapter(List<AppointmentData> appointmentData) {
         this.appointmentData = appointmentData;
@@ -60,13 +58,15 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
         String AppointmentDate = appointmentData.get(position).getAppointmentDate();
         String Problem = appointmentData.get(position).getProblem();
         String AppointmentId = appointmentData.get(position).AppointmentId;
+        String DoctorId = appointmentData.get(position).getDoctorId();
+        String HospitalId = appointmentData.get(position).getHospitalId();
         String Status = appointmentData.get(position).getStatus();
 
         firebaseFirestore.collection("Users").document(UserId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        String ProfileUrl = task.getResult().getString("ProfileImgUrl");
+                        ProfileUrl = task.getResult().getString("ProfileImgUrl");
                         holder.progressBar.setVisibility(View.VISIBLE);
                         if(ProfileUrl != null){
                             holder.mUser.setVisibility(View.INVISIBLE);
@@ -79,22 +79,6 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
         holder.mUserName.setText(PatientName);
         holder.mAppointmentDate.setText(AppointmentDate);
         holder.mProblem.setText(Problem);
-
-        //for add prescription
-        if (Status.equals("2")){
-            holder.mBtnAddPrescription.setVisibility(View.VISIBLE);
-            holder.mBtnAddPrescription.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("AppointmentId",AppointmentId);
-                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                    Fragment fragment = new AddPrescriptionFragment();
-                    fragment.setArguments(bundle);
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
-                }
-            });
-        }
 
         holder.mBtnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,25 +98,49 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
                 });
             }
         });
-        
+
+        holder.mBtnViewDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("UserName",PatientName);
+                bundle.putString("AppointmentDate",AppointmentDate);
+                bundle.putString("DoctorId",DoctorId);
+                bundle.putString("HospitalId",HospitalId);
+                bundle.putString("Status",Status);
+                bundle.putString("ProfileUrl",ProfileUrl);
+                bundle.putString("AppointmentId",AppointmentId);
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                Fragment fragment = new AppointmentDetailsFragment();
+                fragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null)
+                        .commit();
+            }
+        });
+
         //for complete appointment
         if (Status.equals("4")){
             holder.mBtnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    HashMap<String,Object> map = new HashMap<>();
-                    map.put("Status","1");
+//                    HashMap<String,Object> map = new HashMap<>();
+//                    map.put("Status","1");
+//
+//                    firebaseFirestore.collection("Appointments").document(AppointmentId)
+//                            .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if (task.isSuccessful()){
+//                                Toast.makeText(context, "Complete Appointment", Toast.LENGTH_SHORT).show();
+//                                holder.mBtnCompleteAppointment.setVisibility(View.GONE);
+//                            }
+//                        }
+//                    });
+                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                    Fragment fragment = new BillFragment();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment)
+                            .addToBackStack(null).commit();
 
-                    firebaseFirestore.collection("Appointments").document(AppointmentId)
-                            .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
-                                Toast.makeText(context, "Complete Appointment", Toast.LENGTH_SHORT).show();
-                                holder.mBtnCompleteAppointment.setVisibility(View.GONE);
-                            }
-                        }
-                    });
                 }
             });
         }else {
@@ -166,7 +174,7 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
     public class ViewHolder extends RecyclerView.ViewHolder {
         CircleImageView mUserImg,mUser;
         ProgressBar progressBar;
-        TextView mUserName,mAppointmentDate,mProblem;
+        TextView mUserName,mAppointmentDate,mProblem,mBtnViewDetails;
         Button mBtnCompleteAppointment,mBtnAddPrescription;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -178,6 +186,7 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
             progressBar = itemView.findViewById(R.id.loader);
             mBtnCompleteAppointment = itemView.findViewById(R.id.btnCompleteAppointment);
             mBtnAddPrescription = itemView.findViewById(R.id.btnAddPrescription);
+            mBtnViewDetails = itemView.findViewById(R.id.btnViewDetails);
         }
     }
 
