@@ -190,12 +190,25 @@
         android:textStyle="bold"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
+    <Button
+        android:id="@+id/btnAddBill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Bill"
+        android:drawableRight="@drawable/ic_attach_file"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textAllCaps="false"
+        android:layout_below="@id/btnAttachFile"
+        android:layout_marginTop="0dp"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:layout_below="@id/btnAttachFile"
+        android:layout_below="@id/btnAddBill"
         android:orientation="horizontal">
 
           <TableRow
@@ -273,19 +286,34 @@
                android:id="@+id/col_3"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:gravity="center_horizontal">
+               android:gravity="">
 
                <TextView
                    android:id="@+id/btnOther"
                    android:layout_width="150dp"
                    android:layout_height="wrap_content"
                    android:text="Other Files"
-                   android:gravity="center"
+                   android:layout_weight="1"
                    android:background="@drawable/edit_txt_problem_bg"
                    android:padding="10dp"
                    android:textStyle="bold"
                    android:drawableRight="@drawable/ic_arrow_forward"
                    android:layout_marginRight="5dp"
+                   android:textColor="@color/Primary_color"
+                   android:layout_marginTop="20dp"
+                   tools:ignore="HardcodedText,RtlHardcoded,UseCompatTextViewDrawableXml" />
+
+               <TextView
+                   android:id="@+id/btnBill"
+                   android:layout_width="150dp"
+                   android:layout_height="wrap_content"
+                   android:text="View Bill"
+                   android:layout_weight="1"
+                   android:background="@drawable/edit_txt_problem_bg"
+                   android:padding="10dp"
+                   android:textStyle="bold"
+                   android:drawableRight="@drawable/ic_arrow_forward"
+                   android:layout_marginLeft="5dp"
                    android:textColor="@color/Primary_color"
                    android:layout_marginTop="20dp"
                    tools:ignore="HardcodedText,RtlHardcoded,UseCompatTextViewDrawableXml" />

@@ -75,7 +75,7 @@
             android:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Bill &amp; Complete"
+            android:text="Complete"
             android:textStyle="bold"
             android:fontFamily="sans-serif-condensed-medium"
             android:layout_below="@id/userImg"

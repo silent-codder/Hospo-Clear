@@ -1,7 +1,9 @@
 package com.silentcodder.newhospital.HospitalRegister.Fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -11,16 +13,31 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.silentcodder.newhospital.R;
+
+import java.util.HashMap;
+import java.util.Objects;
 
 public class BillFragment extends Fragment {
 
     Button btnAddBill;
+    TextView totalBill;
+    ProgressBar progressBar;
+
+    String AppointmentId;
 
     RelativeLayout field_2,field_3,field_4,field_5;
+
+    FirebaseFirestore firebaseFirestore;
 
     ImageView addField_1,addField_2,addField_3,addField_4;
     ImageView minusField_1,minusField_2,minusField_3,minusField_4;
@@ -34,10 +51,16 @@ public class BillFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bill, container, false);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        Bundle bundle = this.getArguments();
+        if (bundle!=null){
+            AppointmentId = bundle.getString("AppointmentId");
+        }
 
         //FindViewById Function
         findIds(view);
-        AddBill();
+        AddBill(AppointmentId);
         //Add field
         addField_1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +77,7 @@ public class BillFragment extends Fragment {
                     addField_1.setVisibility(View.INVISIBLE);
                     minusField_1.setVisibility(View.VISIBLE);
 
-                    AddBill();
+                    AddBill(AppointmentId);
 
                     //close field 2 btn
                     minusField_1.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +121,7 @@ public class BillFragment extends Fragment {
                     addField_2.setVisibility(View.INVISIBLE);
                     minusField_2.setVisibility(View.VISIBLE);
 
-                    AddBill();
+                    AddBill(AppointmentId);
 
                     //close field 2 btn
                     minusField_2.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +160,7 @@ public class BillFragment extends Fragment {
                     addField_3.setVisibility(View.INVISIBLE);
                     minusField_3.setVisibility(View.VISIBLE);
 
-                    AddBill();
+                    AddBill(AppointmentId);
 
                     //close field 3 btn
                     minusField_3.setOnClickListener(new View.OnClickListener() {
@@ -173,7 +196,7 @@ public class BillFragment extends Fragment {
                     addField_4.setVisibility(View.INVISIBLE);
                     minusField_4.setVisibility(View.VISIBLE);
 
-                    AddBill();
+                    AddBill(AppointmentId);
 
                     //close field 4 btn
                     minusField_4.setOnClickListener(new View.OnClickListener() {
@@ -192,10 +215,14 @@ public class BillFragment extends Fragment {
         return view;
     }
 
-    private void AddBill() {
+    private void AddBill(String appointmentId) {
+
         btnAddBill.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                btnAddBill.setVisibility(View.INVISIBLE);
                 txt_BillDescription_1 = billDescription_1.getText().toString();
                 txt_BillAmount_1 = billAmount_1.getText().toString();
 
@@ -210,11 +237,61 @@ public class BillFragment extends Fragment {
 
                 txt_BillDescription_5 = billDescription_5.getText().toString();
                 txt_BillAmount_5 = billAmount_5.getText().toString();
-                Toast.makeText(getContext(), "1." + txt_BillDescription_1 + " " + txt_BillAmount_1 +
-                        "\n2." + txt_BillDescription_2 + " " + txt_BillAmount_2 +
-                        "\n3." + txt_BillDescription_3 + " " + txt_BillAmount_3 +
-                        "\n4." + txt_BillDescription_4 + " " + txt_BillAmount_4 +
-                        "\n5." + txt_BillDescription_5 + " " + txt_BillAmount_5, Toast.LENGTH_SHORT).show();
+
+//                Toast.makeText(getContext(), "1." + txt_BillDescription_1 + " " + txt_BillAmount_1 +
+//                        "\n2." + txt_BillDescription_2 + " " + txt_BillAmount_2 +
+//                        "\n3." + txt_BillDescription_3 + " " + txt_BillAmount_3 +
+//                        "\n4." + txt_BillDescription_4 + " " + txt_BillAmount_4 +
+//                        "\n5." + txt_BillDescription_5 + " " + txt_BillAmount_5, Toast.LENGTH_SHORT).show();
+
+                int totalAmount=0,a=0,b=0,c=0,d=0,e=0;
+
+                if (!txt_BillAmount_1.equals("")){
+                    a = Integer.parseInt(txt_BillAmount_1);
+                }
+                if (!txt_BillAmount_2.equals("")){
+                    b = Integer.parseInt(txt_BillAmount_2);
+                }
+                if (!txt_BillAmount_3.equals("")){
+                    c = Integer.parseInt(txt_BillAmount_3);
+                }
+                if (!txt_BillAmount_4.equals("")){
+                    d = Integer.parseInt(txt_BillAmount_4);
+                }
+                if (!txt_BillAmount_5.equals("")){
+                    e = Integer.parseInt(txt_BillAmount_5);
+                }
+
+                totalAmount = a + b + c + d + e;
+                totalBill.setText("Total Amount : ₹ " + totalAmount);
+
+                HashMap<String,Object> map = new HashMap<>();
+                map.put("BillDescription_1",txt_BillDescription_1);
+                map.put("BillDescription_2",txt_BillDescription_2);
+                map.put("BillDescription_3",txt_BillDescription_3);
+                map.put("BillDescription_4",txt_BillDescription_4);
+                map.put("BillDescription_5",txt_BillDescription_5);
+                map.put("BillAmount_1","₹ "+txt_BillAmount_1);
+                map.put("BillAmount_2","₹ "+txt_BillAmount_2);
+                map.put("BillAmount_3","₹ "+txt_BillAmount_3);
+                map.put("BillAmount_4","₹ "+txt_BillAmount_4);
+                map.put("BillAmount_5","₹ "+txt_BillAmount_5);
+                map.put("TotalBill","₹ "+totalAmount);
+
+                firebaseFirestore.collection("Appointments").document(AppointmentId).collection("Bill")
+                        .document(AppointmentId).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        btnAddBill.setVisibility(View.VISIBLE);
+                        try {
+                            Objects.requireNonNull(getActivity()).getSupportFragmentManager().popBackStack();
+                            Snackbar.make(getView(),"Upload Successfully !!",Snackbar.LENGTH_LONG).show();
+                        }catch (Exception ignored){
+
+                        }
+                    }
+                });
             }
         });
     }
@@ -222,6 +299,8 @@ public class BillFragment extends Fragment {
     private void findIds(View view) {
 
         btnAddBill = view.findViewById(R.id.btnAddBill);
+        totalBill = view.findViewById(R.id.totalBill);
+        progressBar = view.findViewById(R.id.loader);
 
         field_2 = view.findViewById(R.id.field_2);
         field_3 = view.findViewById(R.id.field_3);

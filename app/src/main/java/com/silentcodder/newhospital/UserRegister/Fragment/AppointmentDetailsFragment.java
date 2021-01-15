@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.silentcodder.newhospital.HospitalRegister.Fragment.BillFragment;
+import com.silentcodder.newhospital.HospitalRegister.Fragment.BillViewFragment;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Model.AppointmentId;
 import com.squareup.picasso.Picasso;
@@ -243,6 +245,31 @@ public class AppointmentDetailsFragment extends Fragment {
                 Fragment fragment = new ViewFilesFragment();
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("Type","Other");
+                bundle1.putString("AppointmentId", AppointmentId);
+                fragment.setArguments(bundle1);
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+            }
+        });
+
+        TextView btnBill = view.findViewById(R.id.btnBill);
+        btnBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new BillViewFragment();
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("Type","Bill");
+                bundle1.putString("AppointmentId", AppointmentId);
+                fragment.setArguments(bundle1);
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+            }
+        });
+
+        Button btnCreateBill = view.findViewById(R.id.btnAddBill);
+        btnCreateBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new BillFragment();
+                Bundle bundle1 = new Bundle();
                 bundle1.putString("AppointmentId", AppointmentId);
                 fragment.setArguments(bundle1);
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();

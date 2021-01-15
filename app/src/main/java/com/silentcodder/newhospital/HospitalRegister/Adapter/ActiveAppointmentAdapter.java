@@ -123,23 +123,23 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
             holder.mBtnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    HashMap<String,Object> map = new HashMap<>();
-//                    map.put("Status","1");
-//
-//                    firebaseFirestore.collection("Appointments").document(AppointmentId)
-//                            .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if (task.isSuccessful()){
-//                                Toast.makeText(context, "Complete Appointment", Toast.LENGTH_SHORT).show();
-//                                holder.mBtnCompleteAppointment.setVisibility(View.GONE);
-//                            }
-//                        }
-//                    });
-                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                    Fragment fragment = new BillFragment();
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment)
-                            .addToBackStack(null).commit();
+                    HashMap<String,Object> map = new HashMap<>();
+                    map.put("Status","1");
+
+                    firebaseFirestore.collection("Appointments").document(AppointmentId)
+                            .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                Toast.makeText(context, "Complete Appointment", Toast.LENGTH_SHORT).show();
+                                holder.mBtnCompleteAppointment.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+//                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
+//                    Fragment fragment = new BillFragment();
+//                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment)
+//                            .addToBackStack(null).commit();
 
                 }
             });
