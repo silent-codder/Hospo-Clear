@@ -7,120 +7,126 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UserRegister.Fragment.BookAppointmentFragment">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:padding="10dp"
-        android:background="@drawable/layout_bg"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/doctorImg"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/doctor"
-            app:civ_border_width="0.8dp"/>
-        <TextView
-            android:id="@+id/doctorName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/doctorImg"
-            android:layout_marginStart="10dp"
-            android:textStyle="bold"
-            android:textColor="@color/Primary_color"
-            android:textSize="20sp"
-            android:fontFamily="sans-serif-condensed-medium"
-            tools:ignore="HardcodedText" />
-        <TextView
-            android:id="@+id/doctorSpeciality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/doctorImg"
-            android:layout_marginStart="10dp"
-            android:textStyle="bold"
-            android:layout_below="@id/doctorName"
-            android:textColor="@color/Primary_color"
-            android:fontFamily="sans-serif-condensed-medium"
-            tools:ignore="HardcodedText" />
-        <TextView
-            android:id="@+id/hospitalName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/doctorImg"
-            android:layout_marginStart="10dp"
-            android:textStyle="bold"
-            android:layout_below="@id/doctorSpeciality"
-            android:textColor="@color/Primary_color"
-            android:fontFamily="sans-serif-condensed-medium"
-            tools:ignore="HardcodedText" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/ratingStarLottie"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            app:lottie_rawRes="@raw/rating_star"
-            android:layout_toEndOf="@id/doctorImg"
-            android:layout_marginStart="10dp"
-            android:layout_below="@id/hospitalName"
-            app:lottie_autoPlay="true"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text="5.0"
-            android:gravity="center_vertical"
-            android:textStyle="bold"
-            android:textColor="@color/Primary_color"
-            android:layout_toEndOf="@id/ratingStarLottie"
-            tools:ignore="HardcodedText"
-            android:layout_below="@id/hospitalName"/>
-
-        <View
-            android:id="@+id/view"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0.8dp"
-            android:background="@color/Primary_color"
-            android:layout_below="@id/ratingStarLottie"
-            android:layout_marginTop="10dp"/>
+            android:padding="10dp"
+            android:background="@drawable/layout_bg"
+            android:layout_height="match_parent">
 
-       <RelativeLayout
-           android:id="@+id/dateLayout"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_below="@id/view">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/doctorImg"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/doctor"
+                app:civ_border_width="0.8dp"/>
+            <TextView
+                android:id="@+id/doctorName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/doctorImg"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/Primary_color"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-condensed-medium"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/doctorSpeciality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/doctorImg"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"
+                android:layout_below="@id/doctorName"
+                android:textColor="@color/Primary_color"
+                android:fontFamily="sans-serif-condensed-medium"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/hospitalName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/doctorImg"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"
+                android:layout_below="@id/doctorSpeciality"
+                android:textColor="@color/Primary_color"
+                android:fontFamily="sans-serif-condensed-medium"
+                tools:ignore="HardcodedText" />
 
-           <EditText
-               android:id="@+id/problem"
-               android:layout_marginTop="10dp"
-               android:layout_width="match_parent"
-               android:padding="10dp"
-               android:layout_height="60dp"
-               android:background="@drawable/edit_txt_problem_bg"
-               android:hint="Write problem shortly.."
-               android:fontFamily="sans-serif-condensed-medium"
-               tools:ignore="HardcodedText" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/ratingStarLottie"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                app:lottie_rawRes="@raw/rating_star"
+                android:layout_toEndOf="@id/doctorImg"
+                android:layout_marginStart="10dp"
+                android:layout_below="@id/hospitalName"
+                app:lottie_autoPlay="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="5.0"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textColor="@color/Primary_color"
+                android:layout_toEndOf="@id/ratingStarLottie"
+                tools:ignore="HardcodedText"
+                android:layout_below="@id/hospitalName"/>
 
-           <CalendarView
-               android:layout_below="@id/problem"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:id="@+id/appDate"/>
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:background="@color/Primary_color"
+                android:layout_below="@id/ratingStarLottie"
+                android:layout_marginTop="10dp"/>
 
-           <Button
-               android:id="@+id/btnNext"
-               android:layout_below="@id/appDate"
-               android:layout_centerHorizontal="true"
-               android:layout_width="200dp"
-               android:layout_height="60dp"
-               android:text="Next"
-               android:textColor="@color/white"
-               android:textStyle="bold"
-               android:textAllCaps="false"
-               android:fontFamily="sans-serif-condensed-medium"
-               android:textSize="17sp"
-               tools:ignore="HardcodedText" />
+            <RelativeLayout
+                android:id="@+id/dateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view">
 
-       </RelativeLayout>
+                <EditText
+                    android:id="@+id/problem"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:padding="10dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/edit_txt_problem_bg"
+                    android:hint="Write problem shortly.."
+                    android:fontFamily="sans-serif-condensed-medium"
+                    tools:ignore="HardcodedText" />
 
-    </RelativeLayout>
+                <CalendarView
+                    android:layout_below="@id/problem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/appDate"/>
+
+                <Button
+                    android:id="@+id/btnNext"
+                    android:layout_below="@id/appDate"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="200dp"
+                    android:layout_height="60dp"
+                    android:text="Next"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textSize="17sp"
+                    tools:ignore="HardcodedText" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

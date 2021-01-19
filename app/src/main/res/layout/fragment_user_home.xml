@@ -36,6 +36,7 @@
                 android:inputType="textAutoCorrect"
                 android:layout_margin="20dp"
                 android:hint="Search"
+                android:focusable="false"
                 android:padding="10dp"
                 android:drawableStart="@drawable/ic_search"
                 tools:ignore="HardcodedText"

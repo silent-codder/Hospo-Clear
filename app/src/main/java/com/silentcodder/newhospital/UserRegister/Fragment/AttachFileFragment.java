@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -51,10 +52,12 @@ public class AttachFileFragment extends Fragment {
     private static final int PICK_IMG = 1;
     private List<String> ImageList;
     private UploadImgAdapter uploadImgAdapter;
-    private Button btnUpload;
+    private Button btnUpload,btnUploadPrescription,btnTypeHere;
+    private EditText prescription;
+    private RecyclerView recyclerView;
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
-    private String location,appointmentId;
+    private String location,appointmentId,flag;
     private ProgressBar progressBar;
     private TextView textView;
     @Override
@@ -63,6 +66,9 @@ public class AttachFileFragment extends Fragment {
        View view = inflater.inflate(R.layout.fragment_attach_file, container, false);
        btnUpload = view.findViewById(R.id.btnUpload);
        progressBar = view.findViewById(R.id.loader);
+       prescription = view.findViewById(R.id.prescription);
+       btnTypeHere = view.findViewById(R.id.btnTypePrescription);
+       btnUploadPrescription = view.findViewById(R.id.btnUploadPrescription);
        textView = view.findViewById(R.id.text);
        firebaseFirestore = FirebaseFirestore.getInstance();
        storageReference = FirebaseStorage.getInstance().getReference();
@@ -71,7 +77,21 @@ public class AttachFileFragment extends Fragment {
        if (bundle!=null){
            location  = bundle.getString("Location");
            appointmentId = bundle.getString("AppointmentId");
+           flag = bundle.getString("Flag");
+           if (flag.equals("1")){
+               btnTypeHere.setVisibility(View.VISIBLE);
+           }
        }
+
+       btnTypeHere.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               recyclerView.setVisibility(View.INVISIBLE);
+               prescription.setVisibility(View.VISIBLE);
+               btnUploadPrescription.setVisibility(View.VISIBLE);
+               btnUpload.setVisibility(View.INVISIBLE);
+           }
+       });
 
        btnUpload.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -83,7 +103,7 @@ public class AttachFileFragment extends Fragment {
            }
        });
 
-       RecyclerView recyclerView = view.findViewById(R.id.recycleView);
+       recyclerView = view.findViewById(R.id.recycleView);
        uploadImgAdapter = new UploadImgAdapter(ImageList);
        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
        recyclerView.setHasFixedSize(false);
@@ -98,6 +118,36 @@ public class AttachFileFragment extends Fragment {
                intent.setAction(Intent.ACTION_GET_CONTENT);
                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
                startActivityForResult(intent,PICK_IMG);
+
+               prescription.setVisibility(View.INVISIBLE);
+               btnUploadPrescription.setVisibility(View.INVISIBLE);
+               recyclerView.setVisibility(View.VISIBLE);
+           }
+       });
+
+       btnUploadPrescription.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               String Prescription = prescription.getText().toString();
+               HashMap<String ,Object> map = new HashMap<>();
+               map.put("Prescription",Prescription);
+               firebaseFirestore.collection("Appointments").document(appointmentId)
+                       .collection(location).add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                   @Override
+                   public void onComplete(@NonNull Task<DocumentReference> task) {
+                       if (task.isSuccessful()){
+                           progressBar.setVisibility(View.INVISIBLE);
+                           btnUpload.setVisibility(View.VISIBLE);
+                           textView.setVisibility(View.INVISIBLE);
+                           try {
+                               Objects.requireNonNull(getActivity()).getSupportFragmentManager().popBackStack();
+                               Snackbar.make(getView(),"Upload Successfully !!",Snackbar.LENGTH_LONG).show();
+                           }catch (Exception ignored){
+
+                           }
+                       }
+                   }
+               });
            }
        });
        return view;
@@ -121,8 +171,14 @@ public class AttachFileFragment extends Fragment {
                     uploadImgAdapter.notifyDataSetChanged();
                 }
 
-            }else {
-                Snackbar.make(getView(),"Please select at least 2 images", Snackbar.LENGTH_LONG).show();
+            }else if(data.getData()!=null){
+                Uri ImgUri = data.getData();
+                ImageList.add(String.valueOf(ImgUri));
+                uploadImgAdapter.notifyDataSetChanged();
+                if (ImgUri!=null){
+                    btnUpload.setVisibility(View.VISIBLE);
+                }
+//                Snackbar.make(getView(),"Please select at least 2 images", Snackbar.LENGTH_LONG).show();
             }
         }
     }

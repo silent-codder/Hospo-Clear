@@ -2,6 +2,7 @@ package com.silentcodder.newhospital.UserRegister.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;

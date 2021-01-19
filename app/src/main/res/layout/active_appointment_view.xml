@@ -8,6 +8,7 @@
     app:cardCornerRadius="20dp">
 
     <RelativeLayout
+        android:id="@+id/viewDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/view_bg"
@@ -70,49 +71,63 @@
             android:layout_below="@id/appointmentDate"
             android:textStyle="normal"
             tools:ignore="HardcodedText,RtlHardcoded" />
-        <Button
-            android:id="@+id/btnCompleteAppointment"
-            android:visibility="visible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Complete"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:layout_below="@id/userImg"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentEnd="true"
-            android:textAllCaps="false"
-            tools:ignore="HardcodedText" />
 
         <TextView
-            android:id="@+id/btnViewDetails"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:background="@drawable/edit_txt_problem_bg"
-            android:text="View Details"
-            android:gravity="center"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:textColor="@color/Primary_color"
-            android:textStyle="bold"
-            android:layout_below="@id/userImg"
-            android:layout_marginTop="15dp"
-            android:padding="5dp"
-            tools:ignore="HardcodedText" />
-
-        <Button
-            android:id="@+id/btnAddPrescription"
-            android:visibility="invisible"
-            android:layout_alignParentLeft="true"
+            android:id="@+id/totalBill"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Prescription"
-            android:drawableRight="@drawable/ic_camera"
+            android:background="@drawable/edit_txt_problem_bg"
+            android:layout_below="@id/problem"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentRight="true"
             android:textStyle="bold"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:layout_below="@id/userImg"
-            android:layout_marginTop="10dp"
-            android:textAllCaps="false"
+            android:padding="10dp"
+            android:textColor="@color/Primary_color"
             tools:ignore="HardcodedText" />
+
+<!--        <Button-->
+<!--            android:id="@+id/btnCompleteAppointment"-->
+<!--            android:visibility="visible"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Complete"-->
+<!--            android:textStyle="bold"-->
+<!--            android:fontFamily="sans-serif-condensed-medium"-->
+<!--            android:layout_below="@id/userImg"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:textAllCaps="false"-->
+<!--            tools:ignore="HardcodedText" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/btnViewDetails"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:background="@drawable/edit_txt_problem_bg"-->
+<!--            android:text="View Details"-->
+<!--            android:gravity="center"-->
+<!--            android:fontFamily="sans-serif-condensed-medium"-->
+<!--            android:textColor="@color/Primary_color"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_below="@id/userImg"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:padding="5dp"-->
+<!--            tools:ignore="HardcodedText" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btnAddPrescription"-->
+<!--            android:visibility="invisible"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Add Prescription"-->
+<!--            android:drawableRight="@drawable/ic_camera"-->
+<!--            android:textStyle="bold"-->
+<!--            android:fontFamily="sans-serif-condensed-medium"-->
+<!--            android:layout_below="@id/userImg"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:textAllCaps="false"-->
+<!--            tools:ignore="HardcodedText" />-->
 
     </RelativeLayout>
 

@@ -15,9 +15,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.silentcodder.newhospital.HospitalRegister.Fragment.BillFragment;
@@ -26,12 +28,15 @@ import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Model.AppointmentId;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AppointmentDetailsFragment extends Fragment {
 
     private FirebaseFirestore firebaseFirestore;
-    private String AppointmentId;
+    private String AppointmentId,Status;
+    private Button btnCompleteAppointment;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -39,11 +44,14 @@ public class AppointmentDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_appointment_details, container, false);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        btnCompleteAppointment = view.findViewById(R.id.btnCompleteAppointment);
+
+
         Bundle bundle = this.getArguments();
         if (bundle!=null){
             String UserName = bundle.getString("UserName");
             String Date = bundle.getString("AppointmentDate");
-            String Status = bundle.getString("Status");
+            Status = bundle.getString("Status");
             String DoctorId = bundle.getString("DoctorId");
             String HospitalId = bundle.getString("HospitalId");
             String ProfileUrl = bundle.getString("ProfileUrl");
@@ -104,6 +112,61 @@ public class AppointmentDetailsFragment extends Fragment {
                         });
         }
 
+        firebaseFirestore.collection("Appointments").document(AppointmentId).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            String Status = task.getResult().getString("Status");
+                            if (Status.equals("1")){
+                                btnCompleteAppointment.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    }
+                });
+
+
+        //for complete Appointment
+        if (Status.equals("4")){
+            btnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HashMap<String,Object> map = new HashMap<>();
+                    map.put("Status","1");
+
+                    firebaseFirestore.collection("Appointments").document(AppointmentId)
+                            .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                Toast.makeText(getContext(), "Complete Appointment", Toast.LENGTH_SHORT).show();
+                                btnCompleteAppointment.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                }
+            });
+        }else {
+            btnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HashMap<String,Object> map = new HashMap<>();
+                    map.put("Status","4");
+
+                    firebaseFirestore.collection("Appointments").document(AppointmentId)
+                            .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                Toast.makeText(getContext(), "Request to Complete Appointment", Toast.LENGTH_SHORT).show();
+                                btnCompleteAppointment.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
         Button btnAttachFile = view.findViewById(R.id.btnAttachFile);
         btnAttachFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +184,7 @@ public class AppointmentDetailsFragment extends Fragment {
                         Bundle bundle1 = new Bundle();
                         bundle1.putString("Location","Report");
                         bundle1.putString("AppointmentId", AppointmentId);
+                        bundle1.putString("Flag","2");
                         fragment.setArguments(bundle1);
                         getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
                         dialog.dismiss();
@@ -135,6 +199,7 @@ public class AppointmentDetailsFragment extends Fragment {
                         Bundle bundle1 = new Bundle();
                         bundle1.putString("Location","XRay");
                         bundle1.putString("AppointmentId", AppointmentId);
+                        bundle1.putString("Flag","2");
                         fragment.setArguments(bundle1);
                         getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
                         dialog.dismiss();
@@ -149,6 +214,7 @@ public class AppointmentDetailsFragment extends Fragment {
                         Bundle bundle1 = new Bundle();
                         bundle1.putString("Location","LabReport");
                         bundle1.putString("AppointmentId", AppointmentId);
+                        bundle1.putString("Flag","2");
                         fragment.setArguments(bundle1);
                         getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
                         dialog.dismiss();
@@ -163,6 +229,7 @@ public class AppointmentDetailsFragment extends Fragment {
                         Bundle bundle1 = new Bundle();
                         bundle1.putString("Location","Prescription");
                         bundle1.putString("AppointmentId", AppointmentId);
+                        bundle1.putString("Flag","1");
                         fragment.setArguments(bundle1);
                         getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
                         dialog.dismiss();
@@ -177,6 +244,7 @@ public class AppointmentDetailsFragment extends Fragment {
                         Bundle bundle1 = new Bundle();
                         bundle1.putString("Location","Other");
                         bundle1.putString("AppointmentId", AppointmentId);
+                        bundle1.putString("Flag","2");
                         fragment.setArguments(bundle1);
                         getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
                         dialog.dismiss();
@@ -275,6 +343,7 @@ public class AppointmentDetailsFragment extends Fragment {
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
         });
+
         return view;
     }
 }
