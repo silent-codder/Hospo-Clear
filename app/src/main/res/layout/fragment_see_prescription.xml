@@ -19,6 +19,16 @@
        android:layout_height="match_parent"
        android:scaleType="fitCenter"
        android:id="@+id/photoView"/>
-
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:visibility="invisible"
+      android:background="@drawable/edit_txt_problem_bg"
+      android:padding="20dp"
+       android:textStyle="bold"
+       android:textColor="@color/Primary_color"
+       android:textSize="17sp"
+       android:fontFamily="sans-serif-condensed-medium"
+      android:id="@+id/text"/>
 
 </RelativeLayout>

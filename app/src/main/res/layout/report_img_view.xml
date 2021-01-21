@@ -7,8 +7,10 @@
     android:background="@drawable/edit_txt_bg">
 
     <ProgressBar
+        android:id="@+id/loader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="visible"
         android:layout_margin="25dp"/>
 
     <ImageView
@@ -16,7 +18,15 @@
         android:layout_width="100dp"
         android:layout_margin="1dp"
         android:layout_height="100dp"
-        android:src="@drawable/hospital"
+        android:visibility="visible"
+        android:scaleType="centerCrop"/>
+    <ImageView
+        android:id="@+id/btnText"
+        android:layout_width="100dp"
+        android:layout_margin="1dp"
+        android:visibility="invisible"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_text"
         android:scaleType="centerCrop"/>
 
 </RelativeLayout>

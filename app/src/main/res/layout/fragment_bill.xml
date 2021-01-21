@@ -50,6 +50,7 @@
                android:layout_marginStart="5dp"
                android:layout_height="wrap_content"
                android:text="General check up"
+               android:hint="Description"
                android:fontFamily="sans-serif-condensed-medium"
                android:background="@drawable/edit_txt_problem_bg"
                android:padding="10dp"

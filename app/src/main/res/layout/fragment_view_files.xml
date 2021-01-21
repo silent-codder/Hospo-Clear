@@ -44,17 +44,17 @@
             android:layout_height="wrap_content"
             android:visibility="invisible"
             android:src="@drawable/ic_search"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"/>
+
         <TextView
             android:id="@+id/notFoundText"
-            android:visibility="invisible"
-            android:layout_below="@+id/search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No document found"
+            android:layout_below="@id/search"
             android:layout_centerHorizontal="true"
+            android:text="No document found"
             android:textStyle="bold"
+            android:visibility="invisible"
             tools:ignore="HardcodedText" />
 
 

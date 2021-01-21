@@ -1,5 +1,7 @@
 package com.silentcodder.newhospital.UserRegister.Model;
 
+import android.widget.TextView;
+
 public class AppointmentData extends AppointmentId{
     String HospitalId;
     String DoctorId;
@@ -10,12 +12,13 @@ public class AppointmentData extends AppointmentId{
     String AppointmentDate;
     String Status;
     String ImgUrl;
+    String Prescription;
 
     public AppointmentData() {
     }
 
     public AppointmentData(String hospitalId, String doctorId, String userId, String patientName, String relationship,
-                           String problem, String appointmentDate ,String status,String imgUrl) {
+                           String problem, String appointmentDate ,String status,String imgUrl,String prescription) {
         HospitalId = hospitalId;
         DoctorId = doctorId;
         UserId = userId;
@@ -25,6 +28,15 @@ public class AppointmentData extends AppointmentId{
         Problem = problem;
         AppointmentDate = appointmentDate;
         ImgUrl = imgUrl;
+        Prescription = prescription;
+    }
+
+    public String getPrescription() {
+        return Prescription;
+    }
+
+    public void setPrescription(String prescription) {
+        Prescription = prescription;
     }
 
     public String getImgUrl() {

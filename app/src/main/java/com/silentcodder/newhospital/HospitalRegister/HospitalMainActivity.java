@@ -21,6 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.silentcodder.newhospital.HospitalRegister.Fragment.AllDoctorFragment;
 import com.silentcodder.newhospital.HospitalRegister.Fragment.HospitalHomeFragment;
 import com.silentcodder.newhospital.HospitalRegister.Fragment.HospitalProfileFragment;
 import com.silentcodder.newhospital.HospitalRegister.Fragment.PersonalProfileFragment;
@@ -99,7 +100,7 @@ public class HospitalMainActivity extends AppCompatActivity {
                         selectFragment = new HospitalHomeFragment();
                         break;
                     case R.id.hospital_Doctors :
-                        Toast.makeText(HospitalMainActivity.this, "Working on it", Toast.LENGTH_SHORT).show();
+                        selectFragment = new AllDoctorFragment();
                         break;
                     case R.id.hospital_profile :
                         selectFragment = new HospitalProfileFragment();

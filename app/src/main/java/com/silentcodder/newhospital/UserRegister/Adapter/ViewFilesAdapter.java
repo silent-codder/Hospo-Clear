@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +36,24 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String ImgUrl = appointmentData.get(position).getImgUrl();
+        String Text = appointmentData.get(position).getPrescription();
+        holder.progressBar.setVisibility(View.VISIBLE);
+        if (Text!=null){
+            holder.text.setVisibility(View.VISIBLE);
+            holder.progressBar.setVisibility(View.INVISIBLE);
+            holder.text.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                    Fragment fragment = new SeePrescriptionFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Text",Text);
+                    fragment.setArguments(bundle);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null)
+                            .commit();
+                }
+            });
+        }
         Picasso.get().load(ImgUrl).into(holder.imageView);
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
@@ -59,9 +78,13 @@ public class ViewFilesAdapter extends RecyclerView.Adapter<ViewFilesAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
+        ImageView text;
+        ProgressBar progressBar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.btnImage);
+            progressBar = itemView.findViewById(R.id.loader);
+            text = itemView.findViewById(R.id.btnText);
         }
     }
 }

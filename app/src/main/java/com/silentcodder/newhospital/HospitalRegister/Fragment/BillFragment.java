@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.silentcodder.newhospital.R;
 
@@ -61,6 +62,40 @@ public class BillFragment extends Fragment {
         //FindViewById Function
         findIds(view);
         AddBill(AppointmentId);
+
+        firebaseFirestore.collection("Appointments").document(AppointmentId).collection("Bill")
+                .document(AppointmentId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    String Bill_Descri_1 = task.getResult().getString("BillDescription_1");
+                    String Bill_Descri_2 = task.getResult().getString("BillDescription_2");
+                    String Bill_Descri_3 = task.getResult().getString("BillDescription_3");
+                    String Bill_Descri_4 = task.getResult().getString("BillDescription_4");
+                    String Bill_Descri_5 = task.getResult().getString("BillDescription_5");
+                    String BillAmount = task.getResult().getString("TotalBill");
+
+                    String Amount_1 = task.getResult().getString("BillAmount_1");
+                    String Amount_2 = task.getResult().getString("BillAmount_2");
+                    String Amount_3 = task.getResult().getString("BillAmount_3");
+                    String Amount_4 = task.getResult().getString("BillAmount_4");
+                    String Amount_5 = task.getResult().getString("BillAmount_5");
+
+                    billDescription_1.setText(Bill_Descri_1);
+                    billDescription_2.setText(Bill_Descri_2);
+                    billDescription_3.setText(Bill_Descri_3);
+                    billDescription_4.setText(Bill_Descri_4);
+                    billDescription_5.setText(Bill_Descri_5);
+                    billAmount_1.setText(Amount_1);
+                    billAmount_2.setText(Amount_2);
+                    billAmount_3.setText(Amount_3);
+                    billAmount_4.setText(Amount_4);
+                    billAmount_5.setText(Amount_5);
+                    totalBill.setText("Total Bill : " + BillAmount);
+                }
+            }
+        });
         //Add field
         addField_1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -271,11 +306,11 @@ public class BillFragment extends Fragment {
                 map.put("BillDescription_3",txt_BillDescription_3);
                 map.put("BillDescription_4",txt_BillDescription_4);
                 map.put("BillDescription_5",txt_BillDescription_5);
-                map.put("BillAmount_1","₹ "+txt_BillAmount_1);
-                map.put("BillAmount_2","₹ "+txt_BillAmount_2);
-                map.put("BillAmount_3","₹ "+txt_BillAmount_3);
-                map.put("BillAmount_4","₹ "+txt_BillAmount_4);
-                map.put("BillAmount_5","₹ "+txt_BillAmount_5);
+                map.put("BillAmount_1",txt_BillAmount_1);
+                map.put("BillAmount_2",txt_BillAmount_2);
+                map.put("BillAmount_3",txt_BillAmount_3);
+                map.put("BillAmount_4",txt_BillAmount_4);
+                map.put("BillAmount_5",txt_BillAmount_5);
                 map.put("TotalBill","₹ "+totalAmount);
 
                 firebaseFirestore.collection("Appointments").document(AppointmentId).collection("Bill")

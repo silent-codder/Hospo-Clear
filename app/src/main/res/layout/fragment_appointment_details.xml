@@ -338,7 +338,7 @@
               android:text="Complete Appointment"
               android:layout_below="@id/tableLayout"
               android:textColor="@color/white"
-              android:visibility="visible"
+              android:visibility="invisible"
               android:padding="10dp"
               android:textStyle="bold"
               android:textAllCaps="false"

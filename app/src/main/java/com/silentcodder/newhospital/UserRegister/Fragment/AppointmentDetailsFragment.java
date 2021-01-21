@@ -35,8 +35,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AppointmentDetailsFragment extends Fragment {
 
     private FirebaseFirestore firebaseFirestore;
-    private String AppointmentId,Status;
+    private String AppointmentId,Status,CurrentUserId;
     private Button btnCompleteAppointment;
+    private FirebaseAuth firebaseAuth;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -44,6 +45,8 @@ public class AppointmentDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_appointment_details, container, false);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        CurrentUserId = firebaseAuth.getCurrentUser().getUid();
         btnCompleteAppointment = view.findViewById(R.id.btnCompleteAppointment);
 
 
@@ -112,6 +115,19 @@ public class AppointmentDetailsFragment extends Fragment {
                         });
         }
 
+        firebaseFirestore.collection("AppUsers").document(CurrentUserId).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            String isUser = task.getResult().getString("isUser");
+                            if (isUser.equals("2")){
+                                btnCompleteAppointment.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    }
+                });
+
         firebaseFirestore.collection("Appointments").document(AppointmentId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -128,6 +144,7 @@ public class AppointmentDetailsFragment extends Fragment {
 
         //for complete Appointment
         if (Status.equals("4")){
+            btnCompleteAppointment.setVisibility(View.VISIBLE);
             btnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -147,6 +164,7 @@ public class AppointmentDetailsFragment extends Fragment {
                 }
             });
         }else {
+            btnCompleteAppointment.setVisibility(View.VISIBLE);
             btnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

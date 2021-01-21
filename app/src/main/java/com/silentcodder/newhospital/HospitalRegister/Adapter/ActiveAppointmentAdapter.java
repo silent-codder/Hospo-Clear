@@ -106,11 +106,13 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
             @SuppressLint("SetTextI18n")
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     String totalBill = task.getResult().getString("TotalBill");
-                    holder.mTotalBill.setText("Bill Amount :  "  + totalBill);
-                }else {
-                    holder.mTotalBill.setText("Bill Amount :  00");
+                    if(totalBill != null){
+                        holder.mTotalBill.setText("Bill Amount :  " + totalBill);
+                    }else {
+                        holder.mTotalBill.setText("Bill Amount :  -");
+                    }
                 }
             }
         });
