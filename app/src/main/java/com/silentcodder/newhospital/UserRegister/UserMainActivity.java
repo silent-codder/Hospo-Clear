@@ -10,22 +10,32 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.silentcodder.newhospital.MainActivity;
+import com.silentcodder.newhospital.NotificationService;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Fragment.UserAppointmentsFragment;
 import com.silentcodder.newhospital.UserRegister.Fragment.UserHomeFragment;
 import com.silentcodder.newhospital.UserRegister.Fragment.UserProfileFragment;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -44,14 +54,44 @@ public class UserMainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_main);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        String UserId = firebaseAuth.getCurrentUser().getUid();
+        //get token
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+
+                } else {
+                    String  token = task.getResult().getToken();
+                    HashMap<String,Object> map = new HashMap<>();
+                    map.put("token",token);
+                    firebaseFirestore.collection("Tokens").document(UserId)
+                            .set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+
+                    Log.i("FCM TOKEN", token);
+                }
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         nav = findViewById(R.id.navMenu);
         drawerLayout = findViewById(R.id.drawer);
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
         CircleImageView UserImg = findViewById(R.id.userImg);
 
         UserImg.setOnClickListener(new View.OnClickListener() {
@@ -61,8 +101,6 @@ public class UserMainActivity extends AppCompatActivity{
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
         });
-
-        String UserId = firebaseAuth.getCurrentUser().getUid();
 
 
         toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.Open,R.string.Close);

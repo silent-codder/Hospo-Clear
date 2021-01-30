@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,6 +24,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.silentcodder.newhospital.DoctorRegister.DoctorMainActivity;
 import com.silentcodder.newhospital.DoctorRegister.RegisterActivity.DoctorLoginActivity;
 import com.silentcodder.newhospital.DoctorRegister.RegisterActivity.SelectHospitalActivity;
@@ -183,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore  firebaseFirestore = FirebaseFirestore.getInstance();
+
         progressBar = findViewById(R.id.loader);
         if (user!=null){
             progressBar.setVisibility(View.VISIBLE);

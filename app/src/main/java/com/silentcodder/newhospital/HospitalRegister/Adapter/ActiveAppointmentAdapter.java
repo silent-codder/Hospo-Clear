@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -120,6 +121,7 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
         holder.mViewDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.lottieAnimationView.setVisibility(View.INVISIBLE);
                 Bundle bundle = new Bundle();
                 bundle.putString("UserName",PatientName);
                 bundle.putString("AppointmentDate",AppointmentDate);
@@ -193,7 +195,7 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
         CircleImageView mUserImg,mUser;
         ProgressBar progressBar;
         TextView mUserName,mAppointmentDate,mProblem,mBtnViewDetails,mTotalBill;
-//        Button mBtnCompleteAppointment,mBtnAddPrescription;
+        LottieAnimationView lottieAnimationView;
         RelativeLayout mViewDetails;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -204,10 +206,9 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
             mUser = itemView.findViewById(R.id.userIm);
             progressBar = itemView.findViewById(R.id.loader);
             mViewDetails = itemView.findViewById(R.id.viewDetails);
-//            mBtnCompleteAppointment = itemView.findViewById(R.id.btnCompleteAppointment);
-//            mBtnAddPrescription = itemView.findViewById(R.id.btnAddPrescription);
             mBtnViewDetails = itemView.findViewById(R.id.btnViewDetails);
             mTotalBill = itemView.findViewById(R.id.totalBill);
+            lottieAnimationView = itemView.findViewById(R.id.newNotification);
         }
     }
 

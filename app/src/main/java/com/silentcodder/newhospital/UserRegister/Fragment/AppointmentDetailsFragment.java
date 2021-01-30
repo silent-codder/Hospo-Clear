@@ -22,8 +22,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.silentcodder.newhospital.APIService;
+import com.silentcodder.newhospital.Client;
+import com.silentcodder.newhospital.Data;
 import com.silentcodder.newhospital.HospitalRegister.Fragment.BillFragment;
 import com.silentcodder.newhospital.HospitalRegister.Fragment.BillViewFragment;
+import com.silentcodder.newhospital.NotificationSender;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Model.AppointmentId;
 import com.squareup.picasso.Picasso;
@@ -31,13 +35,18 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AppointmentDetailsFragment extends Fragment {
 
     private FirebaseFirestore firebaseFirestore;
-    private String AppointmentId,Status,CurrentUserId;
+    private String AppointmentId,Status,CurrentUserId,PatientId,HospitalName;
     private Button btnCompleteAppointment;
     private FirebaseAuth firebaseAuth;
+    String fcmUrl = "https://fcm.googleapis.com/";
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -107,7 +116,7 @@ public class AppointmentDetailsFragment extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()){
-                                    String HospitalName = task.getResult().getString("HospitalName");
+                                    HospitalName = task.getResult().getString("HospitalName");
                                     TextView hospitalName = view.findViewById(R.id.hospitalName);
                                     hospitalName.setText(HospitalName);
                                 }
@@ -134,6 +143,7 @@ public class AppointmentDetailsFragment extends Fragment {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()){
                             String Status = task.getResult().getString("Status");
+                            PatientId = task.getResult().getString("UserId");
                             if (Status.equals("1")){
                                 btnCompleteAppointment.setVisibility(View.INVISIBLE);
                             }
@@ -148,6 +158,19 @@ public class AppointmentDetailsFragment extends Fragment {
             btnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    firebaseFirestore.collection("Tokens").document(PatientId).get()
+                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()){
+                                        String Token = task.getResult().getString("token");
+                                        String title = "Appointment Complete";
+                                        sendNotification(Token,title,HospitalName);
+                                    }
+                                }
+                            });
+
                     HashMap<String,Object> map = new HashMap<>();
                     map.put("Status","1");
 
@@ -363,5 +386,24 @@ public class AppointmentDetailsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void sendNotification(String token, String title, String hospitalName) {
+        Data data = new Data(title,hospitalName);
+        NotificationSender notificationSender = new NotificationSender(data,token);
+
+        APIService apiService = Client.getRetrofit(fcmUrl).create(APIService.class);
+
+        apiService.sendNotification(notificationSender).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }

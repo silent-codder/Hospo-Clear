@@ -32,6 +32,14 @@
             android:layout_height="80dp"
             app:civ_border_color="@color/white"
             app:civ_border_width="0.5dp"/>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/newNotification"
+            android:visibility="visible"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:lottie_rawRes="@raw/new_notification"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
         <TextView
             android:id="@+id/userName"
             android:layout_width="wrap_content"

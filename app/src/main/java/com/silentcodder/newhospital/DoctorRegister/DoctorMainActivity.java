@@ -11,21 +11,30 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.silentcodder.newhospital.DoctorRegister.Fragment.DoctorHomeFragment;
 import com.silentcodder.newhospital.HospitalRegister.Fragment.PersonalProfileFragment;
 import com.silentcodder.newhospital.MainActivity;
 import com.silentcodder.newhospital.R;
+import com.silentcodder.newhospital.UserRegister.UserMainActivity;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -49,6 +58,29 @@ public class DoctorMainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         UserId = firebaseAuth.getCurrentUser().getUid();
+
+        //get token
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                    Toast.makeText(DoctorMainActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                } else {
+                    String  token = task.getResult().getToken();
+                    HashMap<String,Object> map = new HashMap<>();
+                    map.put("token",token);
+                    firebaseFirestore.collection("Tokens").document(UserId)
+                            .set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+
+                            }
+                        }
+                    });
+                }
+            }
+        });
 
         CircleImageView UserImg = findViewById(R.id.userImg);
 

@@ -31,6 +31,10 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.silentcodder.newhospital.APIService;
+import com.silentcodder.newhospital.Client;
+import com.silentcodder.newhospital.Data;
+import com.silentcodder.newhospital.NotificationSender;
 import com.silentcodder.newhospital.R;
 import com.silentcodder.newhospital.UserRegister.Adapter.UserAdapter;
 import com.silentcodder.newhospital.UserRegister.Model.DoctorId;
@@ -40,17 +44,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class SelectUserFragment extends Fragment {
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
 
-    String UserId,Problem,AppointmentDate,DoctorId,HospitalId,UserName;
+    String UserId,Problem,AppointmentDate,DoctorId,HospitalId,UserName,Token;
     TextView mProblem,mAppointmentDate,mPatientName;
 
     RelativeLayout mNameLayout,mAnotherPatient;
     EditText mAnotherPatientName,mRelation;
     ProgressDialog progressDialog;
+    String fcmUrl = "https://fcm.googleapis.com/";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -107,6 +117,17 @@ public class SelectUserFragment extends Fragment {
                         progressDialog.setMessage("Loading..");
                         progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
+
+                        firebaseFirestore.collection("Tokens").document(HospitalId).get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()){
+                                            Token = task.getResult().getString("token");
+                                            sendNotification(Token,UserName,Problem);
+                                        }
+                                    }
+                                });
 
                         HashMap<String,Object> map = new HashMap<>();
                         map.put("PatientName",UserName);
@@ -168,6 +189,18 @@ public class SelectUserFragment extends Fragment {
                             progressDialog.setCanceledOnTouchOutside(false);
                             progressDialog.show();
 
+                            firebaseFirestore.collection("Tokens").document(HospitalId).get()
+                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()){
+                                                Token = task.getResult().getString("token");
+                                                Toast.makeText(getContext(), Token, Toast.LENGTH_SHORT).show();
+                                                sendNotification(Token,UserName,Problem);
+                                            }
+                                        }
+                                    });
+
                             HashMap<String,Object> map = new HashMap<>();
                             map.put("PatientName",PatientName);
                             map.put("AppointmentDate",AppointmentDate);
@@ -202,5 +235,24 @@ public class SelectUserFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void sendNotification(String token, String title, String msg) {
+        Data data = new Data(title,msg);
+        NotificationSender notificationSender = new NotificationSender(data,token);
+
+        APIService apiService = Client.getRetrofit(fcmUrl).create(APIService.class);
+
+        apiService.sendNotification(notificationSender).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }
