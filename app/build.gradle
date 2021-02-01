@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.silentcodder.newhospital"
+        applicationId "com.cctpl.hospoclear"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1

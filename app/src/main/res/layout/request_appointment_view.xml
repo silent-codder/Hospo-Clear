@@ -38,7 +38,7 @@
             android:visibility="visible"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:lottie_rawRes="@raw/new_notification"
+            app:lottie_rawRes="@raw/new_one"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"/>
         <TextView

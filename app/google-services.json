@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "858235465414",
-    "project_id": "hospo-clear",
-    "storage_bucket": "hospo-clear.appspot.com"
+    "project_number": "794577572838",
+    "project_id": "hospoclear",
+    "storage_bucket": "hospoclear.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:858235465414:android:bed4557cc7835d9832b1c7",
+        "mobilesdk_app_id": "1:794577572838:android:df6c10f237303b1a26fc27",
         "android_client_info": {
-          "package_name": "com.silentcodder.newhospital"
+          "package_name": "com.cctpl.hospoclear"
         }
       },
       "oauth_client": [
         {
-          "client_id": "858235465414-4o66pl8gug2pvpkjc17nmeeil8nn2f6h.apps.googleusercontent.com",
+          "client_id": "794577572838-pd0786pgplrfhoreohqss0kdmaeiat4c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAryDinEjAqga4VLcIrqFyB4qGfvMd5D0o"
+          "current_key": "AIzaSyCZpQQm221efWhM4KvADOdwgHG7kbICPk8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "858235465414-4o66pl8gug2pvpkjc17nmeeil8nn2f6h.apps.googleusercontent.com",
+              "client_id": "794577572838-pd0786pgplrfhoreohqss0kdmaeiat4c.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

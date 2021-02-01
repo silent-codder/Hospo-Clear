@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.silentcodder.newhospital">
+    package="com.cctpl.hospoclear">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -22,30 +22,51 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".DoctorRegister.RegisterActivity.DoctorLoginActivity" />
-        <activity android:name=".DoctorRegister.RegisterActivity.SelectHospitalActivity" />
-        <activity android:name=".DoctorRegister.DoctorMainActivity" />
-        <activity android:name=".DoctorRegister.RegisterActivity.DoctorRegisterActivity" />
-        <activity android:name=".DoctorRegister.RegisterActivity.AddDoctorActivity" />
-        <activity android:name=".HospitalRegister.Fragment.EditHospitalProfile" />
-        <activity android:name=".HospitalRegister.HospitalLoginOtp" />
-        <activity android:name=".HospitalRegister.HospitalLogin" />
-        <activity android:name=".HospitalRegister.HospitalMainActivity" />
-        <activity android:name=".UserRegister.UserLoginOtp" />
-        <activity android:name=".UserRegister.UserLogin" />
-        <activity android:name=".UserRegister.UserMainActivity" />
-        <activity android:name=".UserRegister.UserRegister_1" />
-        <activity android:name=".UserRegister.UserOtp" />
-        <activity android:name=".UserRegister.UserRegister" />
-        <activity android:name=".HospitalRegister.DoctorRegister" />
-        <activity android:name=".HospitalRegister.HospitalRegister_2" />
-        <activity android:name=".HospitalRegister.HospitalRegister_1" />
-        <activity android:name=".HospitalRegister.HospitalOtp" />
-        <activity android:name=".HospitalRegister.HospitalRegister" />
+        <activity android:name=".DoctorRegister.RegisterActivity.DoctorLoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".DoctorRegister.RegisterActivity.SelectHospitalActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".DoctorRegister.DoctorMainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".DoctorRegister.RegisterActivity.DoctorRegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".DoctorRegister.RegisterActivity.AddDoctorActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HospitalRegister.Fragment.EditHospitalProfile"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HospitalRegister.HospitalLoginOtp"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HospitalRegister.HospitalLogin"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HospitalRegister.HospitalMainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".UserRegister.UserLoginOtp"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".UserRegister.UserLogin"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".UserRegister.UserMainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".UserRegister.UserRegister_1"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".UserRegister.UserOtp"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".UserRegister.UserRegister"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HospitalRegister.DoctorRegister"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HospitalRegister.HospitalRegister_2"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HospitalRegister.HospitalRegister_1"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HospitalRegister.HospitalOtp"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HospitalRegister.HospitalRegister"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
