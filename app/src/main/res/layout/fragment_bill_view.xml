@@ -25,7 +25,21 @@
         android:layout_below="@+id/text"
         android:background="@drawable/layout_bg">
 
+        <TextView
+            android:id="@+id/notFoundText"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Bill not available..."
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textSize="17sp"
+            android:fontFamily="sans-serif-condensed-medium"
+            tools:ignore="HardcodedText" />
+
         <RelativeLayout
+            android:id="@+id/BillView"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"

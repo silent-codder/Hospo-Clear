@@ -11,9 +11,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.L;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,6 +38,7 @@ public class ViewFilesFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore;
     private TextView textView;
     private ImageView imageView;
+    private Button mBtnAttachFile;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class ViewFilesFragment extends Fragment {
         swipeRefreshLayout = view.findViewById(R.id.refresh);
         recyclerView = view.findViewById(R.id.recycleView);
         imageView = view.findViewById(R.id.search);
+        mBtnAttachFile = view.findViewById(R.id.btnAttachFile);
         textView = view.findViewById(R.id.notFoundText);
         firebaseFirestore = FirebaseFirestore.getInstance();
         Bundle bundle = this.getArguments();
@@ -56,17 +60,13 @@ public class ViewFilesFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshData();
+                loadData();
             }
         });
 
         loadData();
 
         return view;
-    }
-
-    private void refreshData() {
-        loadData();
     }
 
     private void loadData() {
@@ -84,6 +84,19 @@ public class ViewFilesFragment extends Fragment {
                         if (value.isEmpty()){
                             imageView.setVisibility(View.VISIBLE);
                             textView.setVisibility(View.VISIBLE);
+                            mBtnAttachFile.setVisibility(View.VISIBLE);
+                            mBtnAttachFile.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Fragment fragment = new AttachFileFragment();
+                                    Bundle bundle1 = new Bundle();
+                                    bundle1.putString("Location",type);
+                                    bundle1.putString("AppointmentId", appointmentId);
+                                    bundle1.putString("Flag","2");
+                                    fragment.setArguments(bundle1);
+                                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+                                }
+                            });
                         }
                         for (DocumentChange doc : value.getDocumentChanges()){
                             if (doc.getType() == DocumentChange.Type.ADDED){

@@ -57,6 +57,18 @@
             android:visibility="invisible"
             tools:ignore="HardcodedText" />
 
+        <Button
+            android:id="@+id/btnAttachFile"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Attach file"
+            android:textAllCaps="false"
+            android:layout_centerHorizontal="true"
+            android:drawableEnd="@drawable/ic_attach_file"
+            android:layout_below="@id/notFoundText"
+            tools:ignore="HardcodedText" />
+
 
     </RelativeLayout>
 

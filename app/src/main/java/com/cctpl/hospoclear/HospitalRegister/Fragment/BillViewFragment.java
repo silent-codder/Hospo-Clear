@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,6 +80,14 @@ public class BillViewFragment extends Fragment {
                     billAmount_3.setText(BillAmount_3);
                     billAmount_4.setText(BillAmount_4);
                     billAmount_5.setText(BillAmount_5);
+
+
+                    if (BillAmount_1 == null){
+                        RelativeLayout relativeLayout = view.findViewById(R.id.BillView);
+                        relativeLayout.setVisibility(View.GONE);
+                        TextView textView = view.findViewById(R.id.notFoundText);
+                        textView.setVisibility(View.VISIBLE);
+                    }
 
                     TextView totalBill = view.findViewById(R.id.totalBill);
                     String TotalBill = task.getResult().getString("TotalBill");

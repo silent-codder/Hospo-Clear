@@ -64,8 +64,18 @@
                 android:id="@+id/categoryRecycleView"/>
 
             <TextView
-                android:id="@+id/topHospital"
+                android:id="@+id/btnViewMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View more"
                 android:layout_below="@id/categoryRecycleView"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/topHospital"
+                android:layout_below="@id/btnViewMore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Top Hospitals"
