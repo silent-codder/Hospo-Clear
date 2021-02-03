@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:text="20 / 11 / 2020"
-                android:textSize="10sp"
+                android:textSize="@dimen/text_size_extra_small"
                 android:layout_marginTop="5dp"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:layout_below="@id/userImg"
@@ -97,6 +97,7 @@
                 android:layout_toEndOf="@id/insideView"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:textStyle="bold"
+                android:textSize="@dimen/text_size_small"
                 android:layout_marginStart="10dp"
                 android:textColor="@color/Primary_color"
                 tools:ignore="HardcodedText" />
@@ -110,6 +111,7 @@
                 android:textStyle="normal"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:layout_marginStart="10dp"
+                android:textSize="@dimen/text_size_extra_small"
                 android:layout_toRightOf="@id/insideView"
                 android:layout_below="@id/patientName"
                 tools:ignore="HardcodedText" />
@@ -119,6 +121,7 @@
                 android:layout_centerHorizontal="true"
                 android:textColor="#BDBEBF"
                 android:layout_marginStart="10dp"
+                android:textSize="@dimen/text_size_extra_small"
                 android:text="Tab to see more information"
                 android:layout_below="@id/problem"
                 android:layout_toEndOf="@id/insideView"

@@ -21,7 +21,7 @@
             android:layout_gravity="center"
             android:textColor="@color/Primary_color"
             android:fontFamily="sans-serif-condensed-medium"
-            android:textSize="17sp"
+            android:textSize="@dimen/text_size_medium"
             tools:ignore="HardcodedText" />
 
         <View

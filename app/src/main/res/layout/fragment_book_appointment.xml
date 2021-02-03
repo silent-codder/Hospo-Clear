@@ -32,7 +32,7 @@
                 android:layout_marginStart="10dp"
                 android:textStyle="bold"
                 android:textColor="@color/Primary_color"
-                android:textSize="20sp"
+                android:textSize="@dimen/text_size_medium"
                 android:fontFamily="sans-serif-condensed-medium"
                 tools:ignore="HardcodedText" />
             <TextView
@@ -42,6 +42,7 @@
                 android:layout_toEndOf="@id/doctorImg"
                 android:layout_marginStart="10dp"
                 android:textStyle="bold"
+                android:textSize="@dimen/text_size_small"
                 android:layout_below="@id/doctorName"
                 android:textColor="@color/Primary_color"
                 android:fontFamily="sans-serif-condensed-medium"
@@ -50,6 +51,7 @@
                 android:id="@+id/hospitalName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_small"
                 android:layout_toEndOf="@id/doctorImg"
                 android:layout_marginStart="10dp"
                 android:textStyle="bold"
@@ -71,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:text="5.0"
+                android:textSize="@dimen/text_size_small"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
                 android:textColor="@color/Primary_color"

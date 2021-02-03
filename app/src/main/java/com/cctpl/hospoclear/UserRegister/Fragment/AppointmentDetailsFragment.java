@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -166,8 +167,8 @@ public class AppointmentDetailsFragment extends Fragment {
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()){
                                         String Token = task.getResult().getString("token");
-                                        String title = "Appointment Complete";
-                                        sendNotification(Token,title,HospitalName);
+                                        String title = "Your appointment was complete";
+                                        sendNotification(Token,title,"Hospital Name : " + HospitalName);
                                     }
                                 }
                             });
@@ -383,6 +384,29 @@ public class AppointmentDetailsFragment extends Fragment {
                 bundle1.putString("AppointmentId", AppointmentId);
                 fragment.setArguments(bundle1);
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+            }
+        });
+
+
+        //btn show more and less
+
+        TextView ShowMore = view.findViewById(R.id.btnShowMore);
+        TextView ShowLess = view.findViewById(R.id.btnShowLess);
+        TableLayout tableLayout = view.findViewById(R.id.tableLayout);
+        ShowMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tableLayout.setVisibility(View.VISIBLE);
+                ShowMore.setVisibility(View.INVISIBLE);
+                ShowLess.setVisibility(View.VISIBLE);
+            }
+        });
+        ShowLess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tableLayout.setVisibility(View.GONE);
+                ShowMore.setVisibility(View.VISIBLE);
+                ShowLess.setVisibility(View.INVISIBLE);
             }
         });
 

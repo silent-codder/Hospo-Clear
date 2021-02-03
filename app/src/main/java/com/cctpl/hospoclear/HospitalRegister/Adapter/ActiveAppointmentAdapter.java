@@ -113,7 +113,7 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
                     if(totalBill != null){
                         holder.mTotalBill.setText("Bill Amount :  " + totalBill);
                     }else {
-                        holder.mTotalBill.setText("Bill Amount :  -");
+                        holder.mTotalBill.setText("Bill Amount :  00");
                     }
                 }
             }

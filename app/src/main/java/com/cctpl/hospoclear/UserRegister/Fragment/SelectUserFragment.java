@@ -122,7 +122,8 @@ public class SelectUserFragment extends Fragment {
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                         if (task.isSuccessful()){
                                             Token = task.getResult().getString("token");
-                                            sendNotification(Token,UserName,Problem);
+                                            String extra = " has requested for appointment.";
+                                            sendNotification(Token,UserName + extra ,"Problem : " + Problem);
                                         }
                                     }
                                 });
@@ -193,7 +194,8 @@ public class SelectUserFragment extends Fragment {
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                             if (task.isSuccessful()){
                                                 Token = task.getResult().getString("token");
-                                                sendNotification(Token,UserName,Problem);
+                                                String extra = " has requested for appointment.";
+                                                sendNotification(Token,UserName + extra ,"Problem : " + Problem);
                                             }
                                         }
                                     });

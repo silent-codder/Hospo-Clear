@@ -15,7 +15,7 @@
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed-medium"
         android:textColor="@color/purple_500"
-        android:textSize="30sp"
+        android:textSize="@dimen/text_size_large"
         android:layout_centerHorizontal="true"
         tools:ignore="HardcodedText" />
 
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_large"
             android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-condensed-medium"
             android:textColor="@color/Primary_color"
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/Primary_color"
-            android:textSize="17sp"
+            android:textSize="@dimen/text_size_medium"
             android:fontFamily="sans-serif-condensed-medium"
             android:layout_centerHorizontal="true"
             android:textStyle="bold"
@@ -75,7 +75,7 @@
             android:layout_toEndOf="@id/doctorImg"
             android:layout_marginStart="20dp"
             android:textColor="@color/Primary_color"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_size_small"
             android:fontFamily="sans-serif-condensed-medium"
             android:layout_centerHorizontal="true"
             android:textStyle="bold"
@@ -87,10 +87,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/Primary_color"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_size_small"
             android:fontFamily="sans-serif-condensed-medium"
             android:layout_marginTop="10dp"
-            android:textStyle="bold"
+            android:textStyle="normal"
             android:layout_below="@+id/doctorImg"
             tools:ignore="HardcodedText" />
 

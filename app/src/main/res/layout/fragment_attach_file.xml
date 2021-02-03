@@ -85,6 +85,7 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:drawableLeft="@drawable/ic_camera"
         android:layout_margin="10dp"
+        android:textSize="@dimen/text_size_small"
         tools:ignore="ContentDescription,HardcodedText,RtlHardcoded" />
   <Button
       android:id="@+id/btnTypePrescription"
@@ -94,6 +95,7 @@
       android:visibility="invisible"
       android:layout_alignParentRight="true"
       android:layout_marginTop="10dp"
+      android:textSize="@dimen/text_size_small"
       android:textStyle="bold"
       android:fontFamily="sans-serif-condensed-medium"
       android:textAllCaps="false"

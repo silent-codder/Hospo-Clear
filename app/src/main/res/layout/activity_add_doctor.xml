@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create Doctor Login"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_extra_large"
         android:layout_marginTop="56dp"
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed-medium"
@@ -67,7 +67,7 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:fontFamily="sans-serif-condensed-medium"
-            android:textSize="17sp"
+            android:textSize="@dimen/text_size_small"
             tools:ignore="HardcodedText" />
 
     </RelativeLayout>

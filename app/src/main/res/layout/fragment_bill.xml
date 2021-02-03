@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif-condensed-medium"
         android:textStyle="bold"
-        android:textSize="25sp"
+        android:textSize="@dimen/text_size_large"
         tools:ignore="HardcodedText" />
 
     <RelativeLayout

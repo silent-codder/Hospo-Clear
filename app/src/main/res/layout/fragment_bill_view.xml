@@ -13,7 +13,7 @@
         android:text="Hospital Bill"
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
-        android:textSize="25sp"
+        android:textSize="@dimen/text_size_large"
         android:fontFamily="sans-serif-condensed-medium"
         android:textColor="@color/purple_500"
         tools:ignore="HardcodedText" />
@@ -51,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textStyle="bold"
+                android:textSize="@dimen/text_size_small"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:textColor="@color/Primary_color"
                 tools:ignore="HardcodedText" />
@@ -62,6 +63,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="20dp"
                 android:textStyle="bold"
+                android:textSize="@dimen/text_size_small"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:textColor="@color/purple_500"
                 tools:ignore="HardcodedText" />
@@ -71,6 +73,7 @@
                 android:layout_below="@id/bill_description_1"
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
+                android:textSize="@dimen/text_size_small"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textStyle="bold"
@@ -80,6 +83,7 @@
             <TextView
                 android:id="@+id/bill_amount_2"
                 android:layout_marginTop="20dp"
+                android:textSize="@dimen/text_size_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/bill_amount_1"
@@ -95,6 +99,7 @@
                 android:id="@+id/bill_description_3"
                 android:layout_below="@id/bill_description_2"
                 android:layout_marginTop="20dp"
+                android:textSize="@dimen/text_size_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -106,6 +111,7 @@
                 android:id="@+id/bill_amount_3"
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
+                android:textSize="@dimen/text_size_small"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/bill_amount_2"
                 android:text=""
@@ -120,6 +126,7 @@
                 android:id="@+id/bill_description_4"
                 android:layout_below="@id/bill_description_3"
                 android:layout_marginTop="20dp"
+                android:textSize="@dimen/text_size_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -131,6 +138,7 @@
                 android:id="@+id/bill_amount_4"
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
+                android:textSize="@dimen/text_size_small"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/bill_amount_3"
                 android:text=""
@@ -143,6 +151,7 @@
 
             <TextView
                 android:id="@+id/bill_description_5"
+                android:textSize="@dimen/text_size_small"
                 android:layout_below="@id/bill_description_4"
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
@@ -157,6 +166,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_small"
                 android:layout_below="@id/bill_amount_4"
                 android:text=""
                 android:layout_marginStart="20dp"
@@ -168,6 +178,7 @@
 
             <TextView
                 android:id="@+id/totalBill"
+                android:textSize="@dimen/text_size_small"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:padding="10dp"

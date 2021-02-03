@@ -22,7 +22,7 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/hospo_clear"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_extra_large"
         android:textColor="@color/purple_700"
         android:textAllCaps="true"
         android:layout_centerHorizontal="true"/>
@@ -57,6 +57,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Verify Otp"
+            android:textSize="@dimen/text_size_small"
             android:textStyle="bold"
             android:visibility="visible"
             android:layout_centerHorizontal="true"

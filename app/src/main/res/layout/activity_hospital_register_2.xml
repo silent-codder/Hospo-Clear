@@ -24,7 +24,7 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/hospo_clear"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_large"
         android:textColor="@color/purple_700"
         android:textAllCaps="true"
         android:layout_centerHorizontal="true"/>
@@ -45,7 +45,7 @@
             android:textColor="@color/purple_500"
             android:text="Fill up all information to complete \nSecond step."
             android:textStyle="bold"
-            android:textSize="17sp"
+            android:textSize="@dimen/text_size_large"
             tools:ignore="HardcodedText" />
 
        <EditText
@@ -67,6 +67,7 @@
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_small"
             android:layout_below="@id/hospitalContactNumber"
             android:text="In hospital have an ambulance ?"
             android:layout_centerHorizontal="true"
@@ -78,6 +79,7 @@
             android:layout_height="wrap_content"
             android:text="Next"
             android:textStyle="bold"
+            android:textSize="@dimen/text_size_small"
             android:layout_below="@id/checkbox"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"

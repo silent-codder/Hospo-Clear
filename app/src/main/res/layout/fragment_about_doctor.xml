@@ -13,19 +13,20 @@
         android:layout_centerHorizontal="true"
         app:lottie_rawRes="@raw/doctor"
         app:lottie_autoPlay="true"
+        android:visibility="gone"
         app:lottie_loop="true"
         android:id="@+id/lottie"/>
 
    <ScrollView
        android:layout_width="match_parent"
        android:layout_height="match_parent"
+       android:background="@drawable/layout_bg"
        android:layout_below="@id/lottie">
 
        <RelativeLayout
            android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:padding="20dp"
-           android:background="@drawable/layout_bg">
+           android:layout_height="wrap_content"
+           android:padding="20dp">
 
            <de.hdodenhof.circleimageview.CircleImageView
                android:layout_width="80dp"
@@ -58,7 +59,7 @@
                android:layout_marginStart="10dp"
                android:textStyle="bold"
                android:textColor="@color/Primary_color"
-               android:textSize="20sp"
+               android:textSize="@dimen/text_size_large"
                android:fontFamily="sans-serif-condensed-medium"
                tools:ignore="HardcodedText" />
            <TextView
@@ -68,6 +69,7 @@
                android:layout_toEndOf="@id/doctorImg"
                android:layout_marginStart="10dp"
                android:textStyle="bold"
+               android:textSize="@dimen/text_size_medium"
                android:layout_below="@id/doctorName"
                android:textColor="@color/Primary_color"
                android:fontFamily="sans-serif-condensed-medium"
@@ -79,6 +81,7 @@
                android:layout_toEndOf="@id/doctorImg"
                android:layout_marginStart="10dp"
                android:textStyle="bold"
+               android:textSize="@dimen/text_size_small"
                android:layout_below="@id/doctorSpeciality"
                android:textColor="@color/Primary_color"
                android:fontFamily="sans-serif-condensed-medium"
@@ -98,6 +101,7 @@
                android:layout_width="wrap_content"
                android:layout_height="30dp"
                android:text="5.0"
+               android:textSize="@dimen/text_size_small"
                android:gravity="center_vertical"
                android:textStyle="bold"
                android:textColor="@color/Primary_color"
@@ -143,12 +147,13 @@
                android:textStyle="bold"
                android:fontFamily="sans-serif-condensed-medium"
                android:textColor="@color/black"
-               android:textSize="17sp"
+               android:textSize="@dimen/text_size_medium"
                android:layout_below="@+id/view"
                tools:ignore="HardcodedText" />
            <TextView
                android:id="@+id/aboutDoctor"
                android:layout_marginTop="5dp"
+               android:textSize="@dimen/text_size_small"
                android:text="Nothing to more about doctor.."
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
@@ -163,7 +168,7 @@
                android:layout_height="60dp"
                android:text="Request for Appointment"
                android:textStyle="bold"
-               android:textSize="17sp"
+               android:textSize="@dimen/text_size_small"
                android:layout_centerHorizontal="true"
                android:layout_marginTop="30dp"
                android:layout_alignParentBottom="true"

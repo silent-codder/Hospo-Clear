@@ -29,7 +29,7 @@
            android:fontFamily="sans-serif-condensed-medium"
            android:text="@string/hospo_clear"
            android:textStyle="bold"
-           android:textSize="40sp"
+           android:textSize="@dimen/text_size_extra_large"
            android:textColor="@color/purple_700"
            android:textAllCaps="true"
            android:layout_centerHorizontal="true"/>
@@ -41,7 +41,7 @@
         android:visibility="visible"
         android:layout_width="320dp"
         android:layout_height="55dp"
-        android:textSize="18sp"
+        android:textSize="@dimen/text_size_small"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Get Started"
         android:textColor="@color/white"

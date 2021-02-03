@@ -24,7 +24,7 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/hospo_clear"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_large"
         android:textColor="@color/purple_700"
         android:textAllCaps="true"
         android:layout_centerHorizontal="true"/>
@@ -64,6 +64,7 @@
             android:layout_below="@id/mobileNumber"
             android:layout_marginTop="20dp"
             android:layout_width="300dp"
+            android:textSize="@dimen/text_size_small"
             android:layout_height="wrap_content"
             android:text="Continue"
             android:textStyle="bold"
@@ -77,6 +78,7 @@
             android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="@dimen/text_size_extra_small"
             android:text="By Clicking on the CONTINUE button, you agree to our Terms of Use and Privacy Policy."
             android:layout_below="@id/btnContinue"
             tools:ignore="HardcodedText" />
