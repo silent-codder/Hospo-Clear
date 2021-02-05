@@ -1,4 +1,4 @@
-package com.cctpl.hospoclear;
+package com.cctpl.hospoclear.Notification;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

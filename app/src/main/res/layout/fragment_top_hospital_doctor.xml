@@ -19,7 +19,7 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:textColor="@color/purple_500"
         android:textStyle="bold"
-        android:textSize="@dimen/text_size_large"
+        android:textSize="@dimen/text_size_extra_large"
         android:layout_marginStart="20dp"
         android:fontFamily="sans-serif-condensed-medium"
         tools:ignore="HardcodedText" />
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/purple_500"
-        android:textSize="@dimen/text_size_medium"
+        android:textSize="@dimen/text_size_large"
         android:layout_marginBottom="2dp"
         android:textStyle="bold"
         android:layout_alignBottom="@id/hospitalName"
@@ -46,6 +46,18 @@
         android:layout_below="@id/hospitalName"
         android:layout_margin="20dp"
         tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/btnViewDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Hospital Details"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
+        android:layout_below="@id/searchBar"
+        tools:ignore="HardcodedText" />
+
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
@@ -54,7 +66,7 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="@dimen/text_size_medium"
-        android:layout_below="@id/searchBar"
+        android:layout_below="@id/btnViewDetails"
         android:layout_marginStart="20dp"
         android:fontFamily="sans-serif-condensed-medium"
         tools:ignore="HardcodedText" />

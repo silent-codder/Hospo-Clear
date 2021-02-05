@@ -8,11 +8,24 @@ public class HospitalData {
     String UserId;
     String Ambulance;
     String ProfileImgUrl;
+    String ImgUrl;
 
     public HospitalData() {
     }
 
-    public HospitalData(String hospitalName, String city, String state, String contactNumber, String userId, String ambulance,String profileImgUrl) {
+    public HospitalData(String imgUrl) {
+        ImgUrl = imgUrl;
+    }
+
+    public String getImgUrl() {
+        return ImgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        ImgUrl = imgUrl;
+    }
+
+    public HospitalData(String hospitalName, String city, String state, String contactNumber, String userId, String ambulance, String profileImgUrl) {
         HospitalName = hospitalName;
         City = city;
         State = state;

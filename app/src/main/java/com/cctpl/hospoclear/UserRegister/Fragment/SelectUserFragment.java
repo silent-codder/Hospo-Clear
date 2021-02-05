@@ -4,10 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -20,27 +17,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cctpl.hospoclear.APIService;
-import com.cctpl.hospoclear.Client;
-import com.cctpl.hospoclear.Data;
-import com.cctpl.hospoclear.NotificationSender;
+import com.cctpl.hospoclear.Notification.APIService;
+import com.cctpl.hospoclear.Notification.Client;
+import com.cctpl.hospoclear.Notification.Data;
+import com.cctpl.hospoclear.Notification.NotificationSender;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.cctpl.hospoclear.UserRegister.Adapter.UserAdapter;
-import com.cctpl.hospoclear.UserRegister.Model.DoctorId;
-import com.cctpl.hospoclear.UserRegister.Model.UserData;
 import com.cctpl.hospoclear.R;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

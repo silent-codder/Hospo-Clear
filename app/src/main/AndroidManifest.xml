@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewHospital">
         <service
-            android:name=".NotificationService"
+            android:name=".Notification.NotificationService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

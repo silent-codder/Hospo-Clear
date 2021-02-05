@@ -1,4 +1,4 @@
-package com.cctpl.hospoclear;
+package com.cctpl.hospoclear.Notification;
 
 public class Data {
     String title;

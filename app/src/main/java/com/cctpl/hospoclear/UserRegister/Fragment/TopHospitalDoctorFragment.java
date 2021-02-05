@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,6 +85,18 @@ public class TopHospitalDoctorFragment extends Fragment {
                         topDoctorAdapter.notifyDataSetChanged();
                     }
                 }
+            }
+        });
+
+        Button button = view.findViewById(R.id.btnViewDetails);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("HospitalId",HospitalId);
+                Fragment fragment = new HospitalDetailsFragment();
+                fragment.setArguments(bundle1);
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
             }
         });
 

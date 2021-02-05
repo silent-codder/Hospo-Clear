@@ -1,4 +1,4 @@
-package com.cctpl.hospoclear;
+package com.cctpl.hospoclear.Notification;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

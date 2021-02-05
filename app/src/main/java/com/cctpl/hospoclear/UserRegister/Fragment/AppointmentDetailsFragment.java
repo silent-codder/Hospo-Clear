@@ -18,10 +18,10 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cctpl.hospoclear.APIService;
-import com.cctpl.hospoclear.Client;
-import com.cctpl.hospoclear.Data;
-import com.cctpl.hospoclear.NotificationSender;
+import com.cctpl.hospoclear.Notification.APIService;
+import com.cctpl.hospoclear.Notification.Client;
+import com.cctpl.hospoclear.Notification.Data;
+import com.cctpl.hospoclear.Notification.NotificationSender;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
