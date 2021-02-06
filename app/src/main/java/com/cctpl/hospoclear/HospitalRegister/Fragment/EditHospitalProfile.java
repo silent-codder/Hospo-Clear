@@ -36,7 +36,7 @@ public class EditHospitalProfile extends AppCompatActivity {
 
     ImageView mBtnClose,mBtnDone;
     CircleImageView mHospitalImg;
-    EditText mHospitalName,mCityName,mStateName,mHospitalContactNumber,mHospitalBio;
+    EditText mHospitalName,mCityName,mStateName,mHospitalContactNumber,mHospitalBio,mEmail;
 
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
@@ -58,6 +58,7 @@ public class EditHospitalProfile extends AppCompatActivity {
         mHospitalContactNumber = findViewById(R.id.hospitalContactNumber);
         mHospitalBio = findViewById(R.id.hospitalBio);
         mHospitalImg = findViewById(R.id.hospitalImg);
+        mEmail = findViewById(R.id.hospitalMail);
 
         progressDialog = new ProgressDialog(this);
 
@@ -76,12 +77,14 @@ public class EditHospitalProfile extends AppCompatActivity {
                             String State = task.getResult().getString("State");
                             String ContactNumber = task.getResult().getString("ContactNumber");
                             String Bio = task.getResult().getString("HospitalBio");
+                            String Mail = task.getResult().getString("Email");
 
                             mHospitalName.setText(HospitalName);
                             mCityName.setText(City);
                             mStateName.setText(State);
                             mHospitalBio.setText(Bio);
                             mHospitalContactNumber.setText(ContactNumber);
+                            mEmail.setText(Mail);
                         }
                     }
                 });
@@ -104,6 +107,7 @@ public class EditHospitalProfile extends AppCompatActivity {
                 String State = mStateName.getText().toString();
                 String ContactNumber = mHospitalContactNumber.getText().toString();
                 String Bio = mHospitalBio.getText().toString();
+                String Email = mEmail.getText().toString();
 
                 HashMap<String ,Object> map = new HashMap<>();
                 map.put("HospitalName",HospitalName);
@@ -111,6 +115,7 @@ public class EditHospitalProfile extends AppCompatActivity {
                 map.put("State",State);
                 map.put("ContactNumber",ContactNumber);
                 map.put("HospitalBio",Bio);
+                map.put("Email",Email);
 
                 firebaseFirestore.collection("Hospitals").document(UserId).update(map)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {

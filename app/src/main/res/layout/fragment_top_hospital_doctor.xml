@@ -19,7 +19,7 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:textColor="@color/purple_500"
         android:textStyle="bold"
-        android:textSize="@dimen/text_size_extra_large"
+        android:textSize="26sp"
         android:layout_marginStart="20dp"
         android:fontFamily="sans-serif-condensed-medium"
         tools:ignore="HardcodedText" />
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/purple_500"
-        android:textSize="@dimen/text_size_large"
+        android:textSize="24sp"
         android:layout_marginBottom="2dp"
         android:textStyle="bold"
         android:layout_alignBottom="@id/hospitalName"

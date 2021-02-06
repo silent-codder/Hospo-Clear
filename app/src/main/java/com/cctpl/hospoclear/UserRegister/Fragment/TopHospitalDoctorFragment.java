@@ -96,7 +96,7 @@ public class TopHospitalDoctorFragment extends Fragment {
                 bundle1.putString("HospitalId",HospitalId);
                 Fragment fragment = new HospitalDetailsFragment();
                 fragment.setArguments(bundle1);
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
         });
 

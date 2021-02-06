@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,10 +50,12 @@ public class HospitalImageAdapter extends  SliderViewAdapter<HospitalImageAdapte
 
         View itemView;
         ImageView imageView;
+        ProgressBar progressBar;
 
         public SliderAdapterVH(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.myimage);
+            progressBar = itemView.findViewById(R.id.loader);
             this.itemView = itemView;
         }
     }

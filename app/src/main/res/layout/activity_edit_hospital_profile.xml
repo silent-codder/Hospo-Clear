@@ -6,102 +6,119 @@
     android:layout_height="match_parent"
     tools:context=".HospitalRegister.Fragment.EditHospitalProfile">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp">
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/btnDone"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_margin="20dp"
-            android:src="@drawable/ic_done"
-            android:layout_alignParentRight="true"
-            tools:ignore="ContentDescription,RtlHardcoded" />
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:padding="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_margin="20dp"
-            android:gravity="center"
-            android:textColor="@color/purple_500"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_size_small"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:text="Edit Profile"
-            android:layout_centerHorizontal="true"
-            tools:ignore="HardcodedText" />
+           <ImageView
+               android:id="@+id/btnDone"
+               android:layout_width="32dp"
+               android:layout_height="32dp"
+               android:layout_margin="20dp"
+               android:src="@drawable/ic_done"
+               android:layout_alignParentRight="true"
+               tools:ignore="ContentDescription,RtlHardcoded" />
 
-        <ImageView
-            android:id="@+id/btnCancel"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_margin="20dp"
-            android:layout_alignParentLeft="true"
-            tools:ignore="ContentDescription,RtlHardcoded" />
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="32dp"
+               android:layout_margin="20dp"
+               android:gravity="center"
+               android:textColor="@color/purple_500"
+               android:textStyle="bold"
+               android:textSize="@dimen/text_size_small"
+               android:fontFamily="sans-serif-condensed-medium"
+               android:text="Edit Profile"
+               android:layout_centerHorizontal="true"
+               tools:ignore="HardcodedText" />
 
-       <de.hdodenhof.circleimageview.CircleImageView
-           android:id="@+id/hospitalImg"
-           android:layout_width="150dp"
-           android:layout_height="150dp"
-           app:civ_border_width="0.5dp"
-           android:src="@drawable/blank_img"
-           android:layout_below="@id/btnCancel"
-           android:layout_centerHorizontal="true"/>
+           <ImageView
+               android:id="@+id/btnCancel"
+               android:layout_width="32dp"
+               android:layout_height="32dp"
+               android:layout_margin="20dp"
+               android:layout_alignParentLeft="true"
+               tools:ignore="ContentDescription,RtlHardcoded" />
 
-        <EditText
-            android:id="@+id/hospitalName"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/hospitalImg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_edit"
-            android:padding="10dp"
-            android:hint="Hospital Name"
-            tools:ignore="HardcodedText" />
-        <EditText
-            android:id="@+id/city"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/hospitalName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_edit"
-            android:padding="10dp"
-            android:hint="City"
-            tools:ignore="HardcodedText" />
-        <EditText
-            android:id="@+id/state"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/city"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_edit"
-            android:padding="10dp"
-            android:hint="State"
-            tools:ignore="HardcodedText" />
-        <EditText
-            android:id="@+id/hospitalContactNumber"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/state"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_edit"
-            android:padding="10dp"
-            android:hint="Hospital Contact number"
-            tools:ignore="HardcodedText" />
-        <EditText
-            android:id="@+id/hospitalBio"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/hospitalContactNumber"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:drawableEnd="@drawable/ic_edit"
-            android:padding="10dp"
-            android:hint="Hospital bio"
-            tools:ignore="HardcodedText"
-            android:importantForAutofill="no" />
+           <de.hdodenhof.circleimageview.CircleImageView
+               android:id="@+id/hospitalImg"
+               android:layout_width="150dp"
+               android:layout_height="150dp"
+               app:civ_border_width="0.5dp"
+               android:src="@drawable/blank_img"
+               android:layout_below="@id/btnCancel"
+               android:layout_centerHorizontal="true"/>
 
-    </RelativeLayout>
+           <EditText
+               android:id="@+id/hospitalName"
+               android:layout_marginTop="10dp"
+               android:layout_below="@id/hospitalImg"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:drawableEnd="@drawable/ic_edit"
+               android:padding="10dp"
+               android:hint="Hospital Name"
+               tools:ignore="HardcodedText" />
+           <EditText
+               android:id="@+id/city"
+               android:layout_marginTop="10dp"
+               android:layout_below="@id/hospitalName"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:drawableEnd="@drawable/ic_edit"
+               android:padding="10dp"
+               android:hint="City"
+               tools:ignore="HardcodedText" />
+           <EditText
+               android:id="@+id/state"
+               android:layout_marginTop="10dp"
+               android:layout_below="@id/city"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:drawableEnd="@drawable/ic_edit"
+               android:padding="10dp"
+               android:hint="State"
+               tools:ignore="HardcodedText" />
+           <EditText
+               android:id="@+id/hospitalContactNumber"
+               android:layout_marginTop="10dp"
+               android:layout_below="@id/state"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:drawableEnd="@drawable/ic_edit"
+               android:padding="10dp"
+               android:hint="Hospital Contact number"
+               tools:ignore="HardcodedText" />
+           <EditText
+               android:id="@+id/hospitalMail"
+               android:layout_marginTop="10dp"
+               android:inputType="textEmailAddress"
+               android:layout_below="@id/hospitalContactNumber"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:drawableEnd="@drawable/ic_edit"
+               android:padding="10dp"
+               android:hint="Email"
+               tools:ignore="HardcodedText" />
+           <EditText
+               android:id="@+id/hospitalBio"
+               android:layout_marginTop="10dp"
+               android:layout_below="@id/hospitalMail"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:drawableEnd="@drawable/ic_edit"
+               android:padding="10dp"
+               android:hint="Hospital bio"
+               tools:ignore="HardcodedText"
+               android:importantForAutofill="no" />
+
+       </RelativeLayout>
+
+   </ScrollView>
 
 </FrameLayout>

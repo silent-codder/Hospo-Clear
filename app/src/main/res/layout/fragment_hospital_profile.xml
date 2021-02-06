@@ -156,13 +156,12 @@
                 android:text="Upload"
                 tools:ignore="HardcodedText" />
 
-            <Button
-                android:id="@+id/btnShowFile"
+            <androidx.recyclerview.widget.RecyclerView
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Show Page"
                 android:layout_below="@id/btnAddHospitalImages"
-                tools:ignore="HardcodedText" />
+                android:id="@+id/recycleView2"/>
 
         </RelativeLayout>
 

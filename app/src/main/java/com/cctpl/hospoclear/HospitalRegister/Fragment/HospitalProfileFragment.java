@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
@@ -22,17 +23,26 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.cctpl.hospoclear.UserRegister.Adapter.HospitalProfileImagesAdapter;
 import com.cctpl.hospoclear.UserRegister.Adapter.UploadImgAdapter;
+import com.cctpl.hospoclear.UserRegister.Adapter.ViewFilesAdapter;
+import com.cctpl.hospoclear.UserRegister.Fragment.AttachFileFragment;
 import com.cctpl.hospoclear.UserRegister.Fragment.HospitalDetailsFragment;
+import com.cctpl.hospoclear.UserRegister.Model.AppointmentData;
+import com.cctpl.hospoclear.UserRegister.Model.HospitalData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.cctpl.hospoclear.R;
@@ -52,11 +62,13 @@ public class HospitalProfileFragment extends Fragment {
 
     private static final int PICK_IMG = 100;
     private List<String> ImageList;
+    private List<HospitalData>hospitalData;
     CircleImageView mHospitalImg;
     TextView mHospitalName,mHospitalAddress,mHospitalContactNumber,mHospitalBio;
     Button mBtnEditProfile,mBtnAddHospitalImages,mBtnUpload;
     RecyclerView recyclerView;
     UploadImgAdapter uploadImgAdapter;
+    HospitalProfileImagesAdapter hospitalProfileImagesAdapter;
 
     FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
@@ -89,15 +101,28 @@ public class HospitalProfileFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         ImageList = new ArrayList<>();
+        hospitalData = new ArrayList<>();
 
-        Button button = view.findViewById(R.id.btnShowFile);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new HospitalDetailsFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
-            }
-        });
+        RecyclerView ImageRecycleView = view.findViewById(R.id.recycleView2);
+        hospitalProfileImagesAdapter = new HospitalProfileImagesAdapter(hospitalData);
+        ImageRecycleView.setLayoutManager(new GridLayoutManager(getContext(),3));
+        ImageRecycleView.setAdapter(hospitalProfileImagesAdapter);
+
+        firebaseFirestore.collection("Hospitals").document(UserId).collection("Images")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (!value.isEmpty()){
+                            for (DocumentChange doc : value.getDocumentChanges()){
+                                if (doc.getType() == DocumentChange.Type.ADDED){
+                                    HospitalData mHospitalData = doc.getDocument().toObject(HospitalData.class);
+                                    hospitalData.add(mHospitalData);
+                                    hospitalProfileImagesAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
+                    }
+                });
 
         firebaseFirestore.collection("Hospitals").document(UserId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -142,6 +167,7 @@ public class HospitalProfileFragment extends Fragment {
 
                 recyclerView.setVisibility(View.VISIBLE);
                 mBtnUpload.setVisibility(View.VISIBLE);
+                ImageRecycleView.setVisibility(View.GONE);
             }
         });
 
@@ -159,7 +185,6 @@ public class HospitalProfileFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         recyclerView.setHasFixedSize(false);
         recyclerView.setAdapter(uploadImgAdapter);
-
         return view;
     }
 
