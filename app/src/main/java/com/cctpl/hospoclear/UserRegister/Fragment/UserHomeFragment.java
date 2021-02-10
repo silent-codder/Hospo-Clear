@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -24,6 +25,7 @@ import com.cctpl.hospoclear.UserRegister.Adapter.CategoryAdapter;
 import com.cctpl.hospoclear.UserRegister.Adapter.TopHospitalAdapter;
 import com.cctpl.hospoclear.UserRegister.Model.HospitalData;
 import com.cctpl.hospoclear.UserRegister.Model.MyCategories;
+import com.google.gson.internal.$Gson$Preconditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +79,15 @@ public class UserHomeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         recyclerView.setAdapter(adapter);
+
+        TextView BtnViewMore = view.findViewById(R.id.btnViewMore);
+        BtnViewMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new MoreCategoryFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+            }
+        });
 
         return view;
     }

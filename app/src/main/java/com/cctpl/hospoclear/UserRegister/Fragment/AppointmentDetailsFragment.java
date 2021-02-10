@@ -2,6 +2,7 @@ package com.cctpl.hospoclear.UserRegister.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -47,6 +49,7 @@ public class AppointmentDetailsFragment extends Fragment {
     private Button btnCompleteAppointment;
     private FirebaseAuth firebaseAuth;
     String fcmUrl = "https://fcm.googleapis.com/";
+    ProgressDialog progressDialog;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -57,6 +60,10 @@ public class AppointmentDetailsFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         CurrentUserId = firebaseAuth.getCurrentUser().getUid();
         btnCompleteAppointment = view.findViewById(R.id.btnCompleteAppointment);
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
 
 
         Bundle bundle = this.getArguments();
@@ -134,6 +141,7 @@ public class AppointmentDetailsFragment extends Fragment {
                                 btnCompleteAppointment.setVisibility(View.INVISIBLE);
                                 Button button = view.findViewById(R.id.btnAddBill);
                                 button.setVisibility(View.GONE);
+                                progressDialog.dismiss();
                             }
                         }
                     }

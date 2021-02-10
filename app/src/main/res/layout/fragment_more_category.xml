@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserRegister.Fragment.MoreCategoryFragment">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find Doctor by Speciality"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp"
+        android:textSize="@dimen/text_size_extra_large"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="@color/teal_200"
+        tools:ignore="HardcodedText" />
+
+    <RelativeLayout
+        android:layout_below="@id/text"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/layout_bg"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recycleView"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

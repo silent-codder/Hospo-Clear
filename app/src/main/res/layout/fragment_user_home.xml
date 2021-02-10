@@ -71,6 +71,7 @@
                 android:layout_below="@id/categoryRecycleView"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
+                android:textColor="@color/Primary_color"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
             <TextView
@@ -92,7 +93,6 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/topHospital"
                 android:id="@+id/hospitalRecycleView"/>
-
 
         </RelativeLayout>
 

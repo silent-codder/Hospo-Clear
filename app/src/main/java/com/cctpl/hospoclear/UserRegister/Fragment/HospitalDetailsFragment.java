@@ -20,6 +20,14 @@ import com.cctpl.hospoclear.UserRegister.Adapter.HospitalImageAdapter;
 import com.cctpl.hospoclear.UserRegister.Model.AppointmentData;
 import com.cctpl.hospoclear.UserRegister.Model.HospitalData;
 import com.cctpl.hospoclear.UserRegister.UserLogin;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,7 +45,7 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HospitalDetailsFragment extends Fragment {
+public class HospitalDetailsFragment extends Fragment{
 
     List<HospitalData> hospitalData;
     HospitalImageAdapter hospitalImageAdapter;
@@ -119,4 +127,5 @@ public class HospitalDetailsFragment extends Fragment {
 
         return view;
     }
+
 }

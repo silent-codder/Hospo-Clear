@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+       <RelativeLayout
+           android:id="@+id/layout"
+           android:layout_width="wrap_content"
+           android:layout_height="150dp"
+           android:padding="15dp"
+           android:background="@drawable/view_bg"
+           android:layout_marginStart="10dp"
+           android:layout_marginBottom="10dp">
+
+           <de.hdodenhof.circleimageview.CircleImageView
+               android:id="@+id/image"
+               android:layout_width="80dp"
+               android:layout_height="80dp"
+               android:layout_centerHorizontal="true"
+               android:src="@drawable/stethoscope"/>
+
+           <TextView
+               android:id="@+id/text"
+               android:layout_below="@id/image"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="General \nPhysician"
+               android:textStyle="bold"
+               android:layout_marginTop="5dp"
+               android:textSize="@dimen/text_size_small"
+               android:textColor="@color/white"
+               android:gravity="center_horizontal"
+               android:fontFamily="sans-serif-condensed-medium"
+               android:layout_centerHorizontal="true"
+               tools:ignore="HardcodedText" />
+
+       </RelativeLayout>
+
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.cctpl.hospoclear.UserRegister.Fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -37,6 +38,7 @@ public class UserAppointmentsFragment extends Fragment {
     String UserId;
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
+    ProgressDialog progressDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,6 +48,10 @@ public class UserAppointmentsFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         UserId = firebaseAuth.getCurrentUser().getUid();
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
 
         swipeRefreshLayout = view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -65,6 +71,9 @@ public class UserAppointmentsFragment extends Fragment {
     }
 
     private void loadData() {
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
         appointmentData = new ArrayList<>();
         appointmentAdapter = new AppointmentAdapter(appointmentData);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -83,6 +92,7 @@ public class UserAppointmentsFragment extends Fragment {
                         AppointmentData mAppointmentData = doc.getDocument().toObject(AppointmentData.class).withId(AppointmentId);
                         appointmentData.add(mAppointmentData);
                         appointmentAdapter.notifyDataSetChanged();
+                        progressDialog.dismiss();
                     }
                 }
             }
