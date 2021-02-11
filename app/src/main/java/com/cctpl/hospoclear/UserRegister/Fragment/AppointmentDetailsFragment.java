@@ -395,29 +395,6 @@ public class AppointmentDetailsFragment extends Fragment {
             }
         });
 
-
-        //btn show more and less
-
-        TextView ShowMore = view.findViewById(R.id.btnShowMore);
-        TextView ShowLess = view.findViewById(R.id.btnShowLess);
-        TableLayout tableLayout = view.findViewById(R.id.tableLayout);
-        ShowMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tableLayout.setVisibility(View.VISIBLE);
-                ShowMore.setVisibility(View.INVISIBLE);
-                ShowLess.setVisibility(View.VISIBLE);
-            }
-        });
-        ShowLess.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tableLayout.setVisibility(View.GONE);
-                ShowMore.setVisibility(View.VISIBLE);
-                ShowLess.setVisibility(View.INVISIBLE);
-            }
-        });
-
         return view;
     }
 

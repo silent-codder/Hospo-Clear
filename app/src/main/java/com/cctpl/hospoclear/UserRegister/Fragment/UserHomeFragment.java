@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cctpl.hospoclear.UserRegister.Adapter.BookmarkHospitalAdapter;
+import com.cctpl.hospoclear.UserRegister.Model.BookmarkHospitalData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
@@ -30,25 +33,32 @@ import com.google.gson.internal.$Gson$Preconditions;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UserHomeFragment extends Fragment {
 
     FirebaseFirestore firebaseFirestore;
     TopHospitalAdapter topHospitalAdapter;
     List<HospitalData> hospitalData;
-    RecyclerView recyclerView1;
+    BookmarkHospitalAdapter bookmarkHospitalAdapter;
+    List<BookmarkHospitalData> bookmarkHospitalData;
+    RecyclerView recyclerView1,recyclerView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_home, container, false);
         recyclerView1 = view.findViewById(R.id.hospitalRecycleView);
+        recyclerView = view.findViewById(R.id.hospitalRecycleView2);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        String UserId = firebaseAuth.getCurrentUser().getUid();
 
         //Recycle view
         hospitalData = new ArrayList<>();
         topHospitalAdapter = new TopHospitalAdapter(hospitalData);
 
-        recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView1.setAdapter(topHospitalAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(topHospitalAdapter);
 
         CollectionReference ref = firebaseFirestore.collection("Hospitals");
 
@@ -66,18 +76,51 @@ public class UserHomeFragment extends Fragment {
             }
         });
 
+        bookmarkHospitalData = new ArrayList<>();
+        bookmarkHospitalAdapter = new BookmarkHospitalAdapter(bookmarkHospitalData);
+
+        recyclerView1.setLayoutManager(new GridLayoutManager(getContext(),2));
+        recyclerView1.setAdapter(bookmarkHospitalAdapter);
+
+
+
+        CollectionReference reference = firebaseFirestore.collection("Bookmark-Hospital");
+        Query query = reference.whereEqualTo("UserId",UserId);
+        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                if (value.isEmpty()){
+
+                }else {
+                    recyclerView1.setVisibility(View.VISIBLE);
+                    TextView textView = view.findViewById(R.id.topHospital);
+                    textView.setVisibility(View.VISIBLE);
+                    for (DocumentChange doc : value.getDocumentChanges()){
+                        if (doc.getType() == DocumentChange.Type.ADDED){
+                            BookmarkHospitalData mHospitalData = doc.getDocument().toObject(BookmarkHospitalData.class);
+                            bookmarkHospitalData.add(mHospitalData);
+                            bookmarkHospitalAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            }
+        });
+
         MyCategories[] myCategory = new MyCategories[] {
                new MyCategories("General \nPhysician",R.drawable.stethoscope),
                new MyCategories("Heart \nSpecialist",R.drawable.cardiology),
                new MyCategories("Eye \nSpecialist",R.drawable.eye),
                new MyCategories("Dental \nSurgeon",R.drawable.dental),
-               new MyCategories("Ayurveda",R.drawable.leaves)
+               new MyCategories("Ayurveda",R.drawable.leaves),
+               new MyCategories("Neurologist",R.drawable.neurologist)
         };
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.categoryRecycleView);
         CategoryAdapter adapter = new CategoryAdapter(myCategory);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         recyclerView.setAdapter(adapter);
 
         TextView BtnViewMore = view.findViewById(R.id.btnViewMore);

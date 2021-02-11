@@ -100,6 +100,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:padding="10dp"
+                    android:layout_below="@id/appDate"
                     android:layout_height="60dp"
                     android:background="@drawable/edit_txt_problem_bg"
                     android:hint="Write problem shortly.."
@@ -107,14 +108,13 @@
                     tools:ignore="HardcodedText" />
 
                 <CalendarView
-                    android:layout_below="@id/problem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/appDate"/>
 
                 <Button
                     android:id="@+id/btnNext"
-                    android:layout_below="@id/appDate"
+                    android:layout_below="@id/problem"
                     android:layout_centerHorizontal="true"
                     android:layout_width="200dp"
                     android:layout_height="60dp"

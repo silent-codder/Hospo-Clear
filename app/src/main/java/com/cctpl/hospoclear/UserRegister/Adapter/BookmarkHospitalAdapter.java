@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,9 +30,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.cctpl.hospoclear.R;
+import com.google.gson.internal.$Gson$Preconditions;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BookmarkHospitalAdapter extends RecyclerView.Adapter<BookmarkHospitalAdapter.ViewHolder>{
 
@@ -48,7 +53,7 @@ public class BookmarkHospitalAdapter extends RecyclerView.Adapter<BookmarkHospit
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.top_hospital_view,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.top_hospital,parent,false);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         UserId = firebaseAuth.getCurrentUser().getUid();
@@ -66,10 +71,25 @@ public class BookmarkHospitalAdapter extends RecyclerView.Adapter<BookmarkHospit
         String Contact = bookmarkHospitalData.get(position).getContactNumber();
         String HospitalId = bookmarkHospitalData.get(position).getHospitalId();
 
+        firebaseFirestore.collection("Hospitals").document(HospitalId).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            String ProfileUrl = task.getResult().getString("ProfileImgUrl");
+                            holder.progressBar.setVisibility(View.VISIBLE);
+                            if(ProfileUrl != null){
+                                holder.mHospital.setVisibility(View.INVISIBLE);
+                                Picasso.get().load(ProfileUrl).into(holder.mHospitalProfileImg);
+                            }else {
+                                holder.progressBar.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    }
+                });
 
-        holder.mHospitalName.setText(HospitalName);
-        holder.mCity.setText(City + ",");
-        holder.mState.setText(State);
+
+        holder.mHospitalName.setText(HospitalName + "," +City);
         holder.mContact.setText(Contact);
 
         holder.mBookMarkWhite.setVisibility(View.VISIBLE);
@@ -83,6 +103,9 @@ public class BookmarkHospitalAdapter extends RecyclerView.Adapter<BookmarkHospit
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
                             Toast.makeText(context, "Remove successfully..", Toast.LENGTH_SHORT).show();
+                            bookmarkHospitalData.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position,bookmarkHospitalData.size());
                         }
                     }
                 });
@@ -105,7 +128,7 @@ public class BookmarkHospitalAdapter extends RecyclerView.Adapter<BookmarkHospit
                 });
 
         //button for view hospital doctors
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        holder.mBtnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
@@ -124,18 +147,21 @@ public class BookmarkHospitalAdapter extends RecyclerView.Adapter<BookmarkHospit
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView mHospitalName,mCity,mState,mContact;
+        TextView mHospitalName,mContact;
         ImageView mBookMark,mBookMarkWhite;
-        RelativeLayout relativeLayout;
+        TextView mBtnView;
+        ProgressBar progressBar;
+        CircleImageView mHospitalProfileImg,mHospital;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mHospitalName = itemView.findViewById(R.id.hospitalName);
-            mCity = itemView.findViewById(R.id.city);
-            mState = itemView.findViewById(R.id.state);
-            mContact = itemView.findViewById(R.id.contact);
-            relativeLayout = itemView.findViewById(R.id.relativeLayout);
+            mContact = itemView.findViewById(R.id.hospitalContactNumber);
+            mBtnView = itemView.findViewById(R.id.btnView);
             mBookMark = itemView.findViewById(R.id.bookmark);
             mBookMarkWhite = itemView.findViewById(R.id.bookmark_white);
+            mHospitalProfileImg = itemView.findViewById(R.id.hospitalImg);
+            progressBar = itemView.findViewById(R.id.ImgLoader);
+            mHospital = itemView.findViewById(R.id.hospital);
         }
     }
 }

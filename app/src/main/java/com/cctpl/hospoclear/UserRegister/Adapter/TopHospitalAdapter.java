@@ -169,12 +169,12 @@ public class TopHospitalAdapter extends RecyclerView.Adapter<TopHospitalAdapter.
             mHospitalName = itemView.findViewById(R.id.hospitalName);
             mCity = itemView.findViewById(R.id.city);
             mState = itemView.findViewById(R.id.state);
-            mContact = itemView.findViewById(R.id.contact);
+            mContact = itemView.findViewById(R.id.hospitalContactNumber);
             relativeLayout = itemView.findViewById(R.id.relativeLayout);
             mBookMark = itemView.findViewById(R.id.bookmark);
             mBookMarkWhite = itemView.findViewById(R.id.bookmark_white);
             mHospitalProfileImg = itemView.findViewById(R.id.hospitalImg);
-            mImg = itemView.findViewById(R.id.hospitalIm);
+            mImg = itemView.findViewById(R.id.hospital);
             progressBar = itemView.findViewById(R.id.ImgLoader);
         }
     }

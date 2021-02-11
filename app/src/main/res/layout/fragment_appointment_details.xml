@@ -11,7 +11,7 @@
 
   <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="match_parent">
 
       <RelativeLayout
           android:layout_width="match_parent"
@@ -36,17 +36,17 @@
               android:layout_below="@id/text"
               android:layout_marginTop="10dp"/>
 
-          <TextView
-              android:id="@+id/text2"
-              android:layout_marginTop="10dp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Personal Information :"
-              android:textStyle="bold"
-              android:textSize="@dimen/text_size_small"
-              android:textColor="@color/Primary_color"
-              android:layout_below="@+id/view"
-              tools:ignore="HardcodedText" />
+<!--          <TextView-->
+<!--              android:id="@+id/text2"-->
+<!--              android:layout_marginTop="10dp"-->
+<!--              android:layout_width="wrap_content"-->
+<!--              android:layout_height="wrap_content"-->
+<!--              android:text="Personal Information :"-->
+<!--              android:textStyle="bold"-->
+<!--              android:textSize="@dimen/text_size_small"-->
+<!--              android:textColor="@color/Primary_color"-->
+<!--              android:layout_below="@+id/view"-->
+<!--              tools:ignore="HardcodedText" />-->
 
           <de.hdodenhof.circleimageview.CircleImageView
               android:id="@+id/user"
@@ -54,8 +54,9 @@
               android:layout_height="70dp"
               android:src="@drawable/user"
               app:civ_border_width="0.4dp"
+              android:layout_centerHorizontal="true"
               android:layout_marginStart="8dp"
-              android:layout_below="@id/text2"
+              android:layout_below="@id/view"
               android:layout_marginTop="10dp"/>
           <de.hdodenhof.circleimageview.CircleImageView
               android:id="@+id/userImg"
@@ -64,17 +65,18 @@
               android:src="@drawable/user"
               android:layout_marginStart="8dp"
               app:civ_border_width="0.4dp"
-              android:layout_below="@id/text2"
+              android:layout_centerHorizontal="true"
+              android:layout_below="@id/view"
               android:layout_marginTop="10dp"/>
           <TextView
               android:id="@+id/userName"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Ajinkya Shinde"
-              android:layout_toRightOf="@id/userImg"
-              android:layout_below="@id/text2"
+              android:layout_centerHorizontal="true"
+              android:layout_below="@id/user"
               android:fontFamily="sans-serif-condensed-medium"
-              android:layout_marginTop="10dp"
+              android:layout_marginTop="3dp"
               android:textSize="@dimen/text_size_small"
               android:textStyle="bold"
               android:textColor="@color/Primary_color"
@@ -85,29 +87,24 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="9 July 2021"
+              android:layout_centerHorizontal="true"
               android:fontFamily="sans-serif-condensed-medium"
               android:layout_below="@id/userName"
-              android:layout_toRightOf="@id/userImg"
               android:textSize="@dimen/text_size_extra_small"
               android:textStyle="bold"
               android:textColor="@color/Primary_color"
               android:layout_marginStart="10dp"
               tools:ignore="HardcodedText,RtlHardcoded" />
           <RelativeLayout
-              android:layout_below="@id/appointmentDate"
-              android:layout_toRightOf="@id/status"
-              android:layout_marginTop="3dp"
-              android:layout_width="24dp"
-              android:layout_height="24dp"
-              android:layout_marginStart="10dp"
+              android:layout_below="@id/user"
+              android:layout_width="20dp"
+              android:layout_height="20dp"
+              android:layout_marginTop="-20dp"
+              android:layout_marginStart="-20dp"
+              android:layout_toRightOf="@id/userImg"
               android:id="@+id/circleImg"
               tools:ignore="RtlHardcoded">
-              <de.hdodenhof.circleimageview.CircleImageView
-                  android:layout_width="26dp"
-                  android:layout_height="26dp"
-                  android:visibility="gone"
-                  android:src="@drawable/request"
-                  android:id="@+id/requestImg"/>
+
               <de.hdodenhof.circleimageview.CircleImageView
                   android:layout_width="24dp"
                   android:layout_height="24dp"
@@ -120,6 +117,12 @@
                   android:visibility="gone"
                   android:src="@drawable/complete"
                   android:id="@+id/completeImg"/>
+              <de.hdodenhof.circleimageview.CircleImageView
+                  android:id="@+id/requestImg"
+                  android:layout_width="26dp"
+                  android:layout_height="26dp"
+                  android:src="@drawable/request"
+                  android:visibility="gone" />
           </RelativeLayout>
 
           <TextView
@@ -129,18 +132,27 @@
               android:layout_height="wrap_content"
               android:fontFamily="sans-serif-condensed-medium"
               android:text="Pending Appointment"
-              android:layout_toRightOf="@id/userImg"
-              android:layout_marginStart="10dp"
-              android:layout_marginTop="3dp"
+              android:layout_centerHorizontal="true"
+              android:layout_marginStart="2dp"
+              android:layout_marginTop="5dp"
               android:textSize="@dimen/text_size_extra_small"
+              android:visibility="gone"
               android:textColor="@color/Primary_color"
               tools:ignore="HardcodedText,RtlHardcoded" />
+
+          <View
+              android:id="@+id/view2"
+              android:layout_width="match_parent"
+              android:layout_height="0.4dp"
+              android:layout_marginTop="10dp"
+              android:background="@color/Primary_color"
+              android:layout_below="@id/appointmentDate"/>
 
           <TextView
               android:id="@+id/text3"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_below="@id/userImg"
+              android:layout_below="@id/view2"
               android:layout_marginTop="15dp"
               android:text="Hospital Information : "
               android:textStyle="bold"
@@ -179,83 +191,22 @@
               android:textSize="@dimen/text_size_medium"
               android:textStyle="bold"
               tools:ignore="HardcodedText,UseCompatTextViewDrawableXml" />
-          <TextView
-              android:id="@+id/text4"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Other Details :"
-              android:textStyle="bold"
-              android:textSize="@dimen/text_size_small"
-              android:textColor="@color/Primary_color"
-              android:layout_below="@id/doctorName"
-              android:layout_marginTop="10dp"
-              tools:ignore="HardcodedText" />
-          <Button
-              android:id="@+id/btnAttachFile"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Attach files"
-              android:drawableRight="@drawable/ic_attach_file"
-              android:fontFamily="sans-serif-condensed-medium"
-              android:textAllCaps="false"
-              android:layout_below="@id/text4"
-              android:layout_marginTop="10dp"
-              android:textStyle="bold"
-              tools:ignore="HardcodedText,RtlHardcoded" />
-
-          <Button
-              android:id="@+id/btnAddBill"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Create Bill"
-              android:layout_marginStart="20dp"
-              android:layout_toEndOf="@id/btnAttachFile"
-              android:layout_below="@id/text4"
-              android:drawableRight="@drawable/ic_attach_file"
-              android:fontFamily="sans-serif-condensed-medium"
-              android:textAllCaps="false"
-              android:layout_marginTop="10dp"
-              android:textStyle="bold"
-              tools:ignore="HardcodedText,RtlHardcoded" />
-
-          <TextView
-              android:id="@+id/btnShowMore"
-              android:layout_width="100dp"
-              android:layout_height="wrap_content"
-              android:text="Show More.."
-              android:layout_below="@id/btnAttachFile"
-              android:layout_marginTop="10dp"
-              android:textSize="@dimen/text_size_medium"
-              android:textStyle="bold"
-              tools:ignore="HardcodedText" />
-          <TextView
-              android:id="@+id/btnShowLess"
-              android:visibility="invisible"
-              android:layout_width="100dp"
-              android:layout_height="wrap_content"
-              android:text="Show less.."
-              android:layout_below="@id/btnAttachFile"
-              android:layout_marginTop="10dp"
-              android:textSize="@dimen/text_size_medium"
-              android:textStyle="bold"
-              tools:ignore="HardcodedText" />
           <View
-              android:id="@+id/view3"
-              android:layout_width="90dp"
-              android:layout_height="1dp"
-              android:layout_below="@id/btnShowLess"
-              android:background="@color/purple_700"/>
-
+              android:id="@+id/view4"
+              android:layout_width="match_parent"
+              android:layout_height="0.4dp"
+              android:background="@color/Primary_color"
+              android:layout_below="@id/doctorName"
+              android:layout_marginTop="10dp"/>
 
 
           <TableLayout
               android:id="@+id/tableLayout"
-              android:visibility="gone"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:paddingStart="10dp"
               android:paddingEnd="10dp"
-              android:layout_below="@id/view3"
+              android:layout_below="@id/view4"
               android:orientation="horizontal">
 
               <TableRow
@@ -369,14 +320,50 @@
 
           </TableLayout>
 
+         <RelativeLayout
+             android:id="@+id/relativeLayout"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/tableLayout"
+             android:gravity="center_horizontal">
+
+             <Button
+                 android:id="@+id/btnAttachFile"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Attach files"
+                 android:drawableRight="@drawable/ic_attach_file"
+                 android:fontFamily="sans-serif-condensed-medium"
+                 android:textAllCaps="false"
+                 android:layout_marginTop="10dp"
+                 android:visibility="gone"
+                 android:textStyle="bold"
+                 tools:ignore="HardcodedText,RtlHardcoded" />
+
+             <Button
+                 android:id="@+id/btnAddBill"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:text="Create Bill"
+                 android:layout_marginStart="20dp"
+                 android:layout_toEndOf="@id/btnAttachFile"
+                 android:drawableRight="@drawable/ic_attach_file"
+                 android:fontFamily="sans-serif-condensed-medium"
+                 android:textAllCaps="false"
+                 android:layout_marginTop="10dp"
+                 android:textStyle="bold"
+                 tools:ignore="HardcodedText,RtlHardcoded" />
+
+         </RelativeLayout>
+
           <Button
               android:id="@+id/btnCompleteAppointment"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="Complete Appointment"
-              android:layout_below="@id/tableLayout"
+              android:layout_below="@id/relativeLayout"
               android:textColor="@color/white"
-              android:visibility="invisible"
+              android:visibility="gone"
               android:padding="10dp"
               android:textStyle="bold"
               android:textAllCaps="false"
@@ -384,7 +371,17 @@
               android:layout_marginTop="20dp"
               tools:ignore="HardcodedText" />
 
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/Clearcode"
+              android:layout_centerHorizontal="true"
+              android:layout_alignParentBottom="true"
+              android:layout_below="@id/btnCompleteAppointment"
+              android:textSize="@dimen/text_size_extra_small"/>
+
       </RelativeLayout>
+
 
   </ScrollView>
 

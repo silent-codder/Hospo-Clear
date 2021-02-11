@@ -20,29 +20,34 @@
     <RelativeLayout
         android:id="@+id/recycleViewLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="20dp"
         android:layout_below="@+id/text"
         android:background="@drawable/layout_bg">
 
-       <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:id="@+id/refresh">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recycleView"/>
 
-           <androidx.recyclerview.widget.RecyclerView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:id="@+id/recycleView"/>
-
-       </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
+        <Button
+            android:id="@+id/btnAttachFile"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:text="Attach file"
+            android:textAllCaps="false"
+            android:layout_centerHorizontal="true"
+            android:drawableEnd="@drawable/ic_attach_file"
+            android:layout_below="@id/recycleView"
+            tools:ignore="HardcodedText" />
 
         <ImageView
             android:id="@+id/search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_search"
             android:layout_centerHorizontal="true"/>
 
@@ -57,19 +62,8 @@
             android:visibility="invisible"
             tools:ignore="HardcodedText" />
 
-        <Button
-            android:id="@+id/btnAttachFile"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="Attach file"
-            android:textAllCaps="false"
-            android:layout_centerHorizontal="true"
-            android:drawableEnd="@drawable/ic_attach_file"
-            android:layout_below="@id/notFoundText"
-            tools:ignore="HardcodedText" />
-
 
     </RelativeLayout>
+
 
 </RelativeLayout>

@@ -25,11 +25,13 @@ import com.cctpl.hospoclear.UserRegister.Fragment.AppointmentDetailsFragment;
 import com.cctpl.hospoclear.UserRegister.Model.AppointmentData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.cctpl.hospoclear.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -114,6 +116,22 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 fragment.setArguments(bundle);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null)
                         .commit();
+            }
+        });
+
+        holder.mMoreInfo.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                HashMap<String,Object> map = new HashMap<>();
+                map.put("Status","5");
+                firebaseFirestore.collection("Appointments").document(AppointmentId)
+                        .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(context, "Delete appointment successfully..", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
             }
         });
     }

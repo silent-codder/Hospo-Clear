@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
-    app:cardBackgroundColor="#150441"
+    app:cardBackgroundColor="@color/Primary_color"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="10dp">
 
@@ -20,7 +20,7 @@
             android:src="@drawable/hospital"
             app:civ_border_width="0.8dp"
             app:civ_border_color="@color/white"
-            android:id="@+id/hospitalIm"/>
+            android:id="@+id/hospital"/>
         <ProgressBar
             android:visibility="visible"
             android:layout_width="40dp"
@@ -79,7 +79,7 @@
             android:layout_below="@id/hospitalName"
             tools:ignore="HardcodedText" />
         <TextView
-            android:id="@+id/contact"
+            android:id="@+id/hospitalContactNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
@@ -117,5 +117,7 @@
             android:layout_alignParentEnd="true"/>
 
     </RelativeLayout>
+
+
 
 </androidx.cardview.widget.CardView>

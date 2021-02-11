@@ -27,7 +27,7 @@
         <activity android:name=".DoctorRegister.RegisterActivity.SelectHospitalActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".DoctorRegister.DoctorMainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity android:name=".DoctorRegister.RegisterActivity.DoctorRegisterActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".DoctorRegister.RegisterActivity.AddDoctorActivity"

@@ -43,7 +43,6 @@ public class ViewFilesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_files, container, false);
-        swipeRefreshLayout = view.findViewById(R.id.refresh);
         recyclerView = view.findViewById(R.id.recycleView);
         imageView = view.findViewById(R.id.search);
         mBtnAttachFile = view.findViewById(R.id.btnAttachFile);
@@ -57,20 +56,12 @@ public class ViewFilesFragment extends Fragment {
             textView1.setText(type);
         }
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadData();
-            }
-        });
-
         loadData();
 
         return view;
     }
 
     private void loadData() {
-        swipeRefreshLayout.setRefreshing(false);
         appointmentData = new ArrayList<>();
         viewFilesAdapter = new ViewFilesAdapter(appointmentData);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));

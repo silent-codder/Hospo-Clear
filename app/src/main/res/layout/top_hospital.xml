@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:orientation="horizontal"
+    app:cardBackgroundColor="@color/Primary_color"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp">
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/relativeLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:padding="10dp">-->
+
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:layout_width="80dp"-->
+<!--            android:layout_height="80dp"-->
+<!--            android:src="@drawable/hospital"-->
+<!--            app:civ_border_width="0.8dp"-->
+<!--            app:civ_border_color="@color/white"-->
+<!--            android:id="@+id/hospitalIm"/>-->
+<!--        <ProgressBar-->
+<!--            android:visibility="visible"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:src="@drawable/hospital"-->
+<!--            android:id="@+id/ImgLoader"/>-->
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:layout_width="80dp"-->
+<!--            android:layout_height="80dp"-->
+<!--            android:src="@drawable/hospital"-->
+<!--            app:civ_border_width="0.8dp"-->
+<!--            android:visibility="visible"-->
+<!--            app:civ_border_color="@color/white"-->
+<!--            android:id="@+id/hospitalImg"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/hospitalName"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text=""-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:layout_toEndOf="@id/hospitalImg"-->
+<!--            android:layout_marginStart="14dp"-->
+<!--            android:textSize="@dimen/text_size_medium"-->
+<!--            android:fontFamily="sans-serif-condensed-medium"-->
+<!--            android:textStyle="bold"-->
+<!--            tools:ignore="HardcodedText" />-->
+<!--        <TextView-->
+<!--            android:id="@+id/city"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:text=""-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="@dimen/text_size_small"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:fontFamily="sans-serif-condensed-medium"-->
+<!--            android:layout_toEndOf="@id/hospitalImg"-->
+<!--            android:layout_below="@id/hospitalName"-->
+<!--            tools:ignore="HardcodedText"-->
+<!--            app:drawableStartCompat="@drawable/ic_location" />-->
+<!--        <TextView-->
+<!--            android:id="@+id/state"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:text=""-->
+<!--            android:textSize="@dimen/text_size_small"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:fontFamily="sans-serif-condensed-medium"-->
+<!--            android:layout_toEndOf="@id/city"-->
+<!--            android:layout_below="@id/hospitalName"-->
+<!--            tools:ignore="HardcodedText" />-->
+<!--        <TextView-->
+<!--            android:id="@+id/contact"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text=""-->
+<!--            android:textSize="@dimen/text_size_small"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:fontFamily="sans-serif-condensed-medium"-->
+<!--            android:layout_toEndOf="@id/hospitalImg"-->
+<!--            android:layout_below="@id/city"-->
+<!--            tools:ignore="HardcodedText"-->
+<!--            app:drawableStartCompat="@drawable/ic_phone" />-->
+
+<!--    </RelativeLayout>-->
+
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_below="@id/relativeLayout">
+
+        <ImageView
+            android:id="@+id/bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_save"
+            android:visibility="visible"
+            android:layout_alignParentEnd="true"/>
+        <ImageView
+            android:id="@+id/bookmark_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_save_white"
+            android:visibility="gone"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="170dp"
+        android:layout_height="250dp"
+        android:padding="20dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/hospital"
+            app:civ_border_width="0.8dp"
+            app:civ_border_color="@color/white"
+            android:id="@+id/hospital"/>
+        <ProgressBar
+            android:visibility="visible"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="30dp"
+            android:src="@drawable/hospital"
+            android:id="@+id/ImgLoader"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/hospitalImg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/hospital"/>
+        <TextView
+            android:id="@+id/hospitalName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/text_size_small"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/hospitalImg"
+            android:text="Life Line Hospital, Phaltan"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:id="@+id/hospitalContactNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1800 210 2223"
+            android:layout_below="@id/hospitalName"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:drawableStart="@drawable/ic_phone"
+            tools:ignore="HardcodedText,RtlHardcoded,UseCompatTextViewDrawableXml" />
+
+        <TextView
+            android:id="@+id/btnView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View"
+            android:background="@drawable/edit_txt_problem_bg"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/Primary_color"
+            android:layout_alignParentBottom="true"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
