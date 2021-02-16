@@ -91,6 +91,15 @@ public class PersonalProfileFragment extends Fragment {
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
             }
         });
+
+        Button button = view.findViewById(R.id.btnTimeSlots);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new TimeSlotFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+            }
+        });
         return view;
     }
 }

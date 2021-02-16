@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    tools:ignore="HardcodedText">
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/time_layout_bg"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/timeSlot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11 : 00 AM"
+            android:layout_marginStart="5dp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-medium"
+            tools:ignore="HardcodedText" />
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayoutRed"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@drawable/select_time_layout_bg"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/timeSlotRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-medium"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

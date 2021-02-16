@@ -139,7 +139,7 @@ public class BookAppointmentFragment extends Fragment {
                 }else if (formattedDate == null || date == null){
                     Toast.makeText(getContext(), "Choose appointment date", Toast.LENGTH_SHORT).show();
                 }else {
-                    Fragment fragment = new SelectUserFragment();
+                    Fragment fragment = new SelectTimeSlotFragment();
                     Bundle bundle = new Bundle();
                     bundle.putString("Problem",problem);
                     bundle.putString("Date",date);

@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cctpl.hospoclear.HospitalRegister.Fragment.TimeSlotFragment;
 import com.cctpl.hospoclear.UserRegister.Model.DoctorData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;

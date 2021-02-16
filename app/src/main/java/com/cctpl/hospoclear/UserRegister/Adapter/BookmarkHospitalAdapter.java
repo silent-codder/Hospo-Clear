@@ -8,35 +8,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.cctpl.hospoclear.UserRegister.Fragment.TopHospitalDoctorFragment;
 import com.cctpl.hospoclear.UserRegister.Model.BookmarkHospitalData;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.cctpl.hospoclear.R;
-import com.google.gson.internal.$Gson$Preconditions;
 import com.squareup.picasso.Picasso;
-
-import java.util.HashMap;
 import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class BookmarkHospitalAdapter extends RecyclerView.Adapter<BookmarkHospitalAdapter.ViewHolder>{
 

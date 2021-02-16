@@ -100,6 +100,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:padding="10dp"
+                    android:text="Test"
                     android:layout_below="@id/appDate"
                     android:layout_height="60dp"
                     android:background="@drawable/edit_txt_problem_bg"

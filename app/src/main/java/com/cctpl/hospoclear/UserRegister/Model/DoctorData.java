@@ -6,7 +6,40 @@ public class DoctorData extends DoctorId {
     String Qualification;
     String Speciality;
     String HospitalId;
+    String Hr;
+    String Min;
+    String AmOrPm;
 
+
+    public DoctorData(String hr, String min, String amOrPm) {
+        Hr = hr;
+        Min = min;
+        AmOrPm = amOrPm;
+    }
+
+    public String getHr() {
+        return Hr;
+    }
+
+    public void setHr(String hr) {
+        Hr = hr;
+    }
+
+    public String getMin() {
+        return Min;
+    }
+
+    public void setMin(String min) {
+        Min = min;
+    }
+
+    public String getAmOrPm() {
+        return AmOrPm;
+    }
+
+    public void setAmOrPm(String amOrPm) {
+        AmOrPm = amOrPm;
+    }
 
     public String getDoctorBio() {
         return DoctorBio;
