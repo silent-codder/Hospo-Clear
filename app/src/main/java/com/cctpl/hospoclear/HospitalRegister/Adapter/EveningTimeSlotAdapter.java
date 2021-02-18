@@ -3,30 +3,29 @@ package com.cctpl.hospoclear.HospitalRegister.Adapter;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cctpl.hospoclear.R;
-import com.cctpl.hospoclear.UserRegister.Model.DoctorData;
+import com.cctpl.hospoclear.UserRegister.Model.EveningTimeSlotData;
 import com.cctpl.hospoclear.UserRegister.Model.TimeSlotData;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-public class TimeSlotAdapter extends RecyclerView.Adapter<TimeSlotAdapter.ViewHolder> {
-    List<TimeSlotData> doctorData;
+public class EveningTimeSlotAdapter extends RecyclerView.Adapter<EveningTimeSlotAdapter.ViewHolder> {
+    List<EveningTimeSlotData> eveningTimeSlotData;
     FirebaseFirestore firebaseFirestore;
-    public TimeSlotAdapter(List<TimeSlotData> doctorData) {
-        this.doctorData = doctorData;
+
+    public EveningTimeSlotAdapter(List<EveningTimeSlotData> eveningTimeSlotData) {
+        this.eveningTimeSlotData = eveningTimeSlotData;
     }
 
     @NonNull
@@ -39,9 +38,9 @@ public class TimeSlotAdapter extends RecyclerView.Adapter<TimeSlotAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String TimeSlot = doctorData.get(position).getTimeSlot();
-        String Id = doctorData.get(position).TimeSlotId;
-        String DoctorId = doctorData.get(position).getDoctorId();
+        String TimeSlot = eveningTimeSlotData.get(position).getTimeSlot();
+        String Id = eveningTimeSlotData.get(position).TimeSlotId;
+        String DoctorId = eveningTimeSlotData.get(position).getDoctorId();
         holder.mTimeSlot.setText(TimeSlot);
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
@@ -59,10 +58,10 @@ public class TimeSlotAdapter extends RecyclerView.Adapter<TimeSlotAdapter.ViewHo
                     @Override
                     public void onClick(View v) {
                         firebaseFirestore.collection("Doctors").document(DoctorId)
-                                .collection("Morning").document(Id).delete();
-                        doctorData.remove(position);
+                                .collection("Evening").document(Id).delete();
+                        eveningTimeSlotData.remove(position);
                         notifyItemRemoved(position);
-                        notifyItemRangeChanged(position,doctorData.size());
+                        notifyItemRangeChanged(position,eveningTimeSlotData.size());
                         dialog.dismiss();
 
                     }
@@ -79,7 +78,7 @@ public class TimeSlotAdapter extends RecyclerView.Adapter<TimeSlotAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return doctorData.size();
+        return eveningTimeSlotData.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

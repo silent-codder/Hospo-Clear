@@ -162,6 +162,7 @@
                tools:ignore="HardcodedText" />
 
            <Button
+               android:visibility="gone"
                android:id="@+id/requestAppointment"
                android:layout_below="@id/aboutDoctor"
                android:layout_width="250dp"

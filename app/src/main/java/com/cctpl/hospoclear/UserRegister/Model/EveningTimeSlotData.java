@@ -1,13 +1,13 @@
 package com.cctpl.hospoclear.UserRegister.Model;
 
-public class TimeSlotData extends TimeSlotId{
+public class EveningTimeSlotData extends EveningTimeSlotId{
    String TimeSlot;
    Long TimeStamp;
    String DoctorId;
-    public TimeSlotData() {
+    public EveningTimeSlotData() {
     }
 
-    public TimeSlotData(String timeSlot, Long timeStamp, String doctorId) {
+    public EveningTimeSlotData(String timeSlot, Long timeStamp, String doctorId) {
         TimeSlot = timeSlot;
         TimeStamp = timeStamp;
         DoctorId = doctorId;

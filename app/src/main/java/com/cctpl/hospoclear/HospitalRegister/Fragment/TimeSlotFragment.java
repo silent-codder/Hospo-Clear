@@ -1,5 +1,6 @@
 package com.cctpl.hospoclear.HospitalRegister.Fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,14 +17,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cctpl.hospoclear.HospitalRegister.Adapter.EveningTimeSlotAdapter;
 import com.cctpl.hospoclear.HospitalRegister.Adapter.TimeSlotAdapter;
 import com.cctpl.hospoclear.R;
 import com.cctpl.hospoclear.UserRegister.Model.AppointmentData;
 import com.cctpl.hospoclear.UserRegister.Model.DoctorData;
 import com.cctpl.hospoclear.UserRegister.Model.DoctorId;
+import com.cctpl.hospoclear.UserRegister.Model.EveningTimeSlotData;
 import com.cctpl.hospoclear.UserRegister.Model.TimeSlotData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,11 +52,13 @@ public class TimeSlotFragment extends Fragment {
     EditText mHr,mMin,mToHr,mToMin;
     RadioButton radioButtonAM,radioButtonPM,radioButtonToAM,radioButtonToPM;
     Button mAddSlot;
-    String AmOrPm,ToAmOrPm,DoctorId;
+    String AmOrPm,ToAmOrPm,DoctorId,MIN,Section;
     FirebaseAuth firebaseAuth;
-    RecyclerView recyclerView;
+    RecyclerView recyclerView,recyclerView2;
     List<TimeSlotData> doctorData;
+    List<EveningTimeSlotData> eveningTimeSlotData;
     TimeSlotAdapter timeSlotAdapter;
+    EveningTimeSlotAdapter eveningTimeSlotAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +67,12 @@ public class TimeSlotFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         recyclerView = view.findViewById(R.id.recycleView);
+        recyclerView2 = view.findViewById(R.id.recycleView2);
         DoctorId = firebaseAuth.getCurrentUser().getUid();
+
+        RelativeLayout relativeLayoutFrom = view.findViewById(R.id.layoutFrom);
+        RelativeLayout relativeLayoutTo = view.findViewById(R.id.layoutTo);
+        RelativeLayout relativeLayoutTime = view.findViewById(R.id.layoutTime);
 
         mHr = view.findViewById(R.id.hr);
         mMin = view.findViewById(R.id.min);
@@ -71,70 +83,152 @@ public class TimeSlotFragment extends Fragment {
         radioButtonToAM = view.findViewById(R.id.toAm);
         radioButtonToPM = view.findViewById(R.id.toPm);
         mAddSlot = view.findViewById(R.id.btnAddSlot);
+        TextView textView = view.findViewById(R.id.text2);
+        RadioGroup relativeLayout = view.findViewById(R.id.radioGroup1);
+        Button mBtnCancel = view.findViewById(R.id.btnCancel);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View v) {
+                relativeLayout.setVisibility(View.VISIBLE);
+                textView.setText("Set Time");
+            }
+        });
+
+        RadioButton radioButtonMorningSec = view.findViewById(R.id.morningSection);
+        RadioButton radioButtonEveningSec = view.findViewById(R.id.eveningSection);
+
+        radioButtonEveningSec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Section = "Evening";
+                relativeLayoutFrom.setVisibility(View.VISIBLE);
+            }
+        });
+        radioButtonMorningSec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Section = "Morning";
+                relativeLayoutFrom.setVisibility(View.VISIBLE);
+            }
+        });
+
+
         radioButtonPM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AmOrPm = "PM";
+                relativeLayoutTo.setVisibility(View.VISIBLE);
             }
         });
         radioButtonAM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AmOrPm = "AM";
+                relativeLayoutTo.setVisibility(View.VISIBLE);
             }
         });
         radioButtonToPM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ToAmOrPm = "PM";
+                relativeLayoutTime.setVisibility(View.VISIBLE);
             }
         });
         radioButtonToAM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ToAmOrPm = "AM";
+                relativeLayoutTime.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        RadioButton MIN_10 = view.findViewById(R.id.Min10);
+        RadioButton MIN_15 = view.findViewById(R.id.Min15);
+        RadioButton MIN_20 = view.findViewById(R.id.Min20);
+        RadioButton MIN_30 = view.findViewById(R.id.Min30);
+
+
+        MIN_15.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MIN = "15";
+                mAddSlot.setVisibility(View.VISIBLE);
+                mBtnCancel.setVisibility(View.VISIBLE);
+            }
+        });
+        MIN_30.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MIN = "30";
+                mAddSlot.setVisibility(View.VISIBLE);
+                mBtnCancel.setVisibility(View.VISIBLE);
+            }
+        });
+        MIN_20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MIN = "20";
+                mAddSlot.setVisibility(View.VISIBLE);
+                mBtnCancel.setVisibility(View.VISIBLE);
+            }
+        });
+        MIN_10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MIN = "10";
+                mAddSlot.setVisibility(View.VISIBLE);
+                mBtnCancel.setVisibility(View.VISIBLE);
             }
         });
 
         mAddSlot.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 String FromHr = mHr.getText().toString();
                 String FromMin = mMin.getText().toString();
                 String ToHr = mToHr.getText().toString();
                 String ToMin = mToMin.getText().toString();
-//                String Hr = mHr.getText().toString();
-//                String Min = mMin.getText().toString();
-//                if (TextUtils.isEmpty(Hr)){
-//                    mHr.setError("Hr");
-//                }else if (TextUtils.isEmpty(Min)){
-//                    mMin.setError("Min");
-//                }else if (TextUtils.isEmpty(AmOrPm)){
-//                    Toast.makeText(getContext(), "Select AM or PM", Toast.LENGTH_SHORT).show();
-//                }else {
-//                    HashMap<String ,Object> map = new HashMap<>();
-//                    map.put("Hr",Hr);
-//                    map.put("Min",Min);
-//                    map.put("AmOrPm",AmOrPm);
-//                    map.put("DoctorId",DoctorId);
-//                    map.put("TimeStamp",System.currentTimeMillis());
-//                    firebaseFirestore.collection("Doctors").document(DoctorId).collection("TimeSlots")
-//                            .add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentReference> task) {
-//                            if (task.isSuccessful()){
-//                                Toast toast = Toast.makeText(getActivity(), "Added Time slot..", Toast.LENGTH_SHORT);
-//                                toast.setGravity(Gravity.CENTER,0,0);
-//                                toast.show();
-//                                mHr.setText("");
-//                                mMin.setText("");
-//                                radioButtonAM.clearFocus();
-//                                radioButtonPM.clearFocus();
-//                            }
-//                        }
-//                    });
-//                }
-                CreateTimeSlot(FromHr,FromMin,ToHr,ToMin,AmOrPm,ToAmOrPm);
+
+                if (TextUtils.isEmpty(FromHr)){
+                    mHr.setError("Empty");
+                }else if (TextUtils.isEmpty(FromMin)){
+                    mMin.setError("Empty");
+                }else if (TextUtils.isEmpty(ToHr)){
+                    mToHr.setError("Empty");
+                }else if (TextUtils.isEmpty(ToMin)){
+                    mToMin.setError("Empty");
+                }else if (TextUtils.isEmpty(AmOrPm)){
+                    Toast.makeText(getContext(), "Set AM Or PM", Toast.LENGTH_SHORT).show();
+                }else if (TextUtils.isEmpty(ToAmOrPm)){
+                    Toast.makeText(getContext(), "Set AM Or PM", Toast.LENGTH_SHORT).show();
+                }else if (TextUtils.isEmpty(MIN)){
+                    Toast.makeText(getContext(), "Set appointment time", Toast.LENGTH_SHORT).show();
+                }else {
+                    CreateTimeSlot(FromHr,FromMin,ToHr,ToMin,AmOrPm,ToAmOrPm,MIN);
+                    relativeLayoutFrom.setVisibility(View.GONE);
+                    relativeLayoutTo.setVisibility(View.GONE);
+                    relativeLayoutTime.setVisibility(View.GONE);
+                    relativeLayout.setVisibility(View.GONE);
+                    mBtnCancel.setVisibility(View.GONE);
+                    mAddSlot.setVisibility(View.GONE);
+                    textView.setText("Create Slots");
+                }
+            }
+        });
+        mBtnCancel.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View v) {
+                relativeLayoutFrom.setVisibility(View.GONE);
+                relativeLayoutTo.setVisibility(View.GONE);
+                relativeLayoutTime.setVisibility(View.GONE);
+                relativeLayout.setVisibility(View.GONE);
+                mBtnCancel.setVisibility(View.GONE);
+                mAddSlot.setVisibility(View.GONE);
+                textView.setText("Create Slots");
             }
         });
 
@@ -144,7 +238,8 @@ public class TimeSlotFragment extends Fragment {
         recyclerView.setAdapter(timeSlotAdapter);
         recyclerView.setHasFixedSize(true);
 
-       Query query =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("TimeSlots");
+       Query query =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("Morning")
+               .orderBy("TimeStamp", Query.Direction.ASCENDING);
                 query.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -159,14 +254,37 @@ public class TimeSlotFragment extends Fragment {
                         }
                     }
                 });
+
+        eveningTimeSlotData = new ArrayList<>();
+        eveningTimeSlotAdapter = new EveningTimeSlotAdapter(eveningTimeSlotData);
+        recyclerView2.setLayoutManager(new GridLayoutManager(getContext(),3));
+        recyclerView2.setAdapter(eveningTimeSlotAdapter);
+        recyclerView2.setHasFixedSize(true);
+
+        Query query2 =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("Evening")
+                .orderBy("TimeStamp", Query.Direction.ASCENDING);
+        query2.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                for (DocumentChange doc : value.getDocumentChanges()){
+                    if (doc.getType() == DocumentChange.Type.ADDED){
+                        String timeSlotId = doc.getDocument().getId();
+                        EveningTimeSlotData mAppointmentData = doc.getDocument().toObject(EveningTimeSlotData.class).withId(timeSlotId);
+                        eveningTimeSlotData.add(mAppointmentData);
+                        eveningTimeSlotAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
         return view;
     }
 
-    private void CreateTimeSlot(String fromHr, String fromMin, String toHr, String toMin, String amOrPm, String toAmOrPm) {
+    private void CreateTimeSlot(String fromHr, String fromMin, String toHr, String toMin, String amOrPm, String toAmOrPm,String Min) {
         int start_ms = Integer.parseInt(fromHr); int start_min = Integer.parseInt(fromMin);
         int end_ms = Integer.parseInt(toHr);  int end_min = Integer.parseInt(toMin);
 
-        int SlotTime = 30;
+        int SlotTime = Integer.parseInt(Min);
         int startMs = 0;
 
         int rmin =0 ;
@@ -232,7 +350,6 @@ public class TimeSlotFragment extends Fragment {
         int numOfSlot = finalTotalMin/SlotTime ;
         numOfSlot += 4;
         for(int i =0 ;i< numOfSlot;i++){
-            long TimeStamp = System.currentTimeMillis();
             if(start_min<60){
                 int min = start_min + SlotTime;
                 if(start_ms < 12 && start_timezon!=End_timezon){
@@ -240,11 +357,15 @@ public class TimeSlotFragment extends Fragment {
 //                        System.out.println( start_ms +" : " + "00"  + " AM" );
                         HashMap<String,Object> map = new HashMap<>();
                         map.put("TimeSlot",start_ms + " : 00 AM" );
+                        map.put("DoctorId",DoctorId);
+                        map.put("TimeStamp",System.currentTimeMillis());
                         AddData(map);
                     }else{
 //                        System.out.println( start_ms +" : " + start_min  + " AM" );
                         HashMap<String,Object> map = new HashMap<>();
                         map.put("TimeSlot",start_ms + " : " + start_min + " AM" );
+                        map.put("DoctorId",DoctorId);
+                        map.put("TimeStamp",System.currentTimeMillis());
                         AddData(map);
                     }
 
@@ -253,11 +374,15 @@ public class TimeSlotFragment extends Fragment {
 //                        System.out.println( start_ms +" : " + "00"  + " " + start_timezon );
                         HashMap<String,Object> map = new HashMap<>();
                         map.put("TimeSlot",start_ms + " : 00 " + start_timezon );
+                        map.put("DoctorId",DoctorId);
+                        map.put("TimeStamp",System.currentTimeMillis());
                         AddData(map);
                     }else{
 //                        System.out.println( start_ms +" : " + start_min  + " " + start_timezon );
                         HashMap<String,Object> map = new HashMap<>();
                         map.put("TimeSlot",start_ms + " : " + start_min + " " + start_timezon );
+                        map.put("DoctorId",DoctorId);
+                        map.put("TimeStamp",System.currentTimeMillis());
                         AddData(map);
                     }
                 }else{
@@ -267,11 +392,15 @@ public class TimeSlotFragment extends Fragment {
 //                            System.out.println( start_ms +" : " + "00"  + " PM" );
                             HashMap<String,Object> map = new HashMap<>();
                             map.put("TimeSlot",start_ms + " : 00 PM");
+                            map.put("DoctorId",DoctorId);
+                            map.put("TimeStamp",System.currentTimeMillis());
                             AddData(map);
                         }else{
 //                            System.out.println( start_ms +" : " + start_min  + " PM" );
                             HashMap<String,Object> map = new HashMap<>();
                             map.put("TimeSlot",start_ms + " : " + start_min + " PM" );
+                            map.put("DoctorId",DoctorId);
+                            map.put("TimeStamp",System.currentTimeMillis());
                             AddData(map);
                         }
                     }
@@ -283,11 +412,15 @@ public class TimeSlotFragment extends Fragment {
 //                            System.out.println( startMs +" : " + "00"  + " PM" );
                             HashMap<String,Object> map = new HashMap<>();
                             map.put("TimeSlot",startMs + " : 00 PM");
+                            map.put("DoctorId",DoctorId);
+                            map.put("TimeStamp",System.currentTimeMillis());
                             AddData(map);
                         }else{
 //                            System.out.println( startMs +" : " + start_min  + " PM" );
                             HashMap<String,Object> map = new HashMap<>();
                             map.put("TimeSlot",startMs + " : " + start_min + " PM" );
+                            map.put("DoctorId",DoctorId);
+                            map.put("TimeStamp",System.currentTimeMillis());
                             AddData(map);
                         }
                     }
@@ -303,12 +436,12 @@ public class TimeSlotFragment extends Fragment {
     }
 
     private void AddData(HashMap<String, Object> map) {
-        firebaseFirestore.collection("Doctors").document(DoctorId).collection("TimeSlots")
+        firebaseFirestore.collection("Doctors").document(DoctorId).collection(Section)
                 .add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(getActivity(), "Done", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

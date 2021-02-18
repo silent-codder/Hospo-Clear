@@ -32,8 +32,7 @@
             android:src="@drawable/user"
             android:layout_alignParentEnd="true"
             android:layout_margin="10dp"
-            app:civ_border_width="0.5dp"
-            app:civ_border_color="@color/purple_700"/>
+            app:civ_border_width="0.5dp"/>
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userImg"
             android:layout_width="40dp"
@@ -41,9 +40,7 @@
             android:src="@drawable/user"
             android:layout_alignParentEnd="true"
             android:layout_margin="10dp"
-            app:civ_border_width="0.5dp"
-            app:civ_border_color="@color/purple_700"/>
-
+            app:civ_border_width="0.5dp"/>
 
     </RelativeLayout>
 

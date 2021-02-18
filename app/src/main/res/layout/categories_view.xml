@@ -7,12 +7,12 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="230dp">
+        android:layout_height="170dp">
 
        <RelativeLayout
            android:id="@+id/layout"
-           android:layout_width="140dp"
-           android:layout_height="150dp"
+           android:layout_width="100dp"
+           android:layout_height="100dp"
            android:background="@drawable/view_bg"
            android:layout_alignParentBottom="true"
            android:layout_marginStart="10dp"
@@ -24,20 +24,20 @@
                android:layout_height="wrap_content"
                android:text="General \nPhysician"
                android:textStyle="bold"
-               android:textSize="@dimen/text_size_large"
+               android:textSize="@dimen/text_size_small"
+               android:layout_centerHorizontal="true"
+               android:layout_centerVertical="true"
                android:textColor="@color/white"
                android:fontFamily="sans-serif-condensed-medium"
-               android:layout_alignParentBottom="true"
-               android:layout_margin="30dp"
                tools:ignore="HardcodedText" />
 
        </RelativeLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="-60dp"
             android:src="@drawable/stethoscope"
             android:layout_toRightOf="@id/layout"/>

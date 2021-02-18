@@ -6,265 +6,377 @@
     android:layout_marginTop="56dp"
     tools:context=".HospitalRegister.Fragment.TimeSlotFragment">
 
-   <RelativeLayout
+   <ScrollView
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:padding="20dp"
-       tools:ignore="HardcodedText">
+       android:layout_height="match_parent">
 
-       <TextView
-           android:id="@+id/text"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Update your time slots"
-           android:textSize="@dimen/text_size_medium"
-           android:textStyle="bold"
-           android:textColor="@color/purple_500"
-           android:layout_centerHorizontal="true"
-           tools:ignore="HardcodedText" />
-       
-      <RelativeLayout
-          android:id="@+id/relativeLayout"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_below="@id/text"
-          android:gravity="center"
-          android:layout_centerVertical="true"
-          android:padding="10dp"
-          android:background="@drawable/edit_txt_problem_bg"
-          android:layout_marginTop="20dp">
-
-          <TextView
-              android:id="@+id/text2"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Set time"
-              android:textStyle="bold"
-              android:layout_centerHorizontal="true"
-              android:textColor="@color/Primary_color"
-              android:layout_marginTop="20dp"
-              tools:ignore="HardcodedText" />
-
-        <RelativeLayout
-            android:id="@+id/layoutFrom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text2">
-
-            <TextView
-                android:id="@+id/from"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="From time  : "
-                android:textStyle="normal"
-                android:layout_alignParentLeft="true"
-                android:textColor="@color/Primary_color"
-                android:layout_marginTop="20dp"
-                tools:ignore="HardcodedText" />
-
-            <EditText
-                android:id="@+id/hr"
-                android:layout_below="@id/from"
-                android:layout_width="70dp"
-                android:inputType="numberSigned"
-                android:maxLength="2"
-                android:layout_height="wrap_content"
-                android:hint="Hr"
-                android:layout_marginStart="20dp"
-                android:textColor="@color/Primary_color"
-                android:padding="5dp"
-                android:background="@drawable/edit_txt_bg"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                tools:ignore="RtlHardcoded" />
-            <TextView
-                android:id="@+id/space"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=":"
-                android:textStyle="bold"
-                android:textColor="@color/Primary_color"
-                android:layout_toRightOf="@id/hr"
-                android:layout_below="@id/from"
-                android:textSize="@dimen/text_size_medium"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="25dp"/>
-            <EditText
-                android:id="@+id/min"
-                android:layout_width="70dp"
-                android:inputType="numberSigned"
-                android:maxLength="2"
-                android:layout_below="@id/from"
-                android:layout_height="wrap_content"
-                android:hint="Min"
-                android:layout_marginStart="5dp"
-                android:textColor="@color/Primary_color"
-                android:layout_toRightOf="@id/space"
-                android:padding="5dp"
-                android:background="@drawable/edit_txt_bg"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                tools:ignore="RtlHardcoded" />
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/from"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="13dp"
-                android:layout_toRightOf="@id/min"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/am"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="AM"
-                    android:textStyle="bold"
-                    android:textColor="@color/Primary_color"/>
-                <RadioButton
-                    android:id="@+id/pm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PM"
-                    android:textStyle="bold"
-                    android:textColor="@color/Primary_color"/>
-
-            </RadioGroup>
-
-        </RelativeLayout>
-          <RelativeLayout
-              android:id="@+id/layoutTo"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_below="@id/layoutFrom">
-
-              <TextView
-                  android:id="@+id/to"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="To time  : "
-                  android:textStyle="normal"
-                  android:layout_alignParentLeft="true"
-                  android:textColor="@color/Primary_color"
-                  android:layout_marginTop="20dp"
-                  tools:ignore="HardcodedText" />
-
-              <EditText
-                  android:id="@+id/toHr"
-                  android:layout_below="@id/to"
-                  android:layout_width="70dp"
-                  android:inputType="numberSigned"
-                  android:maxLength="2"
-                  android:layout_height="wrap_content"
-                  android:hint="Hr"
-                  android:layout_marginStart="20dp"
-                  android:textColor="@color/Primary_color"
-                  android:padding="5dp"
-                  android:background="@drawable/edit_txt_bg"
-                  android:gravity="center"
-                  android:layout_marginTop="20dp"
-                  tools:ignore="RtlHardcoded" />
-              <TextView
-                  android:id="@+id/toSpace"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text=":"
-                  android:textStyle="bold"
-                  android:textColor="@color/Primary_color"
-                  android:layout_toRightOf="@id/toHr"
-                  android:layout_below="@id/to"
-                  android:textSize="@dimen/text_size_medium"
-                  android:layout_marginStart="5dp"
-                  android:layout_marginTop="25dp"/>
-              <EditText
-                  android:id="@+id/toMin"
-                  android:layout_width="70dp"
-                  android:inputType="numberSigned"
-                  android:maxLength="2"
-                  android:layout_below="@id/to"
-                  android:layout_height="wrap_content"
-                  android:hint="Min"
-                  android:layout_marginStart="5dp"
-                  android:textColor="@color/Primary_color"
-                  android:layout_toRightOf="@id/toSpace"
-                  android:padding="5dp"
-                  android:background="@drawable/edit_txt_bg"
-                  android:gravity="center"
-                  android:layout_marginTop="20dp"
-                  tools:ignore="RtlHardcoded" />
-
-              <RadioGroup
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_below="@id/to"
-                  android:layout_marginStart="10dp"
-                  android:layout_marginTop="13dp"
-                  android:layout_toRightOf="@id/toMin"
-                  android:orientation="horizontal">
-
-                  <RadioButton
-                      android:id="@+id/toAm"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="AM"
-                      android:textStyle="bold"
-                      android:textColor="@color/Primary_color"/>
-                  <RadioButton
-                      android:id="@+id/toPm"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="PM"
-                      android:textStyle="bold"
-                      android:textColor="@color/Primary_color"/>
-
-              </RadioGroup>
-
-          </RelativeLayout>
-          
-          <Button
-              android:id="@+id/btnAddSlot"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_below="@id/layoutTo"
-              android:layout_centerHorizontal="true"
-              android:text="Add Slot"
-              android:textStyle="bold"
-              android:textAllCaps="false"
-              android:layout_alignParentRight="true"
-              android:layout_marginTop="10dp"/>
-          
-      </RelativeLayout>
-
-       <TextView
-           android:id="@+id/text3"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Your Time Slots"
-           android:layout_below="@id/relativeLayout"
-           android:layout_marginTop="20dp"
-           android:textStyle="bold"
-           android:layout_centerHorizontal="true"
-           android:textColor="@color/purple_500"/>
-       <androidx.recyclerview.widget.RecyclerView
+       <RelativeLayout
            android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_below="@id/text3"
-           android:layout_marginTop="20dp"
-           android:id="@+id/recycleView"/>
-       <TextView
-           android:id="@+id/btnDelete"
-           android:layout_marginTop="100dp"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Slots not available"
-           android:textStyle="bold"
-           android:fontFamily="sans-serif-condensed-medium"
-           android:textAllCaps="false"
-           android:layout_below="@id/text3"
-           android:layout_centerHorizontal="true"
-           android:visibility="gone"/>
+           android:layout_height="match_parent"
+           android:padding="20dp"
+           tools:ignore="HardcodedText">
 
-   </RelativeLayout>
+           <TextView
+               android:id="@+id/text"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Update your time slots"
+               android:textSize="@dimen/text_size_medium"
+               android:textStyle="bold"
+               android:textColor="@color/purple_500"
+               android:layout_centerHorizontal="true"
+               tools:ignore="HardcodedText" />
+
+           <RelativeLayout
+               android:id="@+id/relativeLayout"
+               android:visibility="visible"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/text"
+               android:gravity="center"
+               android:layout_centerVertical="true"
+               android:padding="10dp"
+               android:background="@drawable/edit_txt_problem_bg"
+               android:layout_marginTop="20dp">
+
+               <TextView
+                   android:id="@+id/text2"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="Create Slots"
+                   android:gravity="center"
+                   android:padding="10dp"
+                   android:background="@drawable/view_bg"
+                   android:textStyle="bold"
+                   android:layout_centerHorizontal="true"
+                   android:textColor="@color/white"
+                   tools:ignore="HardcodedText" />
+
+               <RadioGroup
+                   android:id="@+id/radioGroup1"
+                   android:visibility="gone"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:gravity="center_horizontal"
+                   android:layout_below="@id/text2">
+
+                   <RadioButton
+                       android:id="@+id/morningSection"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Morning Section"
+                       android:textColor="@color/Primary_color"
+                       android:textStyle="bold"/>
+                   <RadioButton
+                       android:id="@+id/eveningSection"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Evening Section"
+                       android:textColor="@color/Primary_color"
+                       android:textStyle="bold"/>
+
+               </RadioGroup>
+
+               <RelativeLayout
+                   android:id="@+id/layoutFrom"
+                   android:visibility="gone"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@id/radioGroup1">
+
+                   <TextView
+                       android:id="@+id/from"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="From time  : "
+                       android:textStyle="normal"
+                       android:layout_alignParentLeft="true"
+                       android:textColor="@color/Primary_color"
+                       android:layout_marginTop="10dp"
+                       tools:ignore="HardcodedText" />
+
+                   <EditText
+                       android:id="@+id/hr"
+                       android:layout_below="@id/from"
+                       android:layout_width="70dp"
+                       android:inputType="numberSigned"
+                       android:maxLength="2"
+                       android:layout_height="wrap_content"
+                       android:hint="Hr"
+                       android:layout_marginStart="20dp"
+                       android:textColor="@color/Primary_color"
+                       android:padding="5dp"
+                       android:background="@drawable/edit_txt_bg"
+                       android:gravity="center"
+                       android:layout_marginTop="20dp"
+                       tools:ignore="RtlHardcoded" />
+                   <TextView
+                       android:id="@+id/space"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text=":"
+                       android:textStyle="bold"
+                       android:textColor="@color/Primary_color"
+                       android:layout_toRightOf="@id/hr"
+                       android:layout_below="@id/from"
+                       android:textSize="@dimen/text_size_medium"
+                       android:layout_marginStart="5dp"
+                       android:layout_marginTop="25dp"/>
+                   <EditText
+                       android:id="@+id/min"
+                       android:layout_width="70dp"
+                       android:inputType="numberSigned"
+                       android:maxLength="2"
+                       android:layout_below="@id/from"
+                       android:layout_height="wrap_content"
+                       android:hint="Min"
+                       android:layout_marginStart="5dp"
+                       android:textColor="@color/Primary_color"
+                       android:layout_toRightOf="@id/space"
+                       android:padding="5dp"
+                       android:background="@drawable/edit_txt_bg"
+                       android:gravity="center"
+                       android:layout_marginTop="20dp"
+                       tools:ignore="RtlHardcoded" />
+
+                   <RadioGroup
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_below="@id/from"
+                       android:layout_marginStart="10dp"
+                       android:layout_marginTop="13dp"
+                       android:layout_toRightOf="@id/min"
+                       android:orientation="horizontal">
+
+                       <RadioButton
+                           android:id="@+id/am"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="AM"
+                           android:textStyle="bold"
+                           android:textColor="@color/Primary_color"/>
+                       <RadioButton
+                           android:id="@+id/pm"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="PM"
+                           android:textStyle="bold"
+                           android:textColor="@color/Primary_color"/>
+
+                   </RadioGroup>
+
+               </RelativeLayout>
+               <RelativeLayout
+                   android:id="@+id/layoutTo"
+                   android:visibility="gone"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@id/layoutFrom">
+
+                   <TextView
+                       android:id="@+id/to"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="To time  : "
+                       android:textStyle="normal"
+                       android:layout_alignParentLeft="true"
+                       android:textColor="@color/Primary_color"
+                       android:layout_marginTop="20dp"
+                       tools:ignore="HardcodedText" />
+
+                   <EditText
+                       android:id="@+id/toHr"
+                       android:layout_below="@id/to"
+                       android:layout_width="70dp"
+                       android:inputType="numberSigned"
+                       android:maxLength="2"
+                       android:layout_height="wrap_content"
+                       android:hint="Hr"
+                       android:layout_marginStart="20dp"
+                       android:textColor="@color/Primary_color"
+                       android:padding="5dp"
+                       android:background="@drawable/edit_txt_bg"
+                       android:gravity="center"
+                       android:layout_marginTop="20dp"
+                       tools:ignore="RtlHardcoded" />
+                   <TextView
+                       android:id="@+id/toSpace"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text=":"
+                       android:textStyle="bold"
+                       android:textColor="@color/Primary_color"
+                       android:layout_toRightOf="@id/toHr"
+                       android:layout_below="@id/to"
+                       android:textSize="@dimen/text_size_medium"
+                       android:layout_marginStart="5dp"
+                       android:layout_marginTop="25dp"/>
+                   <EditText
+                       android:id="@+id/toMin"
+                       android:layout_width="70dp"
+                       android:inputType="numberSigned"
+                       android:maxLength="2"
+                       android:layout_below="@id/to"
+                       android:layout_height="wrap_content"
+                       android:hint="Min"
+                       android:layout_marginStart="5dp"
+                       android:textColor="@color/Primary_color"
+                       android:layout_toRightOf="@id/toSpace"
+                       android:padding="5dp"
+                       android:background="@drawable/edit_txt_bg"
+                       android:gravity="center"
+                       android:layout_marginTop="20dp"
+                       tools:ignore="RtlHardcoded" />
+
+                   <RadioGroup
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_below="@id/to"
+                       android:layout_marginStart="10dp"
+                       android:layout_marginTop="13dp"
+                       android:layout_toRightOf="@id/toMin"
+                       android:orientation="horizontal">
+
+                       <RadioButton
+                           android:id="@+id/toAm"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="AM"
+                           android:textStyle="bold"
+                           android:textColor="@color/Primary_color"/>
+                       <RadioButton
+                           android:id="@+id/toPm"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="PM"
+                           android:textStyle="bold"
+                           android:textColor="@color/Primary_color"/>
+
+                   </RadioGroup>
+
+               </RelativeLayout>
+
+               <RelativeLayout
+                   android:id="@+id/layoutTime"
+                   android:visibility="gone"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@id/layoutTo">
+                   <TextView
+                       android:id="@+id/text4"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Select appointment time: "
+                       android:layout_marginTop="10dp"
+                       android:textColor="@color/Primary_color"/>
+                   <RadioGroup
+                       android:id="@+id/radioGroup"
+                       android:layout_marginTop="10dp"
+                       android:layout_below="@id/text4"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:gravity="center_horizontal"
+                       android:orientation="horizontal">
+
+                       <RadioButton
+                           android:id="@+id/Min10"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="10 Min"/>
+                       <RadioButton
+                           android:id="@+id/Min15"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="15 Min"/>
+                       <RadioButton
+                           android:id="@+id/Min20"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="center"
+                           android:gravity="center_vertical"
+                           android:text="20 Min"/>
+                       <RadioButton
+                           android:id="@+id/Min30"
+                           android:textSize="@dimen/text_size_small"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="30 Min"/>
+
+                   </RadioGroup>
+               </RelativeLayout>
+
+               <Button
+                   android:id="@+id/btnAddSlot"
+                   android:visibility="gone"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@id/layoutTime"
+                   android:layout_centerHorizontal="true"
+                   android:text="Create Slot"
+                   android:textStyle="bold"
+                   android:textAllCaps="false"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginTop="10dp"/>
+               <Button
+                   android:id="@+id/btnCancel"
+                   android:visibility="gone"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@id/layoutTime"
+                   android:layout_centerHorizontal="true"
+                   android:text="Cancel"
+                   android:textStyle="bold"
+                   android:textAllCaps="false"
+                   android:layout_alignParentLeft="true"
+                   android:layout_marginTop="10dp"/>
+
+           </RelativeLayout>
+
+           <TextView
+               android:id="@+id/text3"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Your Time Slots"
+               android:layout_below="@id/relativeLayout"
+               android:layout_marginTop="20dp"
+               android:textStyle="bold"
+               android:layout_centerHorizontal="true"
+               android:textColor="@color/purple_500"/>
+           <TextView
+               android:id="@+id/morning"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Morning Section : "
+               android:textStyle="bold"
+               android:textColor="@color/purple_500"
+               android:layout_below="@id/text3"/>
+           <androidx.recyclerview.widget.RecyclerView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/morning"
+               android:layout_marginTop="10dp"
+               android:id="@+id/recycleView"/>
+           <TextView
+               android:id="@+id/evening"
+               android:layout_marginTop="10dp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Evening Section : "
+               android:textStyle="bold"
+               android:textColor="@color/purple_500"
+               android:layout_below="@id/recycleView"/>
+           <androidx.recyclerview.widget.RecyclerView
+               android:visibility="visible"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/evening"
+               android:layout_marginTop="10dp"
+               android:id="@+id/recycleView2"/>
+
+
+       </RelativeLayout>
+
+   </ScrollView>
 
 </RelativeLayout>

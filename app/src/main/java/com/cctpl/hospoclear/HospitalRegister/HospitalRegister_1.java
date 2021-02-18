@@ -97,7 +97,11 @@ public class HospitalRegister_1 extends AppCompatActivity {
             map.put("isUser","1");
             map.put("TimeStamp",System.currentTimeMillis());
 
+            HashMap<String,Object> location = new HashMap<>();
+            location.put("City",city);
+
             firebaseFirestore.collection("AppUsers").document(userId).set(map);
+            firebaseFirestore.collection("Locations").document(city).set(location);
 
             firebaseFirestore.collection("Hospitals").document(userId)
                     .set(map).addOnCompleteListener(new OnCompleteListener<Void>() {

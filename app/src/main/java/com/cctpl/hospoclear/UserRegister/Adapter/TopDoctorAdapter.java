@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cctpl.hospoclear.UserRegister.Fragment.AboutDoctorFragment;
+import com.cctpl.hospoclear.UserRegister.Fragment.BookAppointmentFragment;
+import com.cctpl.hospoclear.UserRegister.Fragment.RequestAppointmentFragment;
 import com.cctpl.hospoclear.UserRegister.Model.DoctorData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,7 +40,7 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
     List<DoctorData> doctorData;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
-    String UserId;
+    String UserId,HospitalId,HospitalName;
     Context context;
     public TopDoctorAdapter(List<DoctorData> doctorData) {
         this.doctorData = doctorData;
@@ -64,6 +66,7 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
         String Qualification = doctorData.get(position).getQualification();
         String ProfileUrl = doctorData.get(position).getProfileImgUrl();
         String DoctorId = doctorData.get(position).DoctorId;
+        HospitalId = doctorData.get(position).getHospitalId();
 
         holder.mDoctorName.setText(DoctorName);
         holder.mDoctorSpeciality.setText(Speciality + ",");
@@ -119,6 +122,15 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
             }
         });
 
+        firebaseFirestore.collection("Hospitals").document(HospitalId)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    HospitalName = task.getResult().getString("HospitalName");
+                }
+            }
+        });
         //show bookmark hospital or not
         firebaseFirestore.collection("Bookmark-Doctor").document(DoctorId)
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -134,13 +146,26 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
             }
         });
 
-        holder.mBtnBookAppointment.setOnClickListener(new View.OnClickListener() {
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 Fragment fragment = new AboutDoctorFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("DoctorId",DoctorId);
+                fragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+            }
+        });
+
+        holder.mBtnBookAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                Fragment fragment = new BookAppointmentFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("DoctorId",DoctorId);
+                bundle.putString("HospitalName",HospitalName);
                 fragment.setArguments(bundle);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
@@ -165,7 +190,7 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
             mDoctorSpeciality = itemView.findViewById(R.id.doctorSpeciality);
             mDoctorExperience = itemView.findViewById(R.id.doctorExperience);
             mDoctorQualification = itemView.findViewById(R.id.doctorQualification);
-            relativeLayout = itemView.findViewById(R.id.relativeLayout);
+            relativeLayout = itemView.findViewById(R.id.relativeLayout2);
             mBookMark = itemView.findViewById(R.id.bookmark);
             mBookMarkWhite = itemView.findViewById(R.id.bookmark_white);
             progressBar = itemView.findViewById(R.id.ImgLoader);

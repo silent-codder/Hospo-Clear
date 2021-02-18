@@ -13,6 +13,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +28,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -34,7 +39,9 @@ import com.cctpl.hospoclear.UserRegister.Fragment.UserHomeFragment;
 import com.cctpl.hospoclear.UserRegister.Fragment.UserProfileFragment;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -48,6 +55,7 @@ public class UserMainActivity extends AppCompatActivity{
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
     String ProfileUrl;
+    private String mLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

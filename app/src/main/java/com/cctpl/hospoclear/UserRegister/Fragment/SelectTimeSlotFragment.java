@@ -11,9 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cctpl.hospoclear.HospitalRegister.Adapter.EveningTimeSlotAdapter;
+import com.cctpl.hospoclear.HospitalRegister.Adapter.SelectEveningTimeSlotAdapter;
 import com.cctpl.hospoclear.HospitalRegister.Adapter.SelectTimeSlotAdapter;
 import com.cctpl.hospoclear.HospitalRegister.Adapter.TimeSlotAdapter;
 import com.cctpl.hospoclear.R;
+import com.cctpl.hospoclear.UserRegister.Model.EveningTimeSlotData;
 import com.cctpl.hospoclear.UserRegister.Model.TimeSlotData;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -28,8 +31,10 @@ import java.util.List;
 public class SelectTimeSlotFragment extends Fragment {
 
     List<TimeSlotData> timeSlotData;
-    RecyclerView recyclerView;
-    SelectTimeSlotAdapter timeSlotAdapter;
+    List<EveningTimeSlotData> eveningTimeSlotData;
+    RecyclerView recyclerViewMorning,recyclerViewEvening;
+    SelectTimeSlotAdapter selectTimeSlotAdapter;
+    SelectEveningTimeSlotAdapter selectEveningTimeSlotAdapter;
     FirebaseFirestore firebaseFirestore;
     String DoctorId,HospitalId,Problem,Date;
 
@@ -45,15 +50,16 @@ public class SelectTimeSlotFragment extends Fragment {
             DoctorId = bundle.getString("DoctorId");
             HospitalId = bundle.getString("HospitalId");
         }
-        recyclerView = view.findViewById(R.id.recycleView);
+        recyclerViewMorning = view.findViewById(R.id.recycleViewMorning);
+        recyclerViewEvening = view.findViewById(R.id.recycleViewEvening);
         firebaseFirestore = FirebaseFirestore.getInstance();
         timeSlotData = new ArrayList<>();
-        timeSlotAdapter = new SelectTimeSlotAdapter(timeSlotData);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(timeSlotAdapter);
+        selectTimeSlotAdapter = new SelectTimeSlotAdapter(timeSlotData);
+        recyclerViewMorning.setLayoutManager(new GridLayoutManager(getContext(),3));
+        recyclerViewMorning.setAdapter(selectTimeSlotAdapter);
+        recyclerViewMorning.setHasFixedSize(true);
 
-        Query query =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("TimeSlots")
+        Query query =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("Morning")
                 .orderBy("TimeStamp", Query.Direction.ASCENDING);
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -64,12 +70,34 @@ public class SelectTimeSlotFragment extends Fragment {
                         String timeSlotId = doc.getDocument().getId();
                         TimeSlotData mAppointmentData = doc.getDocument().toObject(TimeSlotData.class).withId(timeSlotId);
                         timeSlotData.add(mAppointmentData);
-                        timeSlotAdapter.notifyDataSetChanged();
+                        selectTimeSlotAdapter.notifyDataSetChanged();
                     }
                 }
             }
         });
 
+        eveningTimeSlotData = new ArrayList<>();
+        selectEveningTimeSlotAdapter = new SelectEveningTimeSlotAdapter(eveningTimeSlotData);
+        recyclerViewEvening.setLayoutManager(new GridLayoutManager(getContext(),3));
+        recyclerViewEvening.setAdapter(selectEveningTimeSlotAdapter);
+        recyclerViewEvening.setHasFixedSize(true);
+
+        Query query2 =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("Evening")
+                .orderBy("TimeStamp", Query.Direction.ASCENDING);
+        query2.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                for (DocumentChange doc : value.getDocumentChanges()){
+                    if (doc.getType() == DocumentChange.Type.ADDED){
+                        String timeSlotId = doc.getDocument().getId();
+                        EveningTimeSlotData mAppointmentData = doc.getDocument().toObject(EveningTimeSlotData.class).withId(timeSlotId);
+                        eveningTimeSlotData.add(mAppointmentData);
+                        selectEveningTimeSlotAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
         return view;
     }
 }

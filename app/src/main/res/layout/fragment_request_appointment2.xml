@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="56dp"
+    tools:context=".UserRegister.Fragment.RequestAppointmentFragment">
+
+    //Select Date
+    <RelativeLayout
+        android:id="@+id/dateLayout"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <CalendarView
+            android:id="@+id/appointmentDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btnNextDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appointmentDate"
+            android:text="Next"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size_medium"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+    //Select time
+    <RelativeLayout
+        android:id="@+id/timeLayout"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/morningSection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Morning Session :"
+            android:textStyle="bold"
+            android:textColor="@color/Primary_color"
+            android:fontFamily="sans-serif-condensed-medium"
+            tools:ignore="HardcodedText" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleViewMorning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/morningSection"
+            android:layout_marginTop="10dp"/>
+        <TextView
+            android:id="@+id/eveningSection"
+            android:layout_below="@id/recycleViewMorning"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Morning Session :"
+            android:textStyle="bold"
+            android:textColor="@color/Primary_color"
+            android:fontFamily="sans-serif-condensed-medium"
+            tools:ignore="HardcodedText" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleViewEvening"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/eveningSection"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:id="@+id/btnNextTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_below="@id/recycleViewEvening"
+            android:layout_marginTop="10dp"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+    //Select User
+    <RelativeLayout
+        android:id="@+id/selectUserLayout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select User for Appointment"
+            android:textSize="@dimen/text_size_medium"
+            android:textColor="@color/purple_500"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:id="@+id/text"
+            tools:ignore="HardcodedText" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_below="@id/text"
+            android:background="@drawable/edit_txt_problem_bg"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You"
+                android:layout_marginStart="10dp"
+                android:id="@+id/you"
+                android:textStyle="bold"
+                android:textColor="@color/Primary_color"
+                android:fontFamily="sans-serif-condensed-medium"
+                tools:ignore="HardcodedText" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Someone else"
+                android:id="@+id/someoneElse"
+                android:textStyle="bold"
+                android:textColor="@color/Primary_color"
+                android:fontFamily="sans-serif-condensed-medium"
+                tools:ignore="HardcodedText" />
+
+
+        </RadioGroup>
+
+        <RelativeLayout
+            android:id="@+id/name_layout"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="70dp"
+            android:background="@drawable/edit_txt_problem_bg"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:layout_below="@+id/radioGroup">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Patient Name : "
+                android:textColor="@color/Primary_color"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/patientName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="10dp"
+                android:text="loading.."
+                android:layout_toEndOf="@id/name"
+                android:textColor="@color/Primary_color"
+                tools:ignore="HardcodedText" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/anotherPatient"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/radioGroup"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:background="@drawable/edit_txt_problem_bg">
+
+            <TextView
+                android:id="@+id/name_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Patient Name : "
+                android:textColor="@color/Primary_color"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:id="@+id/anotherPatientName"
+                android:layout_below="@id/name_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Primary_color"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/name_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Relationship with you : "
+                android:layout_below="@+id/anotherPatientName"
+                android:textColor="@color/Primary_color"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:id="@+id/relation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Primary_color"
+                android:hint="e.g son"
+                android:layout_below="@id/name_2"
+                tools:ignore="HardcodedText" />
+
+        </RelativeLayout>
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/btnNextSelectUser"
+            android:layout_marginTop="90dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/anotherPatient"
+            android:text="Next"
+            android:textSize="@dimen/text_size_medium"
+            android:textAllCaps="false"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+    //Confirm Appointment
+    <RelativeLayout
+        android:id="@+id/confirmAppointmentLayout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_txt_problem_bg"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Appointment Details"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/text_size_medium"
+            android:textColor="@color/Primary_color"
+            tools:ignore="HardcodedText" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/Primary_color"
+            android:layout_below="@id/text2"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/patient"
+            android:layout_below="@id/view"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/Primary_color"
+            android:text="Patient Name :"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:id="@+id/PatientName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ajinkya Shinde"
+            android:textStyle="bold"
+            android:layout_below="@id/view"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/patient"
+            android:layout_marginStart="10dp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/relation2"
+            android:layout_below="@id/patient"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/Primary_color"
+            android:text="Relationship : "
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:id="@id/relation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MySelf"
+            android:textStyle="bold"
+            android:layout_below="@id/patient"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/relation2"
+            android:layout_marginStart="10dp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/Date"
+            android:layout_below="@id/relation2"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/Primary_color"
+            android:text="Appointment Date :"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:id="@+id/appointmentDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9 july 1999"
+            android:textStyle="bold"
+            android:layout_below="@id/relation"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/Date"
+            android:layout_marginStart="10dp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/Time"
+            android:layout_below="@id/Date"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/Primary_color"
+            android:text="Appointment Time :"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:id="@+id/appointmentTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9 : 45 AM"
+            android:textStyle="bold"
+            android:layout_below="@id/Date"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/Time"
+            android:layout_marginStart="10dp"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btnConfirmAppointment"
+            android:layout_below="@+id/appointmentTimeText"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm Appointment"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

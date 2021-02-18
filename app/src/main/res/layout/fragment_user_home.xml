@@ -15,36 +15,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Find Your Desired \nHospital"
-                android:textStyle="bold"
-                android:textSize="30sp"
-                android:layout_marginStart="25dp"
-                android:textColor="@color/purple_700"
-                android:fontFamily="sans-serif-condensed-medium"
-                tools:ignore="HardcodedText" />
-
-            <EditText
-                android:layout_below="@id/heading"
-                android:id="@+id/searchBar"
+            <RelativeLayout
+                android:id="@+id/locationLayout"
+                android:gravity="start"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/search_bg"
-                android:inputType="textAutoCorrect"
-                android:layout_margin="20dp"
-                android:hint="Search"
-                android:focusable="false"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textLoc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_baseline_location"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold"
+                    android:textColor="@color/Primary_color"
+                    tools:ignore="HardcodedText" />
+
+                <Spinner
+                    android:id="@+id/locationSpinner"
+                    android:layout_toEndOf="@id/textLoc"
+                    android:layout_width="wrap_content"
+                    android:gravity="center_vertical"
+                    android:prompt="@string/hospo_clear"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/imgAd"
+                android:layout_below="@id/locationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
                 android:padding="10dp"
-                android:drawableStart="@drawable/ic_search"
-                tools:ignore="HardcodedText"
-                android:autofillHints="no" />
+                android:src="@drawable/hospo_clear_ad"/>
 
             <TextView
                 android:id="@+id/categoryTxt"
-                android:layout_below="@id/searchBar"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/imgAd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Top Categories"
