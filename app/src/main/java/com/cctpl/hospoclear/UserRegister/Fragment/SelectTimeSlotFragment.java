@@ -1,5 +1,7 @@
 package com.cctpl.hospoclear.UserRegister.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -7,9 +9,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.cctpl.hospoclear.HospitalRegister.Adapter.EveningTimeSlotAdapter;
 import com.cctpl.hospoclear.HospitalRegister.Adapter.SelectEveningTimeSlotAdapter;
@@ -95,6 +101,31 @@ public class SelectTimeSlotFragment extends Fragment {
                         eveningTimeSlotData.add(mAppointmentData);
                         selectEveningTimeSlotAdapter.notifyDataSetChanged();
                     }
+                }
+            }
+        });
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppointmentData",0);
+        String TimeSlot = sharedPreferences.getString("TimeSlot",null);
+
+        Button button = view.findViewById(R.id.btnNext);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (TextUtils.isEmpty(TimeSlot)){
+                    Toast toast = Toast.makeText(getContext(), "Select Time Slot", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
+                }else {
+                    Fragment fragment = new SelectUserFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Problem",Problem);
+                    bundle.putString("Date",Date);
+                    bundle.putString("DoctorId",DoctorId);
+                    bundle.putString("HospitalId",HospitalId);
+                    fragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
                 }
             }
         });

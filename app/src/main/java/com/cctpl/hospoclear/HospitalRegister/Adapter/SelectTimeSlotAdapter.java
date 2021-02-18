@@ -47,36 +47,57 @@ public class SelectTimeSlotAdapter extends RecyclerView.Adapter<SelectTimeSlotAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String TimeSlot = doctorData.get(position).getTimeSlot();
-        String Id = doctorData.get(position).TimeSlotId;
         String DoctorId = doctorData.get(position).getDoctorId();
+        String Id = doctorData.get(position).TimeSlotId;
+        String Flag = doctorData.get(position).getFlag();
 
         holder.mTimeSlot.setText(TimeSlot);
         holder.mTimeSlotRed.setText(TimeSlot);
+        holder.mTimeSlotGreen.setText(TimeSlot);
+
+        if (Flag.equals("1")){
+            holder.relativeLayoutRed.setVisibility(View.VISIBLE);
+            holder.relativeLayout.setVisibility(View.GONE);
+        }else {
+            holder.relativeLayout.setVisibility(View.VISIBLE);
+        }
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
-                holder.relativeLayoutRed.setVisibility(View.VISIBLE);
+                holder.relativeLayoutGreen.setVisibility(View.VISIBLE);
                 String timeSlot = doctorData.get(position).getTimeSlot();
-                AddFlag(DoctorId,timeSlot);
+                String flag = "3";
+                AddFlag(DoctorId,timeSlot,Id,flag);
             }
         });
-        holder.relativeLayoutRed.setOnClickListener(new View.OnClickListener() {
+        holder.relativeLayoutGreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.relativeLayoutRed.setVisibility(View.GONE);
+                holder.relativeLayoutGreen.setVisibility(View.GONE);
+                String timeSlot = doctorData.get(position).getTimeSlot();
+                String flag = "2";
+                AddFlag(DoctorId,timeSlot,Id,flag);
             }
         });
 
     }
 
-    private void AddFlag(String doctorId,String id) {
+    private void AddFlag(String doctorId,String timeSlot,String Id,String flag) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("AppointmentData",0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("Flag",flag);
+
+        firebaseFirestore.collection("Doctors").document(doctorId)
+                .collection("Morning").document(Id).update(map);
+
         editor.putString("DoctorId", doctorId);
-        editor.putString("TimeSlot",id);
+        editor.putString("TimeSlot",timeSlot);
+        editor.putString("Section","Morning");
+        editor.putString("SlotId",Id);
         editor.commit();
     }
 
@@ -86,14 +107,16 @@ public class SelectTimeSlotAdapter extends RecyclerView.Adapter<SelectTimeSlotAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        RelativeLayout relativeLayout,relativeLayoutRed;
-        TextView mTimeSlot,mTimeSlotRed;
+        RelativeLayout relativeLayout,relativeLayoutRed,relativeLayoutGreen;
+        TextView mTimeSlot,mTimeSlotRed,mTimeSlotGreen;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mTimeSlot = itemView.findViewById(R.id.timeSlot);
             mTimeSlotRed = itemView.findViewById(R.id.timeSlotRed);
+            mTimeSlotGreen = itemView.findViewById(R.id.timeSlotGreen);
             relativeLayout = itemView.findViewById(R.id.relativeLayout);
             relativeLayoutRed = itemView.findViewById(R.id.relativeLayoutRed);
+            relativeLayoutGreen = itemView.findViewById(R.id.relativeLayoutGreen);
         }
     }
 }

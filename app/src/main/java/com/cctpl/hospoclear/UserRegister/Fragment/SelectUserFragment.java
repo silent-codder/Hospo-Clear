@@ -1,10 +1,13 @@
 package com.cctpl.hospoclear.UserRegister.Fragment;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,6 +24,7 @@ import com.cctpl.hospoclear.Notification.APIService;
 import com.cctpl.hospoclear.Notification.Client;
 import com.cctpl.hospoclear.Notification.Data;
 import com.cctpl.hospoclear.Notification.NotificationSender;
+import com.cctpl.hospoclear.UserRegister.UserMainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -42,7 +46,7 @@ public class SelectUserFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
 
-    String UserId,Problem,AppointmentDate,DoctorId,HospitalId,UserName,Token;
+    String UserId,Problem,AppointmentDate,DoctorId,HospitalId,UserName,Token,timeSlot,SlotId,Section;
     TextView mProblem,mAppointmentDate,mPatientName;
 
     RelativeLayout mNameLayout,mAnotherPatient;
@@ -77,6 +81,14 @@ public class SelectUserFragment extends Fragment {
             mAppointmentDate.setText(AppointmentDate);
             mProblem.setText(Problem);
         }
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppointmentData",0);
+        Editor editor = sharedPreferences.edit();
+        timeSlot = sharedPreferences.getString("TimeSlot",null);
+        SlotId = sharedPreferences.getString("SlotId",null);
+        Section = sharedPreferences.getString("Section",null);
+        TextView textView = view.findViewById(R.id.appointmentTime);
+        textView.setText(timeSlot);
 
         firebaseFirestore.collection("Users").document(UserId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -118,9 +130,16 @@ public class SelectUserFragment extends Fragment {
                                     }
                                 });
 
+                        HashMap<String, Object> map2 = new HashMap<>();
+                        map2.put("Flag","2");
+
+                        firebaseFirestore.collection("Doctors").document(DoctorId)
+                                .collection(Section).document(SlotId).update(map2);
+
                         HashMap<String,Object> map = new HashMap<>();
                         map.put("PatientName",UserName);
                         map.put("AppointmentDate",AppointmentDate);
+                        map.put("AppointmentTime",timeSlot);
                         map.put("Problem",Problem);
                         map.put("TimeStamp",System.currentTimeMillis());
                         map.put("UserId",UserId);
@@ -139,7 +158,9 @@ public class SelectUserFragment extends Fragment {
                                         if (task.isSuccessful()){
                                             progressDialog.dismiss();
                                             Toast.makeText(getContext(), "Requesting appointment", Toast.LENGTH_SHORT).show();
-                                            Fragment fragment = new UserAppointmentsFragment();
+                                            editor.clear();
+                                            editor.commit();
+                                            Fragment fragment = new UserHomeFragment();
                                             getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
                                         }
                                     }
@@ -190,9 +211,16 @@ public class SelectUserFragment extends Fragment {
                                         }
                                     });
 
+                            HashMap<String, Object> map2 = new HashMap<>();
+                            map2.put("Flag","2");
+
+                            firebaseFirestore.collection("Doctors").document(DoctorId)
+                                    .collection(Section).document(SlotId).update(map2);
+
                             HashMap<String,Object> map = new HashMap<>();
                             map.put("PatientName",PatientName);
                             map.put("AppointmentDate",AppointmentDate);
+                            map.put("AppointmentTime",timeSlot);
                             map.put("Problem",Problem);
                             map.put("Status","3");
                             map.put("TimeStamp",System.currentTimeMillis());
@@ -207,8 +235,10 @@ public class SelectUserFragment extends Fragment {
                                             if (task.isSuccessful()){
                                                 progressDialog.dismiss();
                                                 Toast.makeText(getContext(), "Requesting appointment", Toast.LENGTH_SHORT).show();
-                                                Fragment fragment = new UserAppointmentsFragment();
-                                                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                                                editor.clear();
+                                                editor.commit();
+                                                Fragment fragment = new UserHomeFragment();
+                                                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
                                             }
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
@@ -225,6 +255,13 @@ public class SelectUserFragment extends Fragment {
         });
         return view;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((UserMainActivity)getActivity()).clearBackStackInclusive("tag"); // tag (addToBackStack tag) should be the same which was used while transacting the F2 fragment
+    }
+   
 
     private void sendNotification(String token, String title, String msg) {
         Data data = new Data(title,msg);

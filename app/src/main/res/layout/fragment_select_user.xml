@@ -50,6 +50,31 @@
            tools:ignore="HardcodedText" />
 
        <TextView
+           android:id="@+id/time"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Appointment Time : "
+           android:layout_below="@id/date"
+           android:layout_marginTop="20dp"
+           android:textColor="@color/Primary_color"
+           android:fontFamily="sans-serif-condensed-medium"
+           android:textStyle="bold"
+           android:textSize="@dimen/text_size_medium"
+           tools:ignore="HardcodedText" />
+       <TextView
+           android:id="@+id/appointmentTime"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_toEndOf="@id/time"
+           android:layout_below="@+id/appointmentDate"
+           android:textSize="@dimen/text_size_medium"
+           android:layout_marginTop="20dp"
+           android:layout_marginStart="10dp"
+           android:textColor="@color/Primary_color"
+           android:textStyle="normal"
+           tools:ignore="HardcodedText" />
+
+       <TextView
            android:id="@+id/prob"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
@@ -58,7 +83,7 @@
            android:layout_marginTop="20dp"
            android:textSize="@dimen/text_size_medium"
            android:fontFamily="sans-serif-condensed-medium"
-           android:layout_below="@id/date"
+           android:layout_below="@id/time"
            android:textColor="@color/Primary_color"
            tools:ignore="HardcodedText" />
        <TextView
@@ -67,7 +92,7 @@
            android:layout_height="wrap_content"
            android:textStyle="normal"
            android:layout_toRightOf="@id/prob"
-           android:layout_below="@id/date"
+           android:layout_below="@id/time"
            android:layout_marginTop="22dp"
            android:layout_marginStart="10dp"
            android:textSize="@dimen/text_size_medium"

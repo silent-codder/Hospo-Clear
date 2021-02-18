@@ -4,13 +4,16 @@ public class EveningTimeSlotData extends EveningTimeSlotId{
    String TimeSlot;
    Long TimeStamp;
    String DoctorId;
+   String Flag;
+
     public EveningTimeSlotData() {
     }
 
-    public EveningTimeSlotData(String timeSlot, Long timeStamp, String doctorId) {
+    public EveningTimeSlotData(String timeSlot, Long timeStamp, String doctorId, String flag) {
         TimeSlot = timeSlot;
         TimeStamp = timeStamp;
         DoctorId = doctorId;
+        Flag = flag;
     }
 
     public String getTimeSlot() {
@@ -35,5 +38,13 @@ public class EveningTimeSlotData extends EveningTimeSlotId{
 
     public void setDoctorId(String doctorId) {
         DoctorId = doctorId;
+    }
+
+    public String getFlag() {
+        return Flag;
+    }
+
+    public void setFlag(String flag) {
+        Flag = flag;
     }
 }

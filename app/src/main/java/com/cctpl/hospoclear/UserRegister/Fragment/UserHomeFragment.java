@@ -118,36 +118,36 @@ public class UserHomeFragment extends Fragment {
             }
         });
 
-        bookmarkHospitalData = new ArrayList<>();
-        bookmarkHospitalAdapter = new BookmarkHospitalAdapter(bookmarkHospitalData);
-
-        recyclerView1.setLayoutManager(new GridLayoutManager(getContext(),2));
-        recyclerView1.setAdapter(bookmarkHospitalAdapter);
-
-
-
-        CollectionReference reference = firebaseFirestore.collection("Bookmark-Hospital");
-        Query query = reference.whereEqualTo("UserId",UserId);
-        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
-                if (value.isEmpty()){
-
-                }else {
-                    recyclerView1.setVisibility(View.VISIBLE);
-                    TextView textView = view.findViewById(R.id.topHospital);
-                    textView.setVisibility(View.VISIBLE);
-                    for (DocumentChange doc : value.getDocumentChanges()){
-                        if (doc.getType() == DocumentChange.Type.ADDED){
-                            BookmarkHospitalData mHospitalData = doc.getDocument().toObject(BookmarkHospitalData.class);
-                            bookmarkHospitalData.add(mHospitalData);
-                            bookmarkHospitalAdapter.notifyDataSetChanged();
-                        }
-                    }
-                }
-            }
-        });
+//        bookmarkHospitalData = new ArrayList<>();
+//        bookmarkHospitalAdapter = new BookmarkHospitalAdapter(bookmarkHospitalData);
+//
+//        recyclerView1.setLayoutManager(new GridLayoutManager(getContext(),2));
+//        recyclerView1.setAdapter(bookmarkHospitalAdapter);
+//
+//
+//
+//        CollectionReference reference = firebaseFirestore.collection("Bookmark-Hospital");
+//        Query query = reference.whereEqualTo("UserId",UserId);
+//        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//
+//                if (value.isEmpty()){
+//
+//                }else {
+//                    recyclerView1.setVisibility(View.VISIBLE);
+//                    TextView textView = view.findViewById(R.id.topHospital);
+//                    textView.setVisibility(View.VISIBLE);
+//                    for (DocumentChange doc : value.getDocumentChanges()){
+//                        if (doc.getType() == DocumentChange.Type.ADDED){
+//                            BookmarkHospitalData mHospitalData = doc.getDocument().toObject(BookmarkHospitalData.class);
+//                            bookmarkHospitalData.add(mHospitalData);
+//                            bookmarkHospitalAdapter.notifyDataSetChanged();
+//                        }
+//                    }
+//                }
+//            }
+//        });
 
         MyCategories[] myCategory = new MyCategories[] {
                new MyCategories("General \nPhysician",R.drawable.stethoscope),
@@ -161,8 +161,8 @@ public class UserHomeFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.categoryRecycleView);
         CategoryAdapter adapter = new CategoryAdapter(myCategory);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-//        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         recyclerView.setAdapter(adapter);
 
         TextView BtnViewMore = view.findViewById(R.id.btnViewMore);

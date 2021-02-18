@@ -359,6 +359,7 @@ public class TimeSlotFragment extends Fragment {
                         map.put("TimeSlot",start_ms + " : 00 AM" );
                         map.put("DoctorId",DoctorId);
                         map.put("TimeStamp",System.currentTimeMillis());
+                        map.put("Flag","2");
                         AddData(map);
                     }else{
 //                        System.out.println( start_ms +" : " + start_min  + " AM" );
@@ -366,6 +367,7 @@ public class TimeSlotFragment extends Fragment {
                         map.put("TimeSlot",start_ms + " : " + start_min + " AM" );
                         map.put("DoctorId",DoctorId);
                         map.put("TimeStamp",System.currentTimeMillis());
+                        map.put("Flag","2");
                         AddData(map);
                     }
 
@@ -376,6 +378,7 @@ public class TimeSlotFragment extends Fragment {
                         map.put("TimeSlot",start_ms + " : 00 " + start_timezon );
                         map.put("DoctorId",DoctorId);
                         map.put("TimeStamp",System.currentTimeMillis());
+                        map.put("Flag","2");
                         AddData(map);
                     }else{
 //                        System.out.println( start_ms +" : " + start_min  + " " + start_timezon );
@@ -383,6 +386,7 @@ public class TimeSlotFragment extends Fragment {
                         map.put("TimeSlot",start_ms + " : " + start_min + " " + start_timezon );
                         map.put("DoctorId",DoctorId);
                         map.put("TimeStamp",System.currentTimeMillis());
+                        map.put("Flag","2");
                         AddData(map);
                     }
                 }else{
@@ -394,6 +398,7 @@ public class TimeSlotFragment extends Fragment {
                             map.put("TimeSlot",start_ms + " : 00 PM");
                             map.put("DoctorId",DoctorId);
                             map.put("TimeStamp",System.currentTimeMillis());
+                            map.put("Flag","2");
                             AddData(map);
                         }else{
 //                            System.out.println( start_ms +" : " + start_min  + " PM" );
@@ -401,6 +406,7 @@ public class TimeSlotFragment extends Fragment {
                             map.put("TimeSlot",start_ms + " : " + start_min + " PM" );
                             map.put("DoctorId",DoctorId);
                             map.put("TimeStamp",System.currentTimeMillis());
+                            map.put("Flag","2");
                             AddData(map);
                         }
                     }
@@ -414,6 +420,7 @@ public class TimeSlotFragment extends Fragment {
                             map.put("TimeSlot",startMs + " : 00 PM");
                             map.put("DoctorId",DoctorId);
                             map.put("TimeStamp",System.currentTimeMillis());
+                            map.put("Flag","2");
                             AddData(map);
                         }else{
 //                            System.out.println( startMs +" : " + start_min  + " PM" );
@@ -421,6 +428,7 @@ public class TimeSlotFragment extends Fragment {
                             map.put("TimeSlot",startMs + " : " + start_min + " PM" );
                             map.put("DoctorId",DoctorId);
                             map.put("TimeStamp",System.currentTimeMillis());
+                            map.put("Flag","2");
                             AddData(map);
                         }
                     }
