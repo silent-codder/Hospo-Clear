@@ -3,16 +3,21 @@ package com.cctpl.hospoclear.HospitalRegister.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cctpl.hospoclear.R;
+import com.cctpl.hospoclear.UserRegister.Fragment.SelectUserFragment;
 import com.cctpl.hospoclear.UserRegister.Model.DoctorId;
 import com.cctpl.hospoclear.UserRegister.Model.EveningTimeSlotData;
 import com.cctpl.hospoclear.UserRegister.Model.TimeSlotData;
@@ -98,6 +103,15 @@ public class SelectEveningTimeSlotAdapter extends RecyclerView.Adapter<SelectEve
         editor.putString("Section","Evening");
         editor.putString("SlotId",Id);
         editor.commit();
+
+        String Date = sharedPreferences.getString("AppointmentDate",null);
+        if (TextUtils.isEmpty(Date)){
+            Toast.makeText(context, "Select Date !!!", Toast.LENGTH_SHORT).show();
+        }else {
+            AppCompatActivity activity = (AppCompatActivity) context;
+            Fragment fragment = new SelectUserFragment();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+        }
     }
 
     @Override

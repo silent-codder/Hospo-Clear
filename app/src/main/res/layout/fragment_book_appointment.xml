@@ -7,15 +7,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UserRegister.Fragment.BookAppointmentFragment">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:padding="10dp"
             android:background="@drawable/layout_bg"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/doctorImg"
@@ -80,54 +77,76 @@
                 android:layout_toEndOf="@id/ratingStarLottie"
                 tools:ignore="HardcodedText"
                 android:layout_below="@id/hospitalName"/>
+        </RelativeLayout>
 
-            <View
-                android:id="@+id/view"
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@color/Primary_color"
-                android:layout_below="@id/ratingStarLottie"
-                android:layout_marginTop="10dp"/>
+    <devs.mulham.horizontalcalendar.HorizontalCalendarView
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:textColorNormal="@color/teal_700"
+        app:selectedDateBackground="@color/teal_700"
+        app:textColorSelected="@color/white"
+        android:id="@+id/calenderView"/>
 
-            <RelativeLayout
-                android:id="@+id/dateLayout"
+    <TextView
+        android:id="@+id/text"
+        android:visibility="gone"
+        android:layout_below="@id/calenderView"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Appointment time"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/purple_500"
+        tools:ignore="HardcodedText" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/text">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/morningSection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Morning Session : "
+                android:textColor="@color/Primary_color"
+                android:textStyle="bold"
+                android:layout_marginTop="0dp"
+                tools:ignore="HardcodedText" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/view">
+                android:layout_below="@id/morningSection"
+                android:id="@+id/recycleViewMorning"/>
 
-                <EditText
-                    android:id="@+id/problem"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:padding="10dp"
-                    android:text="Test"
-                    android:layout_below="@id/appDate"
-                    android:layout_height="60dp"
-                    android:background="@drawable/edit_txt_problem_bg"
-                    android:hint="Write problem shortly.."
-                    android:fontFamily="sans-serif-condensed-medium"
-                    tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/eveningSection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Evening Session : "
+                android:layout_below="@id/recycleViewMorning"
+                android:textColor="@color/Primary_color"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                tools:ignore="HardcodedText" />
 
-                <CalendarView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/appDate"/>
-
-                <Button
-                    android:id="@+id/btnNext"
-                    android:layout_below="@id/problem"
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="200dp"
-                    android:layout_height="60dp"
-                    android:text="Next"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textAllCaps="false"
-                    android:fontFamily="sans-serif-condensed-medium"
-                    android:textSize="17sp"
-                    tools:ignore="HardcodedText" />
-
-            </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/eveningSection"
+                android:id="@+id/recycleViewEvening"/>
 
         </RelativeLayout>
 

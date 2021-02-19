@@ -2,12 +2,15 @@ package com.cctpl.hospoclear.UserRegister.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +26,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cctpl.hospoclear.HospitalRegister.Adapter.SelectEveningTimeSlotAdapter;
+import com.cctpl.hospoclear.HospitalRegister.Adapter.SelectTimeSlotAdapter;
+import com.cctpl.hospoclear.UserRegister.Model.EveningTimeSlotData;
+import com.cctpl.hospoclear.UserRegister.Model.TimeSlotData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +38,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.cctpl.hospoclear.R;
 import com.cctpl.hospoclear.UserRegister.Adapter.UserAdapter;
@@ -51,29 +59,30 @@ import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 public class BookAppointmentFragment extends Fragment {
 
-    CalendarView calendarView;
     TextView mDoctorName,mSpeciality,mHospitalName;
     EditText mProblem;
-    Calendar calendar;
-    Button mBtnNext;
     RelativeLayout mDateLayout;
     String DoctorId,UserId,date,HospitalName,HospitalId;
     ProgressDialog progressDialog;
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
+
+    List<TimeSlotData> timeSlotData;
+    List<EveningTimeSlotData> eveningTimeSlotData;
+    RecyclerView recyclerViewMorning,recyclerViewEvening;
+    SelectTimeSlotAdapter selectTimeSlotAdapter;
+    SelectEveningTimeSlotAdapter selectEveningTimeSlotAdapter;
     @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_appointment, container, false);
-        calendarView = view.findViewById(R.id.appDate);
-        long dat = calendarView.getDate()+7;
-        calendarView.setMinDate(dat);
-        mBtnNext = view.findViewById(R.id.btnNext);
         mProblem = view.findViewById(R.id.problem);
         mDateLayout = view.findViewById(R.id.dateLayout);
         mDoctorName = view.findViewById(R.id.doctorName);
@@ -86,7 +95,6 @@ public class BookAppointmentFragment extends Fragment {
         progressDialog.setMessage("Fetching data..");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
-        calendar = Calendar.getInstance();
 
         Bundle bundle = this.getArguments();
         if (bundle!=null){
@@ -117,39 +125,105 @@ public class BookAppointmentFragment extends Fragment {
                     }
                 });
 
-        Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd / MM /yyyy", Locale.getDefault());
-        String formattedDate = df.format(c);
+        /* starts before 1 month from now */
+        Calendar startDate = Calendar.getInstance();
+        startDate.add(Calendar.DATE, 0);
 
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @SuppressLint("SetTextI18n")
+        /* ends after 1 month from now */
+        Calendar endDate = Calendar.getInstance();
+        endDate.add(Calendar.DATE, 2);
+
+        HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, R.id.calenderView)
+                .range(startDate, endDate)
+                .datesNumberOnScreen(5)
+                .build();
+
+        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                month += 1;
-                date = dayOfMonth + " / " +month+ " / " +year;
-
+            public void onDateSelected(Calendar calendar, int position) {
+                String St_Date ;
+                int day = calendar.get(Calendar.DATE);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                date = day + " / " + month + " / " + year;
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppointmentData",0);
+                Editor editor = sharedPreferences.edit();
+                editor.putString("AppointmentDate",date);
+                editor.commit();
             }
         });
-        mBtnNext.setOnClickListener(new View.OnClickListener() {
+
+        recyclerViewMorning = view.findViewById(R.id.recycleViewMorning);
+        recyclerViewEvening = view.findViewById(R.id.recycleViewEvening);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        timeSlotData = new ArrayList<>();
+        selectTimeSlotAdapter = new SelectTimeSlotAdapter(timeSlotData);
+        recyclerViewMorning.setLayoutManager(new GridLayoutManager(getContext(),3));
+        recyclerViewMorning.setAdapter(selectTimeSlotAdapter);
+        recyclerViewMorning.setHasFixedSize(true);
+
+        Query query =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("Morning")
+                .orderBy("TimeStamp", Query.Direction.ASCENDING);
+        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onClick(View v) {
-                String problem = mProblem.getText().toString();
-                if (TextUtils.isEmpty(problem)){
-                    mProblem.setError("Please mention problem");
-                }else if (formattedDate == null || date == null){
-                    Toast.makeText(getContext(), "Choose appointment date", Toast.LENGTH_SHORT).show();
-                }else {
-                    Fragment fragment = new SelectTimeSlotFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("Problem",problem);
-                    bundle.putString("Date",date);
-                    bundle.putString("DoctorId",DoctorId);
-                    bundle.putString("HospitalId",HospitalId);
-                    fragment.setArguments(bundle);
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                for (DocumentChange doc : value.getDocumentChanges()){
+                    if (doc.getType() == DocumentChange.Type.ADDED){
+                        String timeSlotId = doc.getDocument().getId();
+                        TimeSlotData mAppointmentData = doc.getDocument().toObject(TimeSlotData.class).withId(timeSlotId);
+                        timeSlotData.add(mAppointmentData);
+                        selectTimeSlotAdapter.notifyDataSetChanged();
+                    }
                 }
             }
         });
+
+        eveningTimeSlotData = new ArrayList<>();
+        selectEveningTimeSlotAdapter = new SelectEveningTimeSlotAdapter(eveningTimeSlotData);
+        recyclerViewEvening.setLayoutManager(new GridLayoutManager(getContext(),3));
+        recyclerViewEvening.setAdapter(selectEveningTimeSlotAdapter);
+        recyclerViewEvening.setHasFixedSize(true);
+
+        Query query2 =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("Evening")
+                .orderBy("TimeStamp", Query.Direction.ASCENDING);
+        query2.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                for (DocumentChange doc : value.getDocumentChanges()){
+                    if (doc.getType() == DocumentChange.Type.ADDED){
+                        String timeSlotId = doc.getDocument().getId();
+                        EveningTimeSlotData mAppointmentData = doc.getDocument().toObject(EveningTimeSlotData.class).withId(timeSlotId);
+                        eveningTimeSlotData.add(mAppointmentData);
+                        selectEveningTimeSlotAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
+
+
+
+//        mBtnNext.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String problem = mProblem.getText().toString();
+//                if (TextUtils.isEmpty(problem)){
+//                    mProblem.setError("Please mention problem");
+//                }else if (date == null){
+//                    Toast.makeText(getContext(), "Choose appointment date", Toast.LENGTH_SHORT).show();
+//                }else {
+//                    Fragment fragment = new SelectTimeSlotFragment();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("Problem",problem);
+//                    bundle.putString("Date",date);
+//                    bundle.putString("DoctorId",DoctorId);
+//                    bundle.putString("HospitalId",HospitalId);
+//                    fragment.setArguments(bundle);
+//                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+//                }
+//            }
+//        });
         return view;
     }
 

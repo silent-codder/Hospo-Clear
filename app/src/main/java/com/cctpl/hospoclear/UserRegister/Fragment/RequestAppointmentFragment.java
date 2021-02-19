@@ -49,6 +49,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
+
 public class RequestAppointmentFragment extends Fragment {
 
     RelativeLayout DateLayout,TimeLayout,SelectUserLayout,confirmAppointmentLayout;
@@ -270,6 +273,32 @@ public class RequestAppointmentFragment extends Fragment {
         mRelationship.setText(Relation);
         mAppointmentDate.setText(Appointment_Date);
         mAppointmentTime.setText(Appointment_Time);
+
+
+        /* starts before 1 month from now */
+        Calendar startDate = Calendar.getInstance();
+        startDate.add(Calendar.DATE, 0);
+
+        /* ends after 1 month from now */
+        Calendar endDate = Calendar.getInstance();
+        endDate.add(Calendar.DATE, 2);
+
+        HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, R.id.calenderView)
+                .range(startDate, endDate)
+                .datesNumberOnScreen(5)
+                .build();
+
+        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
+            @Override
+            public void onDateSelected(Calendar date, int position) {
+                String St_Date ;
+                int day = date.get(Calendar.DATE);
+                int month = date.get(Calendar.MONTH);
+                int year = date.get(Calendar.YEAR);
+                St_Date = day + " / " + month + " / " + year;
+                Toast.makeText(getContext(), St_Date,Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return view;
     }

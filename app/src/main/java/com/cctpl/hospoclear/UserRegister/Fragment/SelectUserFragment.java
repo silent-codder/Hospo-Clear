@@ -87,6 +87,8 @@ public class SelectUserFragment extends Fragment {
         timeSlot = sharedPreferences.getString("TimeSlot",null);
         SlotId = sharedPreferences.getString("SlotId",null);
         Section = sharedPreferences.getString("Section",null);
+        AppointmentDate = sharedPreferences.getString("AppointmentDate",null);
+        mAppointmentDate.setText(AppointmentDate);
         TextView textView = view.findViewById(R.id.appointmentTime);
         textView.setText(timeSlot);
 
