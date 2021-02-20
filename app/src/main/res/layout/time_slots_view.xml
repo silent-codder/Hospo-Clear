@@ -1,68 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="HardcodedText">
-    <RelativeLayout
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/relativeLayout"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/time_layout_bg"
-        android:padding="10dp">
+        app:cardCornerRadius="8dp"
+        android:layout_margin="15dp">
 
-        <TextView
-            android:id="@+id/timeSlot"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="11 : 00 AM"
-            android:layout_marginStart="5dp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-condensed-medium"
-            tools:ignore="HardcodedText" />
+            android:padding="10dp">
 
+            <TextView
+                android:id="@+id/timeSlot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11 : 00 AM"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
+                android:textColor="#36CC1A"
+                android:fontFamily="sans-serif-condensed-medium"
+                tools:ignore="HardcodedText" />
 
+        </RelativeLayout>
 
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/relativeLayoutGreen"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:background="@drawable/select_time_layout_bg"
-        android:padding="10dp">
+    </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/timeSlotGreen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-condensed-medium"
-            tools:ignore="HardcodedText" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayoutRed"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:background="@drawable/un_select_time_layout_bg"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/timeSlotRed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-condensed-medium"
-            tools:ignore="HardcodedText" />
-
-    </RelativeLayout>
 
 </RelativeLayout>

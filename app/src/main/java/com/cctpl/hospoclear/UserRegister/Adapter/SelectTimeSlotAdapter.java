@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,34 +52,34 @@ public class SelectTimeSlotAdapter extends RecyclerView.Adapter<SelectTimeSlotAd
         String Flag = doctorData.get(position).getFlag();
 
         holder.mTimeSlot.setText(TimeSlot);
-        holder.mTimeSlotRed.setText(TimeSlot);
-        holder.mTimeSlotGreen.setText(TimeSlot);
-
-        if (Flag.equals("1")){
-            holder.relativeLayoutRed.setVisibility(View.VISIBLE);
-            holder.relativeLayout.setVisibility(View.GONE);
-        }else {
-            holder.relativeLayout.setVisibility(View.VISIBLE);
-        }
-
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("UseCompatLoadingForDrawables")
-            @Override
-            public void onClick(View v) {
-                String timeSlot = doctorData.get(position).getTimeSlot();
-                String flag = "1";
-                AddFlag(DoctorId,timeSlot,Id,flag);
-            }
-        });
-        holder.relativeLayoutGreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.relativeLayoutGreen.setVisibility(View.GONE);
-                String timeSlot = doctorData.get(position).getTimeSlot();
-                String flag = "2";
-                AddFlag(DoctorId,timeSlot,Id,flag);
-            }
-        });
+//        holder.mTimeSlotRed.setText(TimeSlot);
+//        holder.mTimeSlotGreen.setText(TimeSlot);
+//
+//        if (Flag.equals("1")){
+//            holder.relativeLayoutRed.setVisibility(View.VISIBLE);
+//            holder.relativeLayout.setVisibility(View.GONE);
+//        }else {
+//            holder.relativeLayout.setVisibility(View.VISIBLE);
+//        }
+//
+//        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+//            @SuppressLint("UseCompatLoadingForDrawables")
+//            @Override
+//            public void onClick(View v) {
+//                String timeSlot = doctorData.get(position).getTimeSlot();
+//                String flag = "1";
+//                AddFlag(DoctorId,timeSlot,Id,flag);
+//            }
+//        });
+//        holder.relativeLayoutGreen.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                holder.relativeLayoutGreen.setVisibility(View.GONE);
+//                String timeSlot = doctorData.get(position).getTimeSlot();
+//                String flag = "2";
+//                AddFlag(DoctorId,timeSlot,Id,flag);
+//            }
+//        });
 
     }
 
@@ -122,16 +123,14 @@ public class SelectTimeSlotAdapter extends RecyclerView.Adapter<SelectTimeSlotAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        RelativeLayout relativeLayout,relativeLayoutRed,relativeLayoutGreen;
+        RelativeLayout relativeLayoutRed,relativeLayoutGreen;
+        CardView relativeLayout;
         TextView mTimeSlot,mTimeSlotRed,mTimeSlotGreen;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mTimeSlot = itemView.findViewById(R.id.timeSlot);
-            mTimeSlotRed = itemView.findViewById(R.id.timeSlotRed);
-            mTimeSlotGreen = itemView.findViewById(R.id.timeSlotGreen);
             relativeLayout = itemView.findViewById(R.id.relativeLayout);
-            relativeLayoutRed = itemView.findViewById(R.id.relativeLayoutRed);
-            relativeLayoutGreen = itemView.findViewById(R.id.relativeLayoutGreen);
+
         }
     }
 }

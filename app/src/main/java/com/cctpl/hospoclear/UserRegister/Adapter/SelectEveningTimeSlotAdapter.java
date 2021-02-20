@@ -120,11 +120,7 @@ public class SelectEveningTimeSlotAdapter extends RecyclerView.Adapter<SelectEve
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mTimeSlot = itemView.findViewById(R.id.timeSlot);
-            mTimeSlotRed = itemView.findViewById(R.id.timeSlotRed);
-            mTimeSlotGreen = itemView.findViewById(R.id.timeSlotGreen);
             relativeLayout = itemView.findViewById(R.id.relativeLayout);
-            relativeLayoutRed = itemView.findViewById(R.id.relativeLayoutRed);
-            relativeLayoutGreen = itemView.findViewById(R.id.relativeLayoutGreen);
         }
     }
 }

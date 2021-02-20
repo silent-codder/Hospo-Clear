@@ -1,9 +1,11 @@
 package com.cctpl.hospoclear.UserRegister.Fragment;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cctpl.hospoclear.UserRegister.Adapter.SelectEveningTimeSlotAdapter;
@@ -41,6 +44,9 @@ public class SelectTimeSlotFragment extends Fragment {
     FirebaseFirestore firebaseFirestore;
     String DoctorId,HospitalId,Problem,Date;
 
+    CardView mBtnMorning,mBtnEvening,mMorningSection,mEveningSection,mImgMorning,mImgEvening;
+    TextView mMorningText,mEveningText;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,11 +54,44 @@ public class SelectTimeSlotFragment extends Fragment {
 
         Bundle bundle = this.getArguments();
         if (bundle!=null){
-            Problem = bundle.getString("Problem");
             Date = bundle.getString("Date");
             DoctorId = bundle.getString("DoctorId");
             HospitalId = bundle.getString("HospitalId");
         }
+
+        mBtnEvening = view.findViewById(R.id.evening);
+        mBtnMorning = view.findViewById(R.id.morning);
+        mMorningSection = view.findViewById(R.id.morningSection);
+        mEveningSection = view.findViewById(R.id.eveningSection);
+        mImgMorning = view.findViewById(R.id.img);
+        mImgEvening = view.findViewById(R.id.img1);
+        mMorningText = view.findViewById(R.id.morningText);
+        mEveningText = view.findViewById(R.id.eveningText);
+
+        mBtnEvening.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMorningSection.setVisibility(View.GONE);
+                mEveningSection.setVisibility(View.VISIBLE);
+                mImgMorning.setCardBackgroundColor(Color.WHITE);
+                mMorningText.setTextColor(Color.WHITE);
+                mImgEvening.setCardBackgroundColor(Color.parseColor("#FF7043"));
+                mEveningText.setTextColor(Color.parseColor("#FF7043"));
+            }
+        });
+
+        mBtnMorning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMorningSection.setVisibility(View.VISIBLE);
+                mEveningSection.setVisibility(View.GONE);
+                mImgEvening.setCardBackgroundColor(Color.WHITE);
+                mEveningText.setTextColor(Color.WHITE);
+                mImgMorning.setCardBackgroundColor(Color.parseColor("#FF7043"));
+                mMorningText.setTextColor(Color.parseColor("#FF7043"));
+            }
+        });
+
         recyclerViewMorning = view.findViewById(R.id.recycleViewMorning);
         recyclerViewEvening = view.findViewById(R.id.recycleViewEvening);
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -102,30 +141,30 @@ public class SelectTimeSlotFragment extends Fragment {
             }
         });
 
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppointmentData",0);
-        String TimeSlot = sharedPreferences.getString("TimeSlot",null);
-
-        Button button = view.findViewById(R.id.btnNext);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (TextUtils.isEmpty(TimeSlot)){
-                    Toast toast = Toast.makeText(getContext(), "Select Time Slot", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER,0,0);
-                    toast.show();
-                }else {
-                    Fragment fragment = new SelectUserFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("Problem",Problem);
-                    bundle.putString("Date",Date);
-                    bundle.putString("DoctorId",DoctorId);
-                    bundle.putString("HospitalId",HospitalId);
-                    fragment.setArguments(bundle);
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
-                }
-            }
-        });
+//        SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppointmentData",0);
+//        String TimeSlot = sharedPreferences.getString("TimeSlot",null);
+//
+//        Button button = view.findViewById(R.id.btnNext);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (TextUtils.isEmpty(TimeSlot)){
+//                    Toast toast = Toast.makeText(getContext(), "Select Time Slot", Toast.LENGTH_SHORT);
+//                    toast.setGravity(Gravity.CENTER,0,0);
+//                    toast.show();
+//                }else {
+//                    Fragment fragment = new SelectUserFragment();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("Problem",Problem);
+//                    bundle.putString("Date",Date);
+//                    bundle.putString("DoctorId",DoctorId);
+//                    bundle.putString("HospitalId",HospitalId);
+//                    fragment.setArguments(bundle);
+//                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+//                }
+//            }
+//        });
         return view;
     }
 }

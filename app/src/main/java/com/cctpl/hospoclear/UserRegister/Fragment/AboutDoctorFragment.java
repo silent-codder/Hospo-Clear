@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class AboutDoctorFragment extends Fragment {
     String HospitalName,DoctorId;
     FirebaseFirestore firebaseFirestore;
     ProgressDialog progressDialog;
-    TextView mDoctorName,mSpeciality,mHospitalName,mAboutDoctor;
+    TextView mDoctorName,mSpeciality,mExperience,mAboutDoctor;
     CircleImageView mDoctorImg,mDoctor;
     ProgressBar progressBar;
 
@@ -45,6 +46,7 @@ public class AboutDoctorFragment extends Fragment {
         mDoctorImg = view.findViewById(R.id.doctorImg);
         mDoctor = view.findViewById(R.id.doctor);
         progressBar = view.findViewById(R.id.ImgLoader);
+        mExperience = view.findViewById(R.id.doctorExperience);
         firebaseFirestore = FirebaseFirestore.getInstance();
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Fetching data..");
@@ -65,11 +67,14 @@ public class AboutDoctorFragment extends Fragment {
                             String DoctorName = task.getResult().getString("DoctorName");
                             String Specialist = task.getResult().getString("Speciality");
                             String HospitalId = task.getResult().getString("HospitalId");
+                            String Experience = task.getResult().getString("Experience");
                             String About = task.getResult().getString("DoctorBio");
                             String ProfileUrl = task.getResult().getString("ProfileImgUrl");
                             progressBar.setVisibility(View.VISIBLE);
 
-                            mAboutDoctor.setText(About);
+                            if (!TextUtils.isEmpty(About)){
+                                mAboutDoctor.setText(About);
+                            }
 
                             if(ProfileUrl != null){
                                 mDoctor.setVisibility(View.INVISIBLE);
@@ -79,6 +84,7 @@ public class AboutDoctorFragment extends Fragment {
                             }
                             mDoctorName.setText(DoctorName);
                             mSpeciality.setText(Specialist);
+                            mExperience.setText("+"+Experience);
 
                             firebaseFirestore.collection("Hospitals").document(HospitalId)
                                     .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

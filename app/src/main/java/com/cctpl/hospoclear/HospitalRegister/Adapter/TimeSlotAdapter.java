@@ -88,7 +88,6 @@ public class TimeSlotAdapter extends RecyclerView.Adapter<TimeSlotAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mTimeSlot = itemView.findViewById(R.id.timeSlot);
-            mTimeSlotRed = itemView.findViewById(R.id.timeSlotRed);
             relativeLayout = itemView.findViewById(R.id.relativeLayout);
         }
     }

@@ -8,16 +8,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cctpl.hospoclear.UserRegister.Adapter.SelectEveningTimeSlotAdapter;
 import com.cctpl.hospoclear.UserRegister.Adapter.SelectTimeSlotAdapter;
@@ -46,9 +49,7 @@ import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 public class BookAppointmentFragment extends Fragment {
 
-    TextView mDoctorName,mSpeciality,mHospitalName;
-    EditText mProblem;
-    RelativeLayout mDateLayout;
+    TextView mDoctorName,mSpeciality,mExperience;
     String DoctorId,UserId,date,HospitalName,HospitalId;
     ProgressDialog progressDialog;
 
@@ -65,11 +66,9 @@ public class BookAppointmentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_appointment, container, false);
-        mProblem = view.findViewById(R.id.problem);
-        mDateLayout = view.findViewById(R.id.dateLayout);
         mDoctorName = view.findViewById(R.id.doctorName);
         mSpeciality = view.findViewById(R.id.doctorSpeciality);
-        mHospitalName = view.findViewById(R.id.hospitalName);
+        mExperience = view.findViewById(R.id.doctorExperience);
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         UserId = firebaseAuth.getCurrentUser().getUid();
@@ -91,14 +90,18 @@ public class BookAppointmentFragment extends Fragment {
                         if (task.isSuccessful()){
                             String DoctorName = task.getResult().getString("DoctorName");
                             String Specialist = task.getResult().getString("Speciality");
+                            String Experience = task.getResult().getString("Experience");
                             String ProfileUrl = task.getResult().getString("ProfileImgUrl");
                             HospitalId = task.getResult().getString("HospitalId");
 
-                            if (ProfileUrl != null){
+                            if (!TextUtils.isEmpty(ProfileUrl)){
                                 CircleImageView circleImageView = view.findViewById(R.id.doctorImg);
                                 Picasso.get().load(ProfileUrl).into(circleImageView);
                             }
 
+                            mDoctorName.setText(DoctorName);
+                            mSpeciality.setText(Specialist);
+                            mExperience.setText("+"+Experience);
                             progressDialog.dismiss();
                         }
                     }
@@ -127,84 +130,30 @@ public class BookAppointmentFragment extends Fragment {
 
                 TextView textView = view.findViewById(R.id.appointmentDate);
                 textView.setText("(" + date + ")");
-//                SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppointmentData",0);
-//                Editor editor = sharedPreferences.edit();
-//                editor.putString("AppointmentDate",date);
-//                editor.commit();
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppointmentData",0);
+                Editor editor = sharedPreferences.edit();
+                editor.putString("AppointmentDate",date);
+                editor.commit();
+
             }
         });
 
-//        recyclerViewMorning = view.findViewById(R.id.recycleViewMorning);
-//        recyclerViewEvening = view.findViewById(R.id.recycleViewEvening);
-//        firebaseFirestore = FirebaseFirestore.getInstance();
-//        timeSlotData = new ArrayList<>();
-//        selectTimeSlotAdapter = new SelectTimeSlotAdapter(timeSlotData);
-//        recyclerViewMorning.setLayoutManager(new GridLayoutManager(getContext(),3));
-//        recyclerViewMorning.setAdapter(selectTimeSlotAdapter);
-//        recyclerViewMorning.setHasFixedSize(true);
-//
-//        Query query =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("Morning")
-//                .orderBy("TimeStamp", Query.Direction.ASCENDING);
-//        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-//
-//                for (DocumentChange doc : value.getDocumentChanges()){
-//                    if (doc.getType() == DocumentChange.Type.ADDED){
-//                        String timeSlotId = doc.getDocument().getId();
-//                        TimeSlotData mAppointmentData = doc.getDocument().toObject(TimeSlotData.class).withId(timeSlotId);
-//                        timeSlotData.add(mAppointmentData);
-//                        selectTimeSlotAdapter.notifyDataSetChanged();
-//                    }
-//                }
-//            }
-//        });
-//
-//        eveningTimeSlotData = new ArrayList<>();
-//        selectEveningTimeSlotAdapter = new SelectEveningTimeSlotAdapter(eveningTimeSlotData);
-//        recyclerViewEvening.setLayoutManager(new GridLayoutManager(getContext(),3));
-//        recyclerViewEvening.setAdapter(selectEveningTimeSlotAdapter);
-//        recyclerViewEvening.setHasFixedSize(true);
-//
-//        Query query2 =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("Evening")
-//                .orderBy("TimeStamp", Query.Direction.ASCENDING);
-//        query2.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-//
-//                for (DocumentChange doc : value.getDocumentChanges()){
-//                    if (doc.getType() == DocumentChange.Type.ADDED){
-//                        String timeSlotId = doc.getDocument().getId();
-//                        EveningTimeSlotData mAppointmentData = doc.getDocument().toObject(EveningTimeSlotData.class).withId(timeSlotId);
-//                        eveningTimeSlotData.add(mAppointmentData);
-//                        selectEveningTimeSlotAdapter.notifyDataSetChanged();
-//                    }
-//                }
-//            }
-//        });
+        CardView btnContinue = view.findViewById(R.id.btnContinue);
+        btnContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(date)){
+                    Fragment fragment = new SelectTimeSlotFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Date",date);
+                    bundle.putString("DoctorId",DoctorId);
+                    bundle.putString("HospitalId",HospitalId);
+                    fragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+                }
+            }
+        });
 
-
-
-//        mBtnNext.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String problem = mProblem.getText().toString();
-//                if (TextUtils.isEmpty(problem)){
-//                    mProblem.setError("Please mention problem");
-//                }else if (date == null){
-//                    Toast.makeText(getContext(), "Choose appointment date", Toast.LENGTH_SHORT).show();
-//                }else {
-//                    Fragment fragment = new SelectTimeSlotFragment();
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("Problem",problem);
-//                    bundle.putString("Date",date);
-//                    bundle.putString("DoctorId",DoctorId);
-//                    bundle.putString("HospitalId",HospitalId);
-//                    fragment.setArguments(bundle);
-//                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
-//                }
-//            }
-//        });
         return view;
     }
 

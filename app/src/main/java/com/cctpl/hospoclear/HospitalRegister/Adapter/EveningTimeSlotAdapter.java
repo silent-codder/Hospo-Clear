@@ -87,7 +87,6 @@ public class EveningTimeSlotAdapter extends RecyclerView.Adapter<EveningTimeSlot
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mTimeSlot = itemView.findViewById(R.id.timeSlot);
-            mTimeSlotRed = itemView.findViewById(R.id.timeSlotRed);
             relativeLayout = itemView.findViewById(R.id.relativeLayout);
         }
     }

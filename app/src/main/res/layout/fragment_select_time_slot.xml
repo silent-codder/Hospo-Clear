@@ -3,80 +3,160 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="56dp"
     tools:context=".UserRegister.Fragment.SelectTimeSlotFragment">
 
-    <ScrollView
+   <TableLayout
+       android:id="@+id/tableLayout"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:padding="20dp"
+       android:orientation="horizontal">
+
+       <TableRow
+           android:layout_width="150dp"
+           android:layout_height="wrap_content">
+
+           <androidx.cardview.widget.CardView
+               android:id="@+id/morning"
+               android:layout_width="150dp"
+               android:layout_weight="1"
+               android:layout_marginEnd="10dp"
+               app:cardBackgroundColor="@color/Primary_color"
+               android:layout_height="49dp"
+               app:cardCornerRadius="15dp">
+
+               <RelativeLayout
+                   android:layout_width="150dp"
+                   android:layout_height="match_parent"
+                   android:layout_gravity="center_horizontal"
+                   android:padding="5dp">
+
+                   <androidx.cardview.widget.CardView
+                       android:id="@+id/img"
+                       android:layout_width="48dp"
+                       android:layout_height="48dp"
+                       app:cardBackgroundColor="@color/date"
+                       app:cardCornerRadius="10dp">
+
+                       <ImageView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/cloud" />
+
+                   </androidx.cardview.widget.CardView>
+
+                   <TextView
+                       android:id="@+id/morningText"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerVertical="true"
+                       android:layout_toEndOf="@id/img"
+                       android:fontFamily="sans-serif-condensed-medium"
+                       android:text="Morning"
+                       android:layout_margin="10dp"
+                       android:textColor="@color/date"
+                       android:textStyle="bold"
+                       tools:ignore="HardcodedText" />
+
+               </RelativeLayout>
+
+           </androidx.cardview.widget.CardView>
+
+           <androidx.cardview.widget.CardView
+               android:id="@+id/evening"
+               android:layout_width="150dp"
+               android:layout_weight="1"
+               app:cardBackgroundColor="@color/Primary_color"
+               android:layout_marginStart="10dp"
+               android:layout_height="wrap_content"
+               app:cardCornerRadius="15dp">
+
+               <RelativeLayout
+                   android:layout_width="150dp"
+                   android:layout_gravity="center_horizontal"
+                   android:layout_height="match_parent"
+                   android:padding="5dp">
+
+                   <androidx.cardview.widget.CardView
+                       android:id="@+id/img1"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       app:cardCornerRadius="10dp">
+
+                       <ImageView
+                           android:layout_width="48dp"
+                           android:layout_height="38dp"
+                           android:src="@drawable/night" />
+
+                   </androidx.cardview.widget.CardView>
+
+                   <TextView
+                       android:id="@+id/eveningText"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerVertical="true"
+                       android:layout_toEndOf="@id/img1"
+                       android:fontFamily="sans-serif-condensed-medium"
+                       android:text="Evening"
+                       android:textColor="@color/white"
+                       android:layout_marginStart="10dp"
+                       android:textStyle="bold"
+                       tools:ignore="HardcodedText" />
+
+               </RelativeLayout>
+
+           </androidx.cardview.widget.CardView>
+
+       </TableRow>
+
+   </TableLayout>
+
+   <androidx.cardview.widget.CardView
+       android:id="@+id/morningSection"
+       android:visibility="visible"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:cardCornerRadius="15dp"
+       android:layout_margin="10dp"
+       android:layout_below="@id/tableLayout">
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:padding="10dp">
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/recycleViewMorning"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
+
+       </RelativeLayout>
+
+   </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/eveningSection"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        android:layout_margin="10dp"
+        android:layout_below="@id/tableLayout">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="10dp">
 
-            <TextView
-                android:id="@+id/text"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select Appointment time"
-                android:textStyle="bold"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/purple_500"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/morningSection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Morning Session : "
-                android:layout_below="@id/text"
-                android:textColor="@color/Primary_color"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"
-                tools:ignore="HardcodedText" />
-
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="10dp"
+                android:id="@+id/recycleViewEvening"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/morningSection"
-                android:id="@+id/recycleViewMorning"/>
-
-            <TextView
-                android:id="@+id/eveningSection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Evening Session : "
-                android:layout_below="@id/recycleViewMorning"
-                android:textColor="@color/Primary_color"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"
-                tools:ignore="HardcodedText" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/eveningSection"
-                android:id="@+id/recycleViewEvening"/>
-
-            <Button
-                android:id="@+id/btnNext"
-                android:layout_marginTop="20dp"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="Next"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:textAllCaps="false"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/recycleViewEvening"
-                tools:ignore="HardcodedText" />
+                android:layout_height="wrap_content"/>
 
         </RelativeLayout>
 
-    </ScrollView>
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

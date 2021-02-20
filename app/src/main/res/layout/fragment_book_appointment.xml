@@ -151,7 +151,7 @@
             android:id="@+id/doctorExperience"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:text="+17"
+            android:text="+17 Yr"
             android:layout_toEndOf="@id/view2"
             android:gravity="center_horizontal"
             android:layout_below="@id/rate"
@@ -159,8 +159,9 @@
             android:textSize="@dimen/text_size_large"
             android:textStyle="bold"
             android:textColor="@color/purple_500"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             tools:ignore="HardcodedText" />
+
 
     </RelativeLayout>
 
@@ -190,6 +191,7 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/btnContinue"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_below="@id/calenderView"

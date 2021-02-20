@@ -170,7 +170,7 @@
                    android:textSize="@dimen/text_size_large"
                    android:textStyle="bold"
                    android:textColor="@color/purple_500"
-                   android:textAllCaps="true"
+                   android:textAllCaps="false"
                    tools:ignore="HardcodedText" />
 
            </RelativeLayout>
@@ -191,7 +191,7 @@
                android:id="@+id/aboutDoctor"
                android:layout_marginTop="5dp"
                android:textSize="@dimen/text_size_small"
-               android:text="Nothing to more about doctor.."
+               android:text="Nothing more about doctor.."
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_below="@id/bio"
