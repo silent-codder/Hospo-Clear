@@ -1,4 +1,4 @@
-package com.cctpl.hospoclear.HospitalRegister.Adapter;
+package com.cctpl.hospoclear.UserRegister.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,12 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cctpl.hospoclear.R;
 import com.cctpl.hospoclear.UserRegister.Fragment.SelectUserFragment;
-import com.cctpl.hospoclear.UserRegister.Model.DoctorId;
 import com.cctpl.hospoclear.UserRegister.Model.EveningTimeSlotData;
-import com.cctpl.hospoclear.UserRegister.Model.TimeSlotData;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -70,9 +65,9 @@ public class SelectEveningTimeSlotAdapter extends RecyclerView.Adapter<SelectEve
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
-                holder.relativeLayoutGreen.setVisibility(View.VISIBLE);
+//                holder.relativeLayoutGreen.setVisibility(View.VISIBLE);
                 String timeSlot = doctorData.get(position).getTimeSlot();
-                String flag = "3";
+                String flag = "1";
                 AddFlag(DoctorId,timeSlot,Id,flag);
             }
         });

@@ -70,7 +70,7 @@ public class TopDoctorAdapter extends RecyclerView.Adapter<TopDoctorAdapter.View
 
         holder.mDoctorName.setText(DoctorName);
         holder.mDoctorSpeciality.setText(Speciality + ",");
-        holder.mDoctorExperience.setText("Ex : " + Experience);
+        holder.mDoctorExperience.setText("Experience : " + Experience);
         holder.mDoctorQualification.setText(Qualification);
 
         holder.progressBar.setVisibility(View.VISIBLE);

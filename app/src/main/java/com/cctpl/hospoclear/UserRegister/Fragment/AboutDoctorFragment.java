@@ -41,7 +41,6 @@ public class AboutDoctorFragment extends Fragment {
 
         mDoctorName = view.findViewById(R.id.doctorName);
         mSpeciality = view.findViewById(R.id.doctorSpeciality);
-        mHospitalName = view.findViewById(R.id.hospitalName);
         mAboutDoctor = view.findViewById(R.id.aboutDoctor);
         mDoctorImg = view.findViewById(R.id.doctorImg);
         mDoctor = view.findViewById(R.id.doctor);
@@ -88,7 +87,6 @@ public class AboutDoctorFragment extends Fragment {
                                     if (task.isSuccessful()){
                                         progressDialog.dismiss();
                                         HospitalName = task.getResult().getString("HospitalName");
-                                        mHospitalName.setText(HospitalName);
                                     }
                                 }
                             });

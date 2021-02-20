@@ -1,6 +1,5 @@
 package com.cctpl.hospoclear.UserRegister.Fragment;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -17,10 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.cctpl.hospoclear.HospitalRegister.Adapter.EveningTimeSlotAdapter;
-import com.cctpl.hospoclear.HospitalRegister.Adapter.SelectEveningTimeSlotAdapter;
-import com.cctpl.hospoclear.HospitalRegister.Adapter.SelectTimeSlotAdapter;
-import com.cctpl.hospoclear.HospitalRegister.Adapter.TimeSlotAdapter;
+import com.cctpl.hospoclear.UserRegister.Adapter.SelectEveningTimeSlotAdapter;
+import com.cctpl.hospoclear.UserRegister.Adapter.SelectTimeSlotAdapter;
 import com.cctpl.hospoclear.R;
 import com.cctpl.hospoclear.UserRegister.Model.EveningTimeSlotData;
 import com.cctpl.hospoclear.UserRegister.Model.TimeSlotData;

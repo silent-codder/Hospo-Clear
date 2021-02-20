@@ -76,6 +76,7 @@
 
        <TextView
            android:id="@+id/prob"
+           android:visibility="gone"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="Problem : "
@@ -88,6 +89,7 @@
            tools:ignore="HardcodedText" />
        <TextView
            android:id="@+id/problem"
+           android:visibility="gone"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:textStyle="normal"

@@ -23,10 +23,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cctpl.hospoclear.HospitalRegister.Adapter.EveningTimeSlotAdapter;
-import com.cctpl.hospoclear.HospitalRegister.Adapter.SelectEveningTimeSlotAdapter;
-import com.cctpl.hospoclear.HospitalRegister.Adapter.SelectTimeSlotAdapter;
-import com.cctpl.hospoclear.HospitalRegister.Adapter.TimeSlotAdapter;
+import com.cctpl.hospoclear.UserRegister.Adapter.SelectEveningTimeSlotAdapter;
+import com.cctpl.hospoclear.UserRegister.Adapter.SelectTimeSlotAdapter;
 import com.cctpl.hospoclear.R;
 import com.cctpl.hospoclear.UserRegister.Model.EveningTimeSlotData;
 import com.cctpl.hospoclear.UserRegister.Model.TimeSlotData;
@@ -45,7 +43,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 

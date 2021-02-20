@@ -88,9 +88,18 @@ public class SelectUserFragment extends Fragment {
         SlotId = sharedPreferences.getString("SlotId",null);
         Section = sharedPreferences.getString("Section",null);
         AppointmentDate = sharedPreferences.getString("AppointmentDate",null);
+        DoctorId = sharedPreferences.getString("DoctorId",null);
         mAppointmentDate.setText(AppointmentDate);
         TextView textView = view.findViewById(R.id.appointmentTime);
         textView.setText(timeSlot);
+
+        firebaseFirestore.collection("Doctors").document(DoctorId).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        HospitalId = task.getResult().getString("HospitalId");
+                    }
+                });
 
         firebaseFirestore.collection("Users").document(UserId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -127,7 +136,8 @@ public class SelectUserFragment extends Fragment {
                                         if (task.isSuccessful()){
                                             Token = task.getResult().getString("token");
                                             String extra = " has requested for appointment.";
-                                            sendNotification(Token,UserName + extra ,"Problem : " + Problem);
+                                            String Data = AppointmentDate + " , " + timeSlot;
+                                            sendNotification(Token,UserName + extra , Data);
                                         }
                                     }
                                 });
@@ -207,8 +217,9 @@ public class SelectUserFragment extends Fragment {
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                             if (task.isSuccessful()){
                                                 Token = task.getResult().getString("token");
-                                                String extra = " has requested for appointment.";
-                                                sendNotification(Token,UserName + extra ,"Problem : " + Problem);
+                                                String extra = " has requested.";
+                                                String Data = AppointmentDate + " , " + timeSlot;
+                                                sendNotification(Token,UserName + extra , Data);
                                             }
                                         }
                                     });

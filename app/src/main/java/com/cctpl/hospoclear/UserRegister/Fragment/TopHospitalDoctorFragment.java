@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,9 +34,12 @@ import com.cctpl.hospoclear.UserRegister.Adapter.TopDoctorAdapter;
 import com.cctpl.hospoclear.UserRegister.Adapter.TopHospitalAdapter;
 import com.cctpl.hospoclear.UserRegister.Model.DoctorData;
 import com.cctpl.hospoclear.UserRegister.Model.HospitalData;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TopHospitalDoctorFragment extends Fragment {
 
@@ -44,7 +49,9 @@ public class TopHospitalDoctorFragment extends Fragment {
     FirebaseFirestore firebaseFirestore;
     String HospitalId;
 
-    TextView mHospitalName,mCity;
+    TextView mHospitalName;
+    CircleImageView mHospitalImg,mHospital;
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,7 +60,9 @@ public class TopHospitalDoctorFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.topDoctorRecycleView);
         mHospitalName = view.findViewById(R.id.hospitalName);
-        mCity = view.findViewById(R.id.city);
+        mHospitalImg = view.findViewById(R.id.hospitalImg);
+        mHospital = view.findViewById(R.id.hospital);
+        progressBar = view.findViewById(R.id.loader);
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         Bundle bundle = this.getArguments();
@@ -88,7 +97,7 @@ public class TopHospitalDoctorFragment extends Fragment {
             }
         });
 
-        Button button = view.findViewById(R.id.btnViewDetails);
+        CardView button = view.findViewById(R.id.btnViewDetails);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,11 +121,21 @@ public class TopHospitalDoctorFragment extends Fragment {
                         if (task.isSuccessful()){
                             String HospitalName = task.getResult().getString("HospitalName");
                             String City = task.getResult().getString("City");
-                            mHospitalName.setText(HospitalName);
-                            mCity.setText(", "+City);
+                            String ProfileUrl = task.getResult().getString("ProfileImgUrl");
+                            mHospitalName.setText(HospitalName + ", " +City);
                             mHospitalName.setSelected(true);
                             mHospitalName.setEllipsize(TextUtils.TruncateAt.MARQUEE);
                             mHospitalName.setSingleLine(true);
+
+                            if (!TextUtils.isEmpty(ProfileUrl)){
+                                mHospital.setVisibility(View.GONE);
+                                progressBar.setVisibility(View.GONE);
+                                mHospitalImg.setVisibility(View.VISIBLE);
+                                Picasso.get().load(ProfileUrl).into(mHospitalImg);
+                            }else {
+                                mHospital.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.GONE);
+                            }
                         }
                     }
                 });

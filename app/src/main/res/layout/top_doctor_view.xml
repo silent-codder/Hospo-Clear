@@ -68,6 +68,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="8dp"
+              android:text="Dr. Ajinkya Shinde"
               android:textColor="@color/white"
               android:layout_toEndOf="@id/doctorImg"
               android:layout_marginStart="10dp"
@@ -79,13 +80,14 @@
               android:id="@+id/doctorSpeciality"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:text="Heart Special"
               android:textColor="@color/white"
               android:textStyle="bold"
               android:layout_marginStart="10dp"
               android:textSize="@dimen/text_size_small"
               android:fontFamily="sans-serif-condensed-medium"
               android:layout_toEndOf="@id/doctorImg"
-              android:layout_below="@id/doctorName"
+              android:layout_below="@id/doctorQualification"
               tools:ignore="HardcodedText"/>
           <TextView
               android:id="@+id/doctorExperience"
@@ -93,25 +95,49 @@
               android:layout_height="wrap_content"
               android:textColor="@color/white"
               android:textStyle="bold"
+              android:text="Ex : 17"
               android:textSize="@dimen/text_size_small"
               android:layout_marginStart="5dp"
               android:fontFamily="sans-serif-condensed-medium"
               android:layout_toEndOf="@id/doctorSpeciality"
-              android:layout_below="@id/doctorName"
+              android:layout_below="@id/doctorQualification"
               tools:ignore="HardcodedText" />
           <TextView
               android:id="@+id/doctorQualification"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:textColor="@color/white"
+              android:text="MBBS, M.Surg"
               android:textStyle="bold"
+              android:textSize="@dimen/text_size_small"
+              android:layout_marginStart="10dp"
+              android:fontFamily="sans-serif-condensed-medium"
+              android:layout_toEndOf="@id/doctorImg"
+              android:layout_below="@id/doctorName"
+              tools:ignore="HardcodedText" />
+          <TextView
+              android:id="@+id/doctorFee"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="@color/white"
+              android:text="Fee : 500"
+              android:textStyle="bold|italic"
               android:textSize="@dimen/text_size_small"
               android:layout_marginStart="10dp"
               android:fontFamily="sans-serif-condensed-medium"
               android:layout_toEndOf="@id/doctorImg"
               android:layout_below="@id/doctorSpeciality"
               tools:ignore="HardcodedText" />
+
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/white"
+              android:layout_below="@id/doctorFee"
+              android:layout_marginTop="5dp"/>
+
       </RelativeLayout>
+
 
       <RelativeLayout
           android:layout_width="match_parent"
@@ -129,7 +155,6 @@
               android:background="@drawable/edit_txt_problem_bg"
               android:padding="10dp"
               android:textStyle="bold"
-              android:layout_marginTop="10dp"
               android:fontFamily="sans-serif-condensed-medium"
               tools:ignore="HardcodedText" />
       </RelativeLayout>

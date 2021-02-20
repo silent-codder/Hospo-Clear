@@ -3,71 +3,206 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="56dp"
     tools:context=".UserRegister.Fragment.TopHospitalDoctorFragment">
 
-    <TextView
-        android:id="@+id/hospitalName"
-        android:layout_width="wrap_content"
-        android:maxWidth="260dp"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:ellipsize="marquee"
-        android:scrollHorizontally="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:textColor="@color/purple_500"
-        android:textStyle="bold"
-        android:textSize="26sp"
-        android:layout_marginStart="20dp"
-        android:fontFamily="sans-serif-condensed-medium"
-        tools:ignore="HardcodedText" />
-    <TextView
-        android:id="@+id/city"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/purple_500"
-        android:textSize="24sp"
-        android:layout_marginBottom="2dp"
-        android:textStyle="bold"
-        android:layout_alignBottom="@id/hospitalName"
-        android:layout_toEndOf="@id/hospitalName"
-        android:fontFamily="sans-serif-condensed-medium"
-        tools:ignore="HardcodedText" />
-    <EditText
-        android:id="@+id/searchBar"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/hospitalInfo"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search doctor"
-        android:drawableStart="@drawable/ic_search"
-        android:background="@drawable/search_bg"
-        android:padding="10dp"
-        android:layout_below="@id/hospitalName"
-        android:layout_margin="20dp"
-        tools:ignore="HardcodedText" />
+        app:cardElevation="10dp"
+        app:cardCornerRadius="20dp">
 
-    <Button
-        android:id="@+id/btnViewDetails"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="View Hospital Profile"
-        android:textAllCaps="false"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:textStyle="bold"
-        android:layout_below="@id/searchBar"
-        tools:ignore="HardcodedText" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/hospital"
+                android:visibility="gone"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/hospital"
+                android:layout_centerHorizontal="true"/>
+            <ProgressBar
+                android:id="@+id/loader"
+                android:visibility="visible"
+                android:layout_margin="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/hospital"
+                android:layout_centerHorizontal="true"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/hospitalImg"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:civ_border_width="1dp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/hospitalName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Loading....."
+                android:layout_below="@id/hospitalImg"
+                android:layout_centerHorizontal="true"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold"
+                android:textColor="@color/Primary_color"
+                tools:ignore="HardcodedText" />
+
+            <RelativeLayout
+                android:id="@+id/details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/hospitalName">
+
+                <TextView
+                    android:id="@+id/patient"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="Patients"
+                    android:gravity="center_horizontal"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    tools:ignore="HardcodedText" />
+                <TextView
+                    android:id="@+id/patientCount"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="+10,000"
+                    android:gravity="center_horizontal"
+                    android:layout_below="@id/patient"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textSize="@dimen/text_size_large"
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_500"
+                    android:textAllCaps="true"
+                    tools:ignore="HardcodedText" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="2dp"
+                    android:layout_height="50dp"
+                    android:background="#939697"
+                    android:layout_toEndOf="@id/patient"
+                    android:layout_marginStart="20dp"/>
+
+                <TextView
+                    android:id="@+id/rate"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/view1"
+                    android:text="Rate"
+                    android:gravity="center_horizontal"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    tools:ignore="HardcodedText" />
+                <TextView
+                    android:id="@+id/rating"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="4.5"
+                    android:layout_toEndOf="@id/view1"
+                    android:gravity="center_horizontal"
+                    android:layout_below="@id/rate"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textSize="@dimen/text_size_large"
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_500"
+                    android:textAllCaps="true"
+                    tools:ignore="HardcodedText" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="2dp"
+                    android:layout_height="50dp"
+                    android:background="#939697"
+                    android:layout_toEndOf="@id/rate"
+                    android:layout_marginStart="10dp"/>
+
+                <TextView
+                    android:id="@+id/doctor"
+                    android:layout_width="80dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/view2"
+                    android:text="Doctors"
+                    android:gravity="center_horizontal"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    tools:ignore="HardcodedText" />
+                <TextView
+                    android:id="@+id/doctorCount"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="+17"
+                    android:layout_toEndOf="@id/view2"
+                    android:gravity="center_horizontal"
+                    android:layout_below="@id/rate"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textSize="@dimen/text_size_large"
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_500"
+                    android:textAllCaps="true"
+                    tools:ignore="HardcodedText" />
+
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btnViewDetails"
+                android:layout_width="330dp"
+                android:layout_height="40dp"
+                app:cardCornerRadius="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/details"
+                android:layout_centerHorizontal="true">
+
+               <RelativeLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:background="@color/purple_500">
+
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="View Profile"
+                       android:textSize="@dimen/text_size_medium"
+                       android:textColor="@color/white"
+                       android:textStyle="bold"
+                       android:gravity="center"
+                       tools:ignore="HardcodedText" />
+
+               </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="Top Doctors"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="@dimen/text_size_medium"
-        android:layout_below="@id/btnViewDetails"
+        android:layout_below="@id/hospitalInfo"
         android:layout_marginStart="20dp"
         android:fontFamily="sans-serif-condensed-medium"
         tools:ignore="HardcodedText" />

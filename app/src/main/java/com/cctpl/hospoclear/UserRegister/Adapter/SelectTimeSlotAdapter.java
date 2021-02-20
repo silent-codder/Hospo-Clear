@@ -1,27 +1,26 @@
-package com.cctpl.hospoclear.HospitalRegister.Adapter;
+package com.cctpl.hospoclear.UserRegister.Adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cctpl.hospoclear.R;
-import com.cctpl.hospoclear.UserRegister.Model.DoctorId;
+import com.cctpl.hospoclear.UserRegister.Fragment.SelectUserFragment;
 import com.cctpl.hospoclear.UserRegister.Model.TimeSlotData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -66,9 +65,8 @@ public class SelectTimeSlotAdapter extends RecyclerView.Adapter<SelectTimeSlotAd
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
-                holder.relativeLayoutGreen.setVisibility(View.VISIBLE);
                 String timeSlot = doctorData.get(position).getTimeSlot();
-                String flag = "3";
+                String flag = "1";
                 AddFlag(DoctorId,timeSlot,Id,flag);
             }
         });
@@ -92,13 +90,30 @@ public class SelectTimeSlotAdapter extends RecyclerView.Adapter<SelectTimeSlotAd
         map.put("Flag",flag);
 
         firebaseFirestore.collection("Doctors").document(doctorId)
-                .collection("Morning").document(Id).update(map);
+                .collection("Morning").document(Id).update(map)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            String Date = sharedPreferences.getString("AppointmentDate",null);
+                            if (TextUtils.isEmpty(Date)){
+                                Toast.makeText(context, "Select Date !!!", Toast.LENGTH_SHORT).show();
+                            }else {
+                                AppCompatActivity activity = (AppCompatActivity) context;
+                                Fragment fragment = new SelectUserFragment();
+                                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+                            }
+                        }
+                    }
+                });
 
         editor.putString("DoctorId", doctorId);
         editor.putString("TimeSlot",timeSlot);
         editor.putString("Section","Morning");
         editor.putString("SlotId",Id);
         editor.commit();
+
+
     }
 
     @Override

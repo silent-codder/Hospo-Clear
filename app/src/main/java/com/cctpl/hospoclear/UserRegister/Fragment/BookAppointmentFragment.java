@@ -4,30 +4,23 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.cctpl.hospoclear.HospitalRegister.Adapter.SelectEveningTimeSlotAdapter;
-import com.cctpl.hospoclear.HospitalRegister.Adapter.SelectTimeSlotAdapter;
+import com.cctpl.hospoclear.UserRegister.Adapter.SelectEveningTimeSlotAdapter;
+import com.cctpl.hospoclear.UserRegister.Adapter.SelectTimeSlotAdapter;
 import com.cctpl.hospoclear.UserRegister.Model.EveningTimeSlotData;
 import com.cctpl.hospoclear.UserRegister.Model.TimeSlotData;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,22 +34,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.cctpl.hospoclear.R;
-import com.cctpl.hospoclear.UserRegister.Adapter.UserAdapter;
-import com.cctpl.hospoclear.UserRegister.Model.DoctorData;
-import com.cctpl.hospoclear.UserRegister.Model.UserData;
 import com.squareup.picasso.Picasso;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParseException;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
@@ -100,7 +82,6 @@ public class BookAppointmentFragment extends Fragment {
         if (bundle!=null){
             DoctorId = bundle.getString("DoctorId");
             HospitalName = bundle.getString("HospitalName");
-            mHospitalName.setText(HospitalName);
         }
 
         firebaseFirestore.collection("Doctors").document(DoctorId).get()
@@ -118,8 +99,6 @@ public class BookAppointmentFragment extends Fragment {
                                 Picasso.get().load(ProfileUrl).into(circleImageView);
                             }
 
-                            mDoctorName.setText(DoctorName);
-                            mSpeciality.setText(Specialist);
                             progressDialog.dismiss();
                         }
                     }
@@ -141,66 +120,68 @@ public class BookAppointmentFragment extends Fragment {
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar calendar, int position) {
-                String St_Date ;
                 int day = calendar.get(Calendar.DATE);
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
-                date = day + " / " + month + " / " + year;
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppointmentData",0);
-                Editor editor = sharedPreferences.edit();
-                editor.putString("AppointmentDate",date);
-                editor.commit();
+                date = day + " / " + (month+1) + " / " + year;
+
+                TextView textView = view.findViewById(R.id.appointmentDate);
+                textView.setText("(" + date + ")");
+//                SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppointmentData",0);
+//                Editor editor = sharedPreferences.edit();
+//                editor.putString("AppointmentDate",date);
+//                editor.commit();
             }
         });
 
-        recyclerViewMorning = view.findViewById(R.id.recycleViewMorning);
-        recyclerViewEvening = view.findViewById(R.id.recycleViewEvening);
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        timeSlotData = new ArrayList<>();
-        selectTimeSlotAdapter = new SelectTimeSlotAdapter(timeSlotData);
-        recyclerViewMorning.setLayoutManager(new GridLayoutManager(getContext(),3));
-        recyclerViewMorning.setAdapter(selectTimeSlotAdapter);
-        recyclerViewMorning.setHasFixedSize(true);
-
-        Query query =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("Morning")
-                .orderBy("TimeStamp", Query.Direction.ASCENDING);
-        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
-                for (DocumentChange doc : value.getDocumentChanges()){
-                    if (doc.getType() == DocumentChange.Type.ADDED){
-                        String timeSlotId = doc.getDocument().getId();
-                        TimeSlotData mAppointmentData = doc.getDocument().toObject(TimeSlotData.class).withId(timeSlotId);
-                        timeSlotData.add(mAppointmentData);
-                        selectTimeSlotAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-        });
-
-        eveningTimeSlotData = new ArrayList<>();
-        selectEveningTimeSlotAdapter = new SelectEveningTimeSlotAdapter(eveningTimeSlotData);
-        recyclerViewEvening.setLayoutManager(new GridLayoutManager(getContext(),3));
-        recyclerViewEvening.setAdapter(selectEveningTimeSlotAdapter);
-        recyclerViewEvening.setHasFixedSize(true);
-
-        Query query2 =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("Evening")
-                .orderBy("TimeStamp", Query.Direction.ASCENDING);
-        query2.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
-                for (DocumentChange doc : value.getDocumentChanges()){
-                    if (doc.getType() == DocumentChange.Type.ADDED){
-                        String timeSlotId = doc.getDocument().getId();
-                        EveningTimeSlotData mAppointmentData = doc.getDocument().toObject(EveningTimeSlotData.class).withId(timeSlotId);
-                        eveningTimeSlotData.add(mAppointmentData);
-                        selectEveningTimeSlotAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-        });
+//        recyclerViewMorning = view.findViewById(R.id.recycleViewMorning);
+//        recyclerViewEvening = view.findViewById(R.id.recycleViewEvening);
+//        firebaseFirestore = FirebaseFirestore.getInstance();
+//        timeSlotData = new ArrayList<>();
+//        selectTimeSlotAdapter = new SelectTimeSlotAdapter(timeSlotData);
+//        recyclerViewMorning.setLayoutManager(new GridLayoutManager(getContext(),3));
+//        recyclerViewMorning.setAdapter(selectTimeSlotAdapter);
+//        recyclerViewMorning.setHasFixedSize(true);
+//
+//        Query query =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("Morning")
+//                .orderBy("TimeStamp", Query.Direction.ASCENDING);
+//        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//
+//                for (DocumentChange doc : value.getDocumentChanges()){
+//                    if (doc.getType() == DocumentChange.Type.ADDED){
+//                        String timeSlotId = doc.getDocument().getId();
+//                        TimeSlotData mAppointmentData = doc.getDocument().toObject(TimeSlotData.class).withId(timeSlotId);
+//                        timeSlotData.add(mAppointmentData);
+//                        selectTimeSlotAdapter.notifyDataSetChanged();
+//                    }
+//                }
+//            }
+//        });
+//
+//        eveningTimeSlotData = new ArrayList<>();
+//        selectEveningTimeSlotAdapter = new SelectEveningTimeSlotAdapter(eveningTimeSlotData);
+//        recyclerViewEvening.setLayoutManager(new GridLayoutManager(getContext(),3));
+//        recyclerViewEvening.setAdapter(selectEveningTimeSlotAdapter);
+//        recyclerViewEvening.setHasFixedSize(true);
+//
+//        Query query2 =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("Evening")
+//                .orderBy("TimeStamp", Query.Direction.ASCENDING);
+//        query2.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//
+//                for (DocumentChange doc : value.getDocumentChanges()){
+//                    if (doc.getType() == DocumentChange.Type.ADDED){
+//                        String timeSlotId = doc.getDocument().getId();
+//                        EveningTimeSlotData mAppointmentData = doc.getDocument().toObject(EveningTimeSlotData.class).withId(timeSlotId);
+//                        eveningTimeSlotData.add(mAppointmentData);
+//                        selectEveningTimeSlotAdapter.notifyDataSetChanged();
+//                    }
+//                }
+//            }
+//        });
 
 
 
