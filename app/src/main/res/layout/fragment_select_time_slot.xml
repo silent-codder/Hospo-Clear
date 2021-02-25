@@ -132,6 +132,36 @@
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>
 
+           <com.airbnb.lottie.LottieAnimationView
+               android:id="@+id/lottie"
+               android:visibility="visible"
+               android:layout_width="100dp"
+               android:layout_height="100dp"
+               android:layout_marginTop="20dp"
+               app:lottie_rawRes="@raw/doctor_not_found"
+               app:lottie_autoPlay="true"
+               app:lottie_loop="true"
+               android:layout_centerHorizontal="true"
+               android:layout_centerVertical="false"/>
+           <TextView
+               android:id="@+id/notFoundText"
+               android:visibility="visible"
+               android:layout_marginTop="10dp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Sorry, Doctor not available !!"
+               android:textStyle="bold"
+               android:layout_below="@id/lottie"
+               android:layout_centerHorizontal="true"
+               tools:ignore="HardcodedText" />
+           <ProgressBar
+               android:visibility="invisible"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_centerVertical="true"
+               android:layout_centerHorizontal="true"
+               android:id="@+id/loader"/>
+
        </RelativeLayout>
 
    </androidx.cardview.widget.CardView>
@@ -155,8 +185,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie1"
+                android:visibility="visible"
+                android:layout_marginTop="20dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:lottie_rawRes="@raw/doctor_not_found"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="false"/>
+            <TextView
+                android:id="@+id/notFoundText1"
+                android:visibility="visible"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sorry, Doctor not available !!"
+                android:textStyle="bold"
+                android:layout_below="@id/lottie1"
+                android:layout_centerHorizontal="true"
+                tools:ignore="HardcodedText" />
+            <ProgressBar
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/loader1"/>
+
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Clearcode"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="@dimen/text_size_extra_small"/>
+
 
 </RelativeLayout>

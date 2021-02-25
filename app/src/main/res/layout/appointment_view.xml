@@ -42,8 +42,9 @@
         android:layout_width="300dp"
         android:layout_height="120dp"
         android:layout_toEndOf="@id/circleImg"
-        app:cardBackgroundColor="#E0F2F1"
         app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="10dp">
 
         <RelativeLayout
@@ -72,12 +73,22 @@
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:text="20 / 11 / 2020"
                 android:textSize="@dimen/text_size_extra_small"
                 android:layout_marginTop="5dp"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:layout_below="@id/userImg"
+                android:textColor="@color/Primary_color"
+                tools:ignore="HardcodedText,SmallSp"/>
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="@dimen/text_size_extra_small"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:layout_below="@id/date"
                 android:textColor="@color/Primary_color"
                 tools:ignore="HardcodedText,SmallSp"/>
 

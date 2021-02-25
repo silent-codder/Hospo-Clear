@@ -15,7 +15,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/text"
+                android:textColor="#B6B5B5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hello,"
+                android:layout_marginStart="20dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textSize="22sp"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:layout_below="@id/text"
+                android:textColor="@color/Primary_color"
+                android:layout_marginStart="20dp"
+                tools:ignore="HardcodedText" />
             <RelativeLayout
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/text"
+                android:visibility="gone"
                 android:id="@+id/locationLayout"
                 android:gravity="start"
                 android:layout_marginStart="20dp"
@@ -45,19 +69,183 @@
 
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/imgAd"
-                android:layout_below="@id/locationLayout"
+            <RelativeLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="239dp"
-                android:scaleType="fitCenter"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userName"
+                android:id="@+id/todayAppointment">
+
+                <TextView
+                    android:id="@+id/todayAppointmentTxt"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Today's Appointment"
+                    android:layout_marginStart="18dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/todayAppointmentTxt"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/todayAppointmentRecycleView"/>
+            </RelativeLayout>
+
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_below="@id/todayAppointment"
+                android:background="@drawable/bg"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
                 android:padding="10dp"
-                android:src="@drawable/ad"/>
+                android:layout_height="wrap_content">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/doctor"
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_margin="15dp"
+                        android:background="@drawable/row_bg">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img1"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/doctor"
+                            android:layout_centerVertical="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Doctors"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:textSize="@dimen/text_size_small"
+                            android:textColor="@color/Primary_color"
+                            android:layout_below="@id/img1"
+                            tools:ignore="HardcodedText" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/hospital"
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:gravity="center"
+                        android:background="@drawable/row_bg">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img2"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/hospital_"
+                            android:layout_centerVertical="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hospitals"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:textSize="@dimen/text_size_small"
+                            android:textColor="@color/Primary_color"
+                            android:layout_below="@id/img2"
+                            tools:ignore="HardcodedText" />
+
+                    </RelativeLayout>
+
+
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/medicine"
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:gravity="center"
+                        android:background="@drawable/row_bg">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img3"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/medicine" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Medicine"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:textSize="@dimen/text_size_small"
+                            android:textColor="@color/Primary_color"
+                            android:layout_below="@id/img3"
+                            tools:ignore="HardcodedText" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/appointment"
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:layout_margin="15dp"
+                        android:gravity="center"
+                        android:background="@drawable/row_bg">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img4"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="20dp"
+                            android:src="@drawable/watch"
+                            android:layout_centerVertical="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Appointments"
+                            android:textStyle="bold"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:textSize="@dimen/text_size_small"
+                            android:textColor="@color/Primary_color"
+                            android:layout_below="@id/img4"
+                            tools:ignore="HardcodedText" />
+
+                    </RelativeLayout>
+
+                </TableRow>
+
+            </TableLayout>
 
             <TextView
                 android:id="@+id/categoryTxt"
                 android:layout_marginTop="20dp"
-                android:layout_below="@id/imgAd"
+                android:layout_below="@id/tableLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Top Categories"
@@ -67,7 +255,6 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,7 +263,6 @@
                 app:reverseLayout="false"
                 android:layout_below="@id/categoryTxt"
                 android:id="@+id/categoryRecycleView"/>
-
             <TextView
                 android:id="@+id/btnViewMore"
                 android:layout_width="wrap_content"
@@ -88,30 +274,10 @@
                 android:textColor="@color/Primary_color"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
-            <TextView
-                android:id="@+id/topHospital"
-                android:visibility="gone"
-                android:layout_below="@id/btnViewMore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Your Saved Hospitals"
-                android:layout_marginStart="18dp"
-                android:textSize="@dimen/text_size_medium"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:visibility="gone"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/topHospital"
-                android:id="@+id/hospitalRecycleView"/>
             <TextView
                 android:id="@+id/Hospital"
-                android:layout_below="@id/hospitalRecycleView"
+                android:layout_below="@id/btnViewMore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hospitals"
@@ -121,9 +287,10 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_marginTop="5dp"
+                android:background="@drawable/bg"
+                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/Hospital"
@@ -132,4 +299,5 @@
         </RelativeLayout>
 
     </ScrollView>
+
 </RelativeLayout>

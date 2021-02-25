@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -63,11 +64,11 @@ public class BookMarkHospitalFragment extends Fragment {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                if (value.isEmpty()){
-                    CircleImageView circleImageView = view.findViewById(R.id.hospitalImg);
+                if (!value.isEmpty()){
+                    LottieAnimationView lottieAnimationView = view.findViewById(R.id.lottie);
                     TextView textView = view.findViewById(R.id.notFoundText);
-                    circleImageView.setVisibility(View.VISIBLE);
-                    textView.setVisibility(View.VISIBLE);
+                    lottieAnimationView.setVisibility(View.GONE);
+                    textView.setVisibility(View.GONE);
                 }
 
                 for (DocumentChange doc : value.getDocumentChanges()){

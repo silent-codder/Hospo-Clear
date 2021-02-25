@@ -5,10 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="56dp"
-    android:background="@drawable/layout_bg"
-    android:paddingTop="20dp"
-    android:paddingRight="20dp"
-    android:paddingLeft="20dp"
     tools:context=".UserRegister.Fragment.UserAppointmentsFragment">
 
     <TextView
@@ -19,95 +15,97 @@
         android:textSize="@dimen/text_size_large"
         android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Appointments"
+        android:text="Your Appointments"
         android:id="@+id/text"
         tools:ignore="HardcodedText" />
 
-    <RelativeLayout
-        android:id="@+id/layout"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_below="@id/text">
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/layout"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_below="@id/text">-->
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/completeImg"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/complete"/>
-        <TextView
-            android:id="@+id/textComplete"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"
-            android:gravity="center_vertical"
-            android:text="Complete"
-            android:textStyle="bold"
-            android:layout_toRightOf="@id/completeImg"
-            android:layout_marginStart="10dp"
-            tools:ignore="HardcodedText" />
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/pendingImg"
-            android:layout_width="24dp"
-            android:layout_toRightOf="@id/textComplete"
-            android:layout_marginStart="10dp"
-            android:layout_height="24dp"
-            android:src="@drawable/pending"/>
-        <TextView
-            android:id="@+id/textPending"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"
-            android:gravity="center_vertical"
-            android:text="Pending"
-            android:textStyle="bold"
-            android:layout_toRightOf="@id/pendingImg"
-            android:layout_marginStart="10dp"
-            tools:ignore="HardcodedText" />
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/requestImg"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_toRightOf="@id/textPending"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/request"/>
-        <TextView
-            android:id="@+id/textRequest"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"
-            android:gravity="center_vertical"
-            android:text="Request"
-            android:textStyle="bold"
-            android:layout_toRightOf="@id/requestImg"
-            android:layout_marginStart="10dp"
-            tools:ignore="HardcodedText" />
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/completeImg"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:src="@drawable/complete"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/textComplete"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:text="Complete"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_toRightOf="@id/completeImg"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            tools:ignore="HardcodedText" />-->
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/pendingImg"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_toRightOf="@id/textComplete"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:src="@drawable/pending"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/textPending"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:text="Pending"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_toRightOf="@id/pendingImg"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            tools:ignore="HardcodedText" />-->
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/requestImg"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:layout_toRightOf="@id/textPending"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:src="@drawable/request"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/textRequest"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:text="Request"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_toRightOf="@id/requestImg"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            tools:ignore="HardcodedText" />-->
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/Primary_color"
-        android:layout_below="@+id/layout"
-        android:layout_marginTop="15dp"
-        android:id="@+id/view"/>
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0.5dp"-->
+<!--        android:background="@color/Primary_color"-->
+<!--        android:layout_below="@+id/layout"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        android:id="@+id/view"/>-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your Visits"
-        android:textSize="@dimen/text_size_medium"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/Primary_color"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:layout_below="@id/view"
-        android:id="@+id/text2"
-        tools:ignore="HardcodedText" />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Your Visits"-->
+<!--        android:textSize="@dimen/text_size_medium"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:textColor="@color/Primary_color"-->
+<!--        android:textStyle="bold"-->
+<!--        android:fontFamily="sans-serif-condensed-medium"-->
+<!--        android:layout_below="@id/view"-->
+<!--        android:id="@+id/text2"-->
+<!--        tools:ignore="HardcodedText" />-->
    <TextView
-       android:layout_below="@id/view"
+       android:id="@+id/text2"
+       android:layout_below="@id/text"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_centerHorizontal="true"
+       android:visibility="gone"
        android:textColor="#BDBEBF"
        android:text="Pull down to refresh"
        tools:ignore="HardcodedText" />
@@ -115,6 +113,7 @@
        android:id="@+id/refresh"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
+       android:layout_marginTop="10dp"
        android:layout_below="@id/text2">
 
        <androidx.recyclerview.widget.RecyclerView
@@ -124,6 +123,30 @@
            android:layout_height="match_parent"
            android:id="@+id/appointmentRecycleView"/>
 
+
    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        app:lottie_url="https://assets4.lottiefiles.com/packages/lf20_loq2tcrv.json"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/text"
+        android:layout_marginTop="50dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
+    <TextView
+        android:id="@+id/notFoundText"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yet not get appointment..!"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="#b3b3b3"
+        android:layout_below="@id/lottie"
+        android:layout_centerHorizontal="true"
+        tools:ignore="HardcodedText" />
 
 </RelativeLayout>

@@ -12,7 +12,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
@@ -39,12 +41,16 @@ public class UserAppointmentsFragment extends Fragment {
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
     ProgressDialog progressDialog;
+    LottieAnimationView lottieAnimationView;
+    TextView textView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_appointments, container, false);
 
         recyclerView = view.findViewById(R.id.appointmentRecycleView);
+        lottieAnimationView = view.findViewById(R.id.lottie);
+        textView = view.findViewById(R.id.notFoundText);
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         UserId = firebaseAuth.getCurrentUser().getUid();
@@ -86,6 +92,13 @@ public class UserAppointmentsFragment extends Fragment {
         query1.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                if (value.isEmpty()){
+                    lottieAnimationView.setVisibility(View.VISIBLE);
+                    textView.setVisibility(View.VISIBLE);
+                    progressDialog.dismiss();
+                }
+
                 for (DocumentChange doc : value.getDocumentChanges()){
                     if (doc.getType() == DocumentChange.Type.ADDED){
                         String AppointmentId = doc.getDocument().getId();

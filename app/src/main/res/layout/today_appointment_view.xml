@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/today_appointment_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="20dp">
+
+    <RelativeLayout
+        android:id="@+id/appointmentDateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/appointment_date_bg"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/appointmentDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_large"
+            android:textColor="@color/white"
+            android:drawableLeft="@drawable/ic_baseline_calendar_today"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText,UseCompatTextViewDrawableXml" />
+        <TextView
+            android:id="@+id/appointmentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_large"
+            android:textColor="@color/white"
+            android:drawableLeft="@drawable/ic_baseline_access_time_24"
+            android:layout_alignParentRight="true"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText,UseCompatTextViewDrawableXml" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_below="@id/appointmentDateLayout">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/doctors"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/doctorImg"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+
+        <TextView
+            android:id="@+id/doctorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/doctorImg"
+            android:hint="loading.."
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:id="@+id/doctorSpeciality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="loading.."
+            android:layout_toEndOf="@id/doctorImg"
+            android:layout_below="@id/doctorName"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textSize="@dimen/text_size_extra_small"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:id="@+id/hospitalName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/doctorImg"
+            android:hint="loading.."
+            android:layout_marginStart="10dp"
+            android:drawableLeft="@drawable/ic_baseline_location"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textSize="@dimen/text_size_small"
+            tools:ignore="HardcodedText,UseCompatTextViewDrawableXml" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:visibility="gone"
+            android:id="@+id/lottie"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="30dp"
+            android:layout_alignParentEnd="true"
+            app:lottie_url="https://assets4.lottiefiles.com/private_files/lf30_jpe6wzcq.json"
+            app:lottie_autoPlay="true"/>
+
+        <TextView
+            android:id="@+id/expireText"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Appointment\n Expired"
+            android:gravity="center"
+            android:textSize="10sp"
+            android:layout_below="@id/lottie"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="20sp"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

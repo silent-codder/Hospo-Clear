@@ -23,11 +23,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="11 : 00 AM"
+                android:visibility="visible"
                 android:gravity="center"
                 android:layout_marginStart="5dp"
                 android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold"
                 android:textColor="#36CC1A"
+                android:fontFamily="sans-serif-condensed-medium"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/timeSlotRed"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11 : 00 AM"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
+                android:textColor="#CC1A35"
                 android:fontFamily="sans-serif-condensed-medium"
                 tools:ignore="HardcodedText" />
 

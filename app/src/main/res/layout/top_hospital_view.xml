@@ -4,7 +4,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
-    app:cardBackgroundColor="@color/Primary_color"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="10dp">
 
@@ -19,7 +18,7 @@
             android:layout_height="80dp"
             android:src="@drawable/hospital"
             app:civ_border_width="0.8dp"
-            app:civ_border_color="@color/white"
+            app:civ_border_color="@color/black"
             android:id="@+id/hospital"/>
         <ProgressBar
             android:visibility="visible"
@@ -35,7 +34,7 @@
             android:src="@drawable/hospital"
             app:civ_border_width="0.8dp"
             android:visibility="visible"
-            app:civ_border_color="@color/white"
+            app:civ_border_color="@color/black"
             android:id="@+id/hospitalImg"/>
 
         <TextView
@@ -44,7 +43,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:layout_marginTop="8dp"
-            android:textColor="@color/white"
+            android:textColor="@color/Primary_color"
             android:layout_toEndOf="@id/hospitalImg"
             android:layout_marginStart="14dp"
             android:textSize="@dimen/text_size_medium"
@@ -55,7 +54,7 @@
             android:id="@+id/city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/Primary_color"
             android:text=""
             android:textStyle="bold"
             android:textSize="@dimen/text_size_small"
@@ -69,7 +68,7 @@
             android:id="@+id/state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/Primary_color"
             android:text=""
             android:textSize="@dimen/text_size_small"
             android:textStyle="bold"
@@ -84,7 +83,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textSize="@dimen/text_size_small"
-            android:textColor="@color/white"
+            android:textColor="@color/Primary_color"
             android:textStyle="bold"
             android:layout_marginStart="10dp"
             android:fontFamily="sans-serif-condensed-medium"

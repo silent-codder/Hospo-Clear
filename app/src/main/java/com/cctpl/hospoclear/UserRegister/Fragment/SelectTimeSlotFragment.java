@@ -16,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.cctpl.hospoclear.UserRegister.Adapter.SelectEveningTimeSlotAdapter;
 import com.cctpl.hospoclear.UserRegister.Adapter.SelectTimeSlotAdapter;
 import com.cctpl.hospoclear.R;
@@ -46,11 +48,18 @@ public class SelectTimeSlotFragment extends Fragment {
 
     CardView mBtnMorning,mBtnEvening,mMorningSection,mEveningSection,mImgMorning,mImgEvening;
     TextView mMorningText,mEveningText;
+    ProgressBar progressBar,progressBar2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_select_time_slot, container, false);
+        progressBar = view.findViewById(R.id.loader);
+        progressBar2 = view.findViewById(R.id.loader1);
+
+        progressBar2.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+
 
         Bundle bundle = this.getArguments();
         if (bundle!=null){
@@ -100,6 +109,10 @@ public class SelectTimeSlotFragment extends Fragment {
         recyclerViewMorning.setLayoutManager(new GridLayoutManager(getContext(),3));
         recyclerViewMorning.setAdapter(selectTimeSlotAdapter);
         recyclerViewMorning.setHasFixedSize(true);
+        LottieAnimationView lottieAnimationView = view.findViewById(R.id.lottie);
+        TextView textView = view.findViewById(R.id.notFoundText);
+
+
 
         Query query =  firebaseFirestore.collection("Doctors").document(DoctorId).collection("Morning")
                 .orderBy("TimeStamp", Query.Direction.ASCENDING);
@@ -108,15 +121,23 @@ public class SelectTimeSlotFragment extends Fragment {
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
                 for (DocumentChange doc : value.getDocumentChanges()){
+
                     if (doc.getType() == DocumentChange.Type.ADDED){
                         String timeSlotId = doc.getDocument().getId();
                         TimeSlotData mAppointmentData = doc.getDocument().toObject(TimeSlotData.class).withId(timeSlotId);
                         timeSlotData.add(mAppointmentData);
                         selectTimeSlotAdapter.notifyDataSetChanged();
+                        progressBar.setVisibility(View.GONE);
+                        lottieAnimationView.setVisibility(View.GONE);
+                        textView.setVisibility(View.GONE);
                     }
                 }
             }
         });
+
+        LottieAnimationView lottieAnimationView1 = view.findViewById(R.id.lottie1);
+        TextView textView1 = view.findViewById(R.id.notFoundText1);
+
 
         eveningTimeSlotData = new ArrayList<>();
         selectEveningTimeSlotAdapter = new SelectEveningTimeSlotAdapter(eveningTimeSlotData);
@@ -131,11 +152,17 @@ public class SelectTimeSlotFragment extends Fragment {
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
                 for (DocumentChange doc : value.getDocumentChanges()){
+                    if (value.isEmpty()){
+
+                    }
                     if (doc.getType() == DocumentChange.Type.ADDED){
                         String timeSlotId = doc.getDocument().getId();
                         EveningTimeSlotData mAppointmentData = doc.getDocument().toObject(EveningTimeSlotData.class).withId(timeSlotId);
                         eveningTimeSlotData.add(mAppointmentData);
                         selectEveningTimeSlotAdapter.notifyDataSetChanged();
+                        progressBar2.setVisibility(View.GONE);
+                        lottieAnimationView1.setVisibility(View.GONE);
+                        textView1.setVisibility(View.GONE);
                     }
                 }
             }

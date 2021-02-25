@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="56dp"
     tools:context=".UserRegister.Fragment.BookMarkHospitalFragment">
 
@@ -31,24 +32,26 @@
             android:layout_height="wrap_content"
             android:id="@+id/favHospitalRecycleView"/>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:visibility="gone"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            app:lottie_url="https://assets4.lottiefiles.com/packages/lf20_loq2tcrv.json"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/hospital"
-            android:id="@+id/hospitalImg"/>
+            android:layout_marginTop="50dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
         <TextView
             android:id="@+id/notFoundText"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Yet Not Saved Hospital"
-            android:layout_below="@id/hospitalImg"
-            android:layout_centerHorizontal="true"
-            android:textStyle="bold"
+            android:text="Yet not saved hospital"
             android:fontFamily="sans-serif-condensed-medium"
+            android:textColor="#b3b3b3"
+            android:layout_below="@id/lottie"
+            android:layout_centerHorizontal="true"
             tools:ignore="HardcodedText" />
 
     </RelativeLayout>

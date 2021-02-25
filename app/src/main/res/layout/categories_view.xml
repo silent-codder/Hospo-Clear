@@ -13,7 +13,7 @@
            android:id="@+id/layout"
            android:layout_width="100dp"
            android:layout_height="100dp"
-           android:background="@drawable/view_bg"
+           android:background="@drawable/bg"
            android:layout_alignParentBottom="true"
            android:layout_marginStart="10dp"
            android:layout_marginBottom="20sp">
@@ -28,7 +28,7 @@
                android:textSize="@dimen/text_size_small"
                android:layout_centerHorizontal="true"
                android:layout_centerVertical="true"
-               android:textColor="@color/white"
+               android:textColor="@color/Primary_color"
                android:fontFamily="sans-serif-condensed-medium"
                tools:ignore="HardcodedText" />
 

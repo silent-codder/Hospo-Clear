@@ -30,7 +30,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/doctor"
+            android:src="@drawable/doctors"
             android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:id="@+id/doctorImg"/>

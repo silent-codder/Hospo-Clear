@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cctpl.hospoclear.R;
@@ -44,7 +45,7 @@ public class TimeSlotAdapter extends RecyclerView.Adapter<TimeSlotAdapter.ViewHo
         String DoctorId = doctorData.get(position).getDoctorId();
         holder.mTimeSlot.setText(TimeSlot);
 
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        holder.mBtnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Dialog dialog = new Dialog(v.getContext());
@@ -83,12 +84,12 @@ public class TimeSlotAdapter extends RecyclerView.Adapter<TimeSlotAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        RelativeLayout relativeLayout;
+        CardView mBtnSelect;
         TextView mTimeSlot,mTimeSlotRed;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mTimeSlot = itemView.findViewById(R.id.timeSlot);
-            relativeLayout = itemView.findViewById(R.id.relativeLayout);
+            mBtnSelect = itemView.findViewById(R.id.relativeLayout);
         }
     }
 }

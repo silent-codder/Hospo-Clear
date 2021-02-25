@@ -5,15 +5,25 @@ public class TimeSlotData extends TimeSlotId{
    Long TimeStamp;
    String DoctorId;
    String Flag;
+   int Hr;
 
     public TimeSlotData() {
     }
 
-    public TimeSlotData(String timeSlot, Long timeStamp, String doctorId, String flag) {
+    public TimeSlotData(String timeSlot, Long timeStamp, String doctorId, String flag,int hr) {
         TimeSlot = timeSlot;
         TimeStamp = timeStamp;
         DoctorId = doctorId;
         Flag = flag;
+        Hr = hr;
+    }
+
+    public int getHr() {
+        return Hr;
+    }
+
+    public void setHr(int hr) {
+        Hr = hr;
     }
 
     public String getTimeSlot() {

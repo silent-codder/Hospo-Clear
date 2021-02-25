@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="7dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginTop="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/Img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="#B3B3B3"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/patientImg"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+
+       <RelativeLayout
+           android:id="@+id/btnAppointmentInfo"
+           android:layout_width="220dp"
+           android:layout_height="wrap_content"
+           android:layout_toEndOf="@id/Img"
+           android:layout_marginStart="10dp">
+
+           <TextView
+               android:id="@+id/patientName"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textColor="@color/black"
+               android:text="Ajinkya Shinde"
+               android:textStyle="bold"
+               android:fontFamily="sans-serif-condensed-medium"
+               android:textSize="@dimen/text_size_medium"
+               android:layout_marginTop="0dp"
+               tools:ignore="HardcodedText" />
+
+
+           <TextView
+               android:id="@+id/appointmentDate"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="9 July 2021 , 10:00 AM"
+               android:layout_below="@id/patientName"
+               android:textStyle="bold"
+               android:textSize="@dimen/text_size_extra_small"
+               tools:ignore="HardcodedText" />
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Tap to see more information"
+               android:layout_below="@id/appointmentDate"
+               android:textStyle="normal"
+               android:textSize="10sp"
+               tools:ignore="HardcodedText" />
+
+       </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/btnMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            tools:ignore="RtlHardcoded" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

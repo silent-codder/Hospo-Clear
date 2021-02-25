@@ -1,5 +1,7 @@
 package com.cctpl.hospoclear.UserRegister.Model;
 
+import java.sql.Timestamp;
+
 public class AppointmentData extends AppointmentId{
     String HospitalId;
     String DoctorId;
@@ -8,15 +10,21 @@ public class AppointmentData extends AppointmentId{
     String Relationship;
     String Problem;
     String AppointmentDate;
+    String AppointmentTime;
     String Status;
     String ImgUrl;
     String Prescription;
+    String SlotId;
+    String Section;
+    Long TimeStamp;
+    String AppointmentTimeStamp;
 
     public AppointmentData() {
     }
 
     public AppointmentData(String hospitalId, String doctorId, String userId, String patientName, String relationship,
-                           String problem, String appointmentDate ,String status,String imgUrl,String prescription) {
+                           String problem, String appointmentDate ,String status,String imgUrl,String prescription,String appointmentTime,String slotId,
+                           String section,Long timeStamp,String appointmentTimeStamp) {
         HospitalId = hospitalId;
         DoctorId = doctorId;
         UserId = userId;
@@ -25,8 +33,53 @@ public class AppointmentData extends AppointmentId{
         Relationship = relationship;
         Problem = problem;
         AppointmentDate = appointmentDate;
+        AppointmentTime = appointmentTime;
         ImgUrl = imgUrl;
+        SlotId = slotId;
         Prescription = prescription;
+        Section = section;
+        TimeStamp = timeStamp;
+        AppointmentTimeStamp = appointmentTimeStamp;
+    }
+
+    public String getAppointmentTimeStamp() {
+        return AppointmentTimeStamp;
+    }
+
+    public void setAppointmentTimeStamp(String appointmentTimeStamp) {
+        AppointmentTimeStamp = appointmentTimeStamp;
+    }
+
+    public Long getTimeStamp() {
+        return TimeStamp;
+    }
+
+    public void setTimeStamp(Long timeStamp) {
+        TimeStamp = timeStamp;
+    }
+
+    public String getSection() {
+        return Section;
+    }
+
+    public void setSection(String section) {
+        Section = section;
+    }
+
+    public String getSlotId() {
+        return SlotId;
+    }
+
+    public void setSlotId(String slotId) {
+        SlotId = slotId;
+    }
+
+    public String getAppointmentTime() {
+        return AppointmentTime;
+    }
+
+    public void setAppointmentTime(String appointmentTime) {
+        AppointmentTime = appointmentTime;
     }
 
     public String getPrescription() {

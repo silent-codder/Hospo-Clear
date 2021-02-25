@@ -45,11 +45,10 @@ import retrofit2.Response;
 public class AppointmentDetailsFragment extends Fragment {
 
     private FirebaseFirestore firebaseFirestore;
-    private String AppointmentId,Status,CurrentUserId,PatientId,HospitalName;
+    private String AppointmentId,Status,CurrentUserId,PatientId,HospitalName,time;
     private Button btnCompleteAppointment;
     private FirebaseAuth firebaseAuth;
     String fcmUrl = "https://fcm.googleapis.com/";
-    ProgressDialog progressDialog;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -60,52 +59,30 @@ public class AppointmentDetailsFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         CurrentUserId = firebaseAuth.getCurrentUser().getUid();
         btnCompleteAppointment = view.findViewById(R.id.btnCompleteAppointment);
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-
 
         Bundle bundle = this.getArguments();
         if (bundle!=null){
             String UserName = bundle.getString("UserName");
             String Date = bundle.getString("AppointmentDate");
+            String Time = bundle.getString("AppointmentTime");
+            String Problem = bundle.getString("Problem");
             Status = bundle.getString("Status");
             String DoctorId = bundle.getString("DoctorId");
             String HospitalId = bundle.getString("HospitalId");
             String ProfileUrl = bundle.getString("ProfileUrl");
             AppointmentId = bundle.getString("AppointmentId");
 
-            TextView userName = view.findViewById(R.id.userName);
-            TextView date = view.findViewById(R.id.appointmentDate);
-            TextView status = view.findViewById(R.id.status);
-            CircleImageView profile = view.findViewById(R.id.userImg);
-            CircleImageView request = view.findViewById(R.id.requestImg);
-            CircleImageView pending = view.findViewById(R.id.pendingImg);
-            CircleImageView complete = view.findViewById(R.id.completeImg);
+
+            TextView userName = view.findViewById(R.id.patientName);
+            TextView date = view.findViewById(R.id.appointmentInfo);
+            TextView problem = view.findViewById(R.id.problem);
+            CircleImageView profile = view.findViewById(R.id.patientImg);
 
             userName.setText(UserName);
-            date.setText(Date);
+            date.setText(Date + ", " + Time );
+            problem.setText(Problem);
             Picasso.get().load(ProfileUrl).into(profile);
-            if (Status.equals("1")){
-                    complete.setVisibility(View.VISIBLE);
-                    status.setText("Appointment was complete");
-                    status.setTextColor(Color.GREEN);
-                    request.setVisibility(View.INVISIBLE);
-                    pending.setVisibility(View.INVISIBLE);
-                }else if(Status.equals("2") || Status.equals("4")){
-                    complete.setVisibility(View.INVISIBLE);
-                    request.setVisibility(View.INVISIBLE);
-                    pending.setVisibility(View.VISIBLE);
-                    status.setTextColor(Color.MAGENTA);
-                    status.setText("Appointment is pending");
-                }else if(Status.equals("3")){
-                    complete.setVisibility(View.INVISIBLE);
-                    request.setVisibility(View.VISIBLE);
-                    pending.setVisibility(View.INVISIBLE);
-                    status.setTextColor(Color.RED);
-                    status.setText("Requesting Appointment");
-                }
+
 
             firebaseFirestore.collection("Doctors").document(DoctorId).get()
                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -113,8 +90,11 @@ public class AppointmentDetailsFragment extends Fragment {
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()){
                                     String DoctorName = task.getResult().getString("DoctorName");
+                                    String Profile = task.getResult().getString("ProfileImgUrl");
                                     TextView doctorName = view.findViewById(R.id.doctorName);
+                                    CircleImageView DoctorImg = view.findViewById(R.id.doctorImg);
                                     doctorName.setText(DoctorName);
+                                    Picasso.get().load(Profile).into(DoctorImg);
                                 }
                             }
                         });
@@ -124,8 +104,12 @@ public class AppointmentDetailsFragment extends Fragment {
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()){
                                     HospitalName = task.getResult().getString("HospitalName");
+                                    String City = task.getResult().getString("City");
+                                    String HospitalImg = task.getResult().getString("ProfileImgUrl");
                                     TextView hospitalName = view.findViewById(R.id.hospitalName);
-                                    hospitalName.setText(HospitalName);
+                                    CircleImageView hospitalImg = view.findViewById(R.id.hospitalImg);
+                                    hospitalName.setText(HospitalName + " ," + City);
+                                    Picasso.get().load(HospitalImg).into(hospitalImg);
                                 }
                             }
                         });
@@ -138,10 +122,9 @@ public class AppointmentDetailsFragment extends Fragment {
                         if (task.isSuccessful()){
                             String isUser = task.getResult().getString("isUser");
                             if (isUser.equals("2")){
-                                btnCompleteAppointment.setVisibility(View.INVISIBLE);
+                                btnCompleteAppointment.setVisibility(View.GONE);
                                 Button button = view.findViewById(R.id.btnAddBill);
                                 button.setVisibility(View.GONE);
-                                progressDialog.dismiss();
                             }
                         }
                     }
@@ -155,7 +138,7 @@ public class AppointmentDetailsFragment extends Fragment {
                             String Status = task.getResult().getString("Status");
                             PatientId = task.getResult().getString("UserId");
                             if (Status.equals("1")){
-                                btnCompleteAppointment.setVisibility(View.INVISIBLE);
+                                btnCompleteAppointment.setVisibility(View.GONE);
                             }
                         }
                     }
@@ -164,7 +147,7 @@ public class AppointmentDetailsFragment extends Fragment {
 
         //for complete Appointment
         if (Status.equals("4")){
-            btnCompleteAppointment.setVisibility(View.VISIBLE);
+            btnCompleteAppointment.setVisibility(View.GONE);
             btnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -197,7 +180,7 @@ public class AppointmentDetailsFragment extends Fragment {
                 }
             });
         }else {
-            btnCompleteAppointment.setVisibility(View.VISIBLE);
+            btnCompleteAppointment.setVisibility(View.GONE);
             btnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

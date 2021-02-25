@@ -185,7 +185,4 @@ public class UserMainActivity extends AppCompatActivity{
         }
     }
 
-    public void clearBackStackInclusive(String tag) {
-        getSupportFragmentManager().popBackStack(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-    }
 }

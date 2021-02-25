@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,65 +50,39 @@ public class SelectEveningTimeSlotAdapter extends RecyclerView.Adapter<SelectEve
         String DoctorId = doctorData.get(position).getDoctorId();
         String Id = doctorData.get(position).TimeSlotId;
         String Flag = doctorData.get(position).getFlag();
+        int hr = doctorData.get(position).getHr();
+        String Hr = String.valueOf(hr+10);
 
         holder.mTimeSlot.setText(TimeSlot);
         holder.mTimeSlotRed.setText(TimeSlot);
-        holder.mTimeSlotGreen.setText(TimeSlot);
 
-        if (Flag.equals("1")){
-            holder.relativeLayoutRed.setVisibility(View.VISIBLE);
-            holder.relativeLayout.setVisibility(View.GONE);
-        }else {
-            holder.relativeLayout.setVisibility(View.VISIBLE);
+        if (Flag.equals("true")){
+            holder.mTimeSlotRed.setVisibility(View.VISIBLE);
+            holder.mTimeSlot.setVisibility(View.GONE);
         }
 
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("UseCompatLoadingForDrawables")
+        holder.mTimeSlot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                holder.relativeLayoutGreen.setVisibility(View.VISIBLE);
                 String timeSlot = doctorData.get(position).getTimeSlot();
-                String flag = "1";
-                AddFlag(DoctorId,timeSlot,Id,flag);
-            }
-        });
-        holder.relativeLayoutGreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.relativeLayoutGreen.setVisibility(View.GONE);
-                String timeSlot = doctorData.get(position).getTimeSlot();
-                String flag = "2";
-                AddFlag(DoctorId,timeSlot,Id,flag);
+                SharedPreferences sharedPreferences = context.getSharedPreferences("AppointmentData", 0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("Flag","true");
+                editor.putString("TimeSlot",timeSlot);
+                editor.putString("SlotId",Id);
+                editor.putString("DoctorId",DoctorId);
+                editor.putString("Section","Evening");
+                editor.putString("Hr",Hr);
+                editor.commit();
+
+                AppCompatActivity activity = (AppCompatActivity) context;
+                Fragment fragment = new SelectUserFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
         });
 
     }
 
-    private void AddFlag(String doctorId,String timeSlot,String Id,String flag) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("AppointmentData",0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("Flag",flag);
-
-        firebaseFirestore.collection("Doctors").document(doctorId)
-                .collection("Evening").document(Id).update(map);
-
-        editor.putString("DoctorId", doctorId);
-        editor.putString("TimeSlot",timeSlot);
-        editor.putString("Section","Evening");
-        editor.putString("SlotId",Id);
-        editor.commit();
-
-        String Date = sharedPreferences.getString("AppointmentDate",null);
-        if (TextUtils.isEmpty(Date)){
-            Toast.makeText(context, "Select Date !!!", Toast.LENGTH_SHORT).show();
-        }else {
-            AppCompatActivity activity = (AppCompatActivity) context;
-            Fragment fragment = new SelectUserFragment();
-            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
-        }
-    }
 
     @Override
     public int getItemCount() {
@@ -115,12 +90,13 @@ public class SelectEveningTimeSlotAdapter extends RecyclerView.Adapter<SelectEve
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        RelativeLayout relativeLayout,relativeLayoutRed,relativeLayoutGreen;
-        TextView mTimeSlot,mTimeSlotRed,mTimeSlotGreen;
+        CardView mBtnSelect;
+        TextView mTimeSlot,mTimeSlotRed;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mTimeSlot = itemView.findViewById(R.id.timeSlot);
-            relativeLayout = itemView.findViewById(R.id.relativeLayout);
+            mTimeSlotRed = itemView.findViewById(R.id.timeSlotRed);
+            mBtnSelect = itemView.findViewById(R.id.relativeLayout);
         }
     }
 }

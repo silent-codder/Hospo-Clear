@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,8 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
+
+import static android.content.ContentValues.TAG;
 
 public class BookAppointmentFragment extends Fragment {
 
@@ -126,13 +129,17 @@ public class BookAppointmentFragment extends Fragment {
                 int day = calendar.get(Calendar.DATE);
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
-                date = day + " / " + (month+1) + " / " + year;
+                date = day + "." + (month+1) + "." + year;
+
+                long timeStamp = calendar.getTimeInMillis();
+                Log.d(TAG, "onDateSelected: " + timeStamp );
 
                 TextView textView = view.findViewById(R.id.appointmentDate);
                 textView.setText("(" + date + ")");
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppointmentData",0);
                 Editor editor = sharedPreferences.edit();
                 editor.putString("AppointmentDate",date);
+                editor.putString("AppointmentTimeStamp", String.valueOf(timeStamp));
                 editor.commit();
 
             }

@@ -3,241 +3,535 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="56dp"
-    android:padding="20dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
     tools:context=".UserRegister.Fragment.SelectUserFragment">
 
-   <TextView
-       android:id="@+id/appoDetails"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="Appointment Details"
-       android:textColor="@color/Primary_color"
-       android:fontFamily="sans-serif-condensed-medium"
-       android:textSize="@dimen/text_size_large"
-       android:layout_centerHorizontal="true"
-       tools:ignore="HardcodedText" />
-   <RelativeLayout
-       android:id="@+id/details"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_marginTop="10dp"
-       android:padding="10dp"
-       android:layout_below="@id/appoDetails"
-       android:background="@drawable/edit_txt_problem_bg"
-       android:layout_centerHorizontal="true">
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
 
-       <TextView
-           android:id="@+id/date"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Appointment Date : "
-           android:textColor="@color/Primary_color"
-           android:fontFamily="sans-serif-condensed-medium"
-           android:textStyle="bold"
-           android:textSize="@dimen/text_size_medium"
-           tools:ignore="HardcodedText" />
-       <TextView
-           android:id="@+id/appointmentDate"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_toEndOf="@id/date"
-           android:textSize="@dimen/text_size_medium"
-           android:layout_marginTop="2dp"
-           android:layout_marginStart="10dp"
-           android:textColor="@color/Primary_color"
-           android:textStyle="normal"
-           tools:ignore="HardcodedText" />
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
 
-       <TextView
-           android:id="@+id/time"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Appointment Time : "
-           android:layout_below="@id/date"
-           android:layout_marginTop="20dp"
-           android:textColor="@color/Primary_color"
-           android:fontFamily="sans-serif-condensed-medium"
-           android:textStyle="bold"
-           android:textSize="@dimen/text_size_medium"
-           tools:ignore="HardcodedText" />
-       <TextView
-           android:id="@+id/appointmentTime"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_toEndOf="@id/time"
-           android:layout_below="@+id/appointmentDate"
-           android:textSize="@dimen/text_size_medium"
-           android:layout_marginTop="20dp"
-           android:layout_marginStart="10dp"
-           android:textColor="@color/Primary_color"
-           android:textStyle="normal"
-           tools:ignore="HardcodedText" />
+         <androidx.cardview.widget.CardView
+             android:id="@+id/doctorDetails"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_margin="5dp"
+             app:contentPadding="10dp"
+             app:cardCornerRadius="20dp">
 
-       <TextView
-           android:id="@+id/prob"
-           android:visibility="gone"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Problem : "
-           android:textStyle="bold"
-           android:layout_marginTop="20dp"
-           android:textSize="@dimen/text_size_medium"
-           android:fontFamily="sans-serif-condensed-medium"
-           android:layout_below="@id/time"
-           android:textColor="@color/Primary_color"
-           tools:ignore="HardcodedText" />
-       <TextView
-           android:id="@+id/problem"
-           android:visibility="gone"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:textStyle="normal"
-           android:layout_toRightOf="@id/prob"
-           android:layout_below="@id/time"
-           android:layout_marginTop="22dp"
-           android:layout_marginStart="10dp"
-           android:textSize="@dimen/text_size_medium"
-           android:textColor="@color/Primary_color"
-           tools:ignore="HardcodedText" />
+             <RelativeLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
 
-   </RelativeLayout>
+                 <de.hdodenhof.circleimageview.CircleImageView
+                     android:layout_width="120dp"
+                     android:layout_height="120dp"
+                     android:layout_centerHorizontal="true"
+                     android:src="@drawable/doctors"
+                     app:civ_border_width="0.8dp"
+                     app:civ_border_color="@color/white"
+                     android:id="@+id/doctor"/>
+                 <ProgressBar
+                     android:visibility="visible"
+                     android:layout_width="wrap_content"
+                     android:layout_margin="60dp"
+                     android:layout_centerHorizontal="true"
+                     android:layout_height="wrap_content"
+                     android:src="@drawable/hospital"
+                     android:id="@+id/ImgLoader"/>
+                 <de.hdodenhof.circleimageview.CircleImageView
+                     android:layout_width="120dp"
+                     android:layout_height="120dp"
+                     android:layout_centerHorizontal="true"
+                     android:src="@drawable/doctors"
+                     android:visibility="visible"
+                     android:id="@+id/doctorImg"/>
+                 <TextView
+                     android:id="@+id/doctorName"
+                     android:layout_below="@id/doctorImg"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="5dp"
+                     android:layout_marginStart="10dp"
+                     android:textStyle="bold"
+                     android:text="Dr. Ajinkya Shinde"
+                     android:layout_centerHorizontal="true"
+                     android:textColor="@color/Primary_color"
+                     android:textSize="@dimen/text_size_large"
+                     android:fontFamily="sans-serif-condensed-medium"
+                     tools:ignore="HardcodedText" />
+                 <TextView
+                     android:id="@+id/doctorSpeciality"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginStart="10dp"
+                     android:text="General Physician"
+                     android:layout_centerHorizontal="true"
+                     android:textStyle="bold"
+                     android:textSize="@dimen/text_size_medium"
+                     android:layout_below="@id/doctorName"
+                     android:fontFamily="sans-serif-condensed-medium"
+                     tools:ignore="HardcodedText" />
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:background="@drawable/edit_txt_problem_bg"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/details"
-        android:orientation="horizontal"
-        android:gravity="start">
+                 <RelativeLayout
+                     android:id="@+id/details"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:gravity="center_horizontal"
+                     android:layout_marginTop="20dp"
+                     android:layout_below="@id/doctorSpeciality">
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="You"
-            android:layout_marginStart="10dp"
-            android:id="@+id/you"
-            android:textStyle="bold"
-            android:textColor="@color/Primary_color"
-            android:fontFamily="sans-serif-condensed-medium"
-            tools:ignore="HardcodedText" />
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="Someone else"
-            android:id="@+id/someoneElse"
-            android:textStyle="bold"
-            android:textColor="@color/Primary_color"
-            android:fontFamily="sans-serif-condensed-medium"
-            tools:ignore="HardcodedText" />
+                     <TextView
+                         android:id="@+id/patients"
+                         android:layout_width="80dp"
+                         android:layout_height="wrap_content"
+                         android:text="Patients"
+                         android:gravity="center_horizontal"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:textSize="@dimen/text_size_medium"
+                         android:textStyle="bold"
+                         android:textAllCaps="true"
+                         tools:ignore="HardcodedText" />
+                     <TextView
+                         android:id="@+id/patientCount"
+                         android:layout_width="80dp"
+                         android:layout_height="wrap_content"
+                         android:text="+1000"
+                         android:gravity="center_horizontal"
+                         android:layout_below="@id/patients"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:textSize="@dimen/text_size_large"
+                         android:textStyle="bold"
+                         android:textColor="@color/purple_500"
+                         android:textAllCaps="true"
+                         tools:ignore="HardcodedText" />
+
+                     <View
+                         android:id="@+id/view1"
+                         android:layout_width="2dp"
+                         android:layout_height="50dp"
+                         android:background="#939697"
+                         android:layout_toEndOf="@id/patients"
+                         android:layout_marginStart="20dp"/>
+
+                     <TextView
+                         android:id="@+id/rate"
+                         android:layout_width="80dp"
+                         android:layout_height="wrap_content"
+                         android:layout_toEndOf="@id/view1"
+                         android:text="Rate"
+                         android:gravity="center_horizontal"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:textSize="@dimen/text_size_medium"
+                         android:textStyle="bold"
+                         android:textAllCaps="true"
+                         tools:ignore="HardcodedText" />
+                     <TextView
+                         android:id="@+id/rating"
+                         android:layout_width="80dp"
+                         android:layout_height="wrap_content"
+                         android:text="4.5"
+                         android:layout_toEndOf="@id/view1"
+                         android:gravity="center_horizontal"
+                         android:layout_below="@id/rate"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:textSize="@dimen/text_size_large"
+                         android:textStyle="bold"
+                         android:textColor="@color/purple_500"
+                         android:textAllCaps="true"
+                         tools:ignore="HardcodedText" />
+
+                     <View
+                         android:id="@+id/view2"
+                         android:layout_width="2dp"
+                         android:layout_height="50dp"
+                         android:background="#939697"
+                         android:layout_toEndOf="@id/rate"
+                         android:layout_marginStart="10dp"/>
+
+                     <TextView
+                         android:id="@+id/Experience"
+                         android:layout_width="90dp"
+                         android:layout_marginStart="10dp"
+                         android:layout_height="wrap_content"
+                         android:layout_toEndOf="@id/view2"
+                         android:text="Experience"
+                         android:gravity="center_horizontal"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:textSize="@dimen/text_size_medium"
+                         android:textStyle="bold"
+                         android:textAllCaps="true"
+                         tools:ignore="HardcodedText" />
+                     <TextView
+                         android:id="@+id/doctorExperience"
+                         android:layout_width="90dp"
+                         android:layout_height="wrap_content"
+                         android:text="+17"
+                         android:layout_toEndOf="@id/view2"
+                         android:gravity="center_horizontal"
+                         android:layout_below="@id/rate"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:textSize="@dimen/text_size_large"
+                         android:textStyle="bold"
+                         android:textColor="@color/purple_500"
+                         android:textAllCaps="false"
+                         tools:ignore="HardcodedText" />
+
+                 </RelativeLayout>
+
+             </RelativeLayout>
+
+         </androidx.cardview.widget.CardView>
+
+         <androidx.cardview.widget.CardView
+             android:id="@+id/appointmentInfo"
+             android:layout_below="@id/doctorDetails"
+             android:layout_width="match_parent"
+             android:layout_margin="5dp"
+             android:layout_height="225dp"
+             app:contentPadding="20dp"
+             app:cardCornerRadius="15dp">
+
+             <RelativeLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
+
+                 <TextView
+                     android:id="@+id/text"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Appointment Info"
+                     android:textAllCaps="true"
+                     android:textColor="#AEACA9"
+                     android:fontFamily="sans-serif-condensed-medium"
+                     tools:ignore="HardcodedText" />
+
+                 <androidx.cardview.widget.CardView
+                     android:id="@+id/dateImg"
+                     android:layout_below="@id/text"
+                     android:layout_marginTop="15dp"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     app:contentPadding="5dp"
+                     android:layout_marginStart="2dp"
+                     app:cardCornerRadius="10dp">
+
+                     <ImageView
+                         android:layout_width="32dp"
+                         android:layout_height="32dp"
+                         android:src="@drawable/date"/>
+
+                 </androidx.cardview.widget.CardView>
+
+                 <TextView
+                     android:id="@+id/appointmentDate"
+                     android:layout_width="wrap_content"
+                     android:padding="5dp"
+                     android:layout_height="32dp"
+                     android:layout_marginStart="10dp"
+                     android:layout_marginTop="15dp"
+                     android:textColor="@color/purple_500"
+                     android:gravity="center_vertical"
+                     android:fontFamily="sans-serif-condensed-medium"
+                     android:layout_toEndOf="@id/dateImg"
+                     android:layout_below="@id/text"
+                     android:text="20 / 2 / 2021"
+                     tools:ignore="HardcodedText" />
+
+                 <androidx.cardview.widget.CardView
+                     android:id="@+id/timeImg"
+                     android:layout_marginStart="2dp"
+                     android:layout_below="@id/dateImg"
+                     android:layout_marginTop="10dp"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     app:contentPadding="5dp"
+                     app:cardCornerRadius="10dp">
+
+                     <ImageView
+                         android:layout_width="32dp"
+                         android:layout_height="32dp"
+                         android:src="@drawable/watch"/>
+
+                 </androidx.cardview.widget.CardView>
+
+                 <TextView
+                     android:id="@+id/appointmentTime"
+                     android:layout_width="wrap_content"
+                     android:padding="5dp"
+                     android:layout_height="32dp"
+                     android:layout_marginStart="10dp"
+                     android:textColor="@color/purple_500"
+                     android:layout_marginTop="15dp"
+                     android:gravity="center_vertical"
+                     android:fontFamily="sans-serif-condensed-medium"
+                     android:layout_toEndOf="@id/dateImg"
+                     android:layout_below="@id/dateImg"
+                     android:text="10 : 00 AM"
+                     tools:ignore="HardcodedText" />
 
 
-    </RadioGroup>
+                 <androidx.cardview.widget.CardView
+                     android:id="@+id/feeImg"
+                     android:layout_below="@id/timeImg"
+                     android:layout_marginTop="10dp"
+                     android:layout_marginStart="2dp"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     app:contentPadding="5dp"
+                     app:cardCornerRadius="10dp">
 
-    <RelativeLayout
-        android:id="@+id/name_layout"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        android:layout_height="70dp"
-        android:background="@drawable/edit_txt_problem_bg"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:layout_below="@+id/radioGroup">
+                     <ImageView
+                         android:layout_width="32dp"
+                         android:layout_height="32dp"
+                         android:src="@drawable/wallet"/>
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Patient Name : "
-            android:textColor="@color/Primary_color"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:textSize="16sp"
-            tools:ignore="HardcodedText" />
+                 </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/patientName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginStart="10dp"
-            android:text="loading.."
-            android:layout_toEndOf="@id/name"
-            android:textColor="@color/Primary_color"
-            tools:ignore="HardcodedText" />
+                 <TextView
+                     android:id="@+id/doctorFee"
+                     android:layout_width="wrap_content"
+                     android:padding="5dp"
+                     android:layout_height="32dp"
+                     android:layout_marginStart="10dp"
+                     android:layout_marginTop="15dp"
+                     android:textColor="@color/purple_500"
+                     android:gravity="center_vertical"
+                     android:fontFamily="sans-serif-condensed-medium"
+                     android:layout_toEndOf="@id/dateImg"
+                     android:layout_below="@id/timeImg"
+                     android:text="₹ 500"
+                     tools:ignore="HardcodedText" />
 
-    </RelativeLayout>
+             </RelativeLayout>
 
-   <RelativeLayout
-       android:id="@+id/anotherPatient"
-       android:visibility="gone"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_below="@id/radioGroup"
-       android:layout_marginTop="10dp"
-       android:padding="10dp"
-       android:background="@drawable/edit_txt_problem_bg">
+         </androidx.cardview.widget.CardView>
 
-       <TextView
-           android:id="@+id/name_1"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Patient Name : "
-           android:textColor="@color/Primary_color"
-           android:textStyle="bold"
-           android:fontFamily="sans-serif-condensed-medium"
-           android:textSize="16sp"
-           tools:ignore="HardcodedText" />
+         <androidx.cardview.widget.CardView
+             android:layout_below="@id/appointmentInfo"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_margin="5dp"
+             android:layout_marginTop="20dp"
+             app:cardCornerRadius="15dp"
+             app:contentPadding="20dp">
 
-       <EditText
-           android:id="@+id/anotherPatientName"
-           android:layout_below="@id/name_1"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:textColor="@color/Primary_color"
-           tools:ignore="HardcodedText" />
+             <RelativeLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
 
-       <TextView
-           android:id="@+id/name_2"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Relationship with you : "
-           android:layout_below="@+id/anotherPatientName"
-           android:textColor="@color/Primary_color"
-           android:textStyle="bold"
-           android:fontFamily="sans-serif-condensed-medium"
-           android:textSize="16sp"
-           tools:ignore="HardcodedText" />
+                 <TextView
+                     android:id="@+id/text1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Patient Info"
+                     android:textAllCaps="true"
+                     android:textColor="#AEACA9"
+                     android:fontFamily="sans-serif-condensed-medium"
+                     tools:ignore="HardcodedText" />
 
-       <EditText
-           android:id="@+id/relation"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:textColor="@color/Primary_color"
-           android:hint="e.g son"
-           android:layout_below="@id/name_2"
-           tools:ignore="HardcodedText" />
+                 <androidx.cardview.widget.CardView
+                     android:id="@+id/radioGroup"
+                     android:layout_marginTop="10dp"
+                     android:layout_marginStart="2dp"
+                     android:layout_marginEnd="2dp"
+                     android:layout_marginBottom="2dp"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     app:cardCornerRadius="15dp"
+                     android:layout_below="@id/text1">
 
-   </RelativeLayout>
+                     <RadioGroup
+                         android:layout_below="@id/text1"
+                         android:layout_width="match_parent"
+                         android:layout_height="70dp"
+                         android:gravity="center"
+                         android:layout_gravity="center_horizontal"
+                         android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnSubmit"
-        android:visibility="gone"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_below="@id/name_layout"
-        android:layout_marginTop="90dp"
-        android:layout_centerHorizontal="true"
-        android:text="Submit"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:textSize="17sp"
-        tools:ignore="HardcodedText" />
+                         <RadioButton
+                             android:id="@+id/you"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:text="You"
+                             android:layout_marginEnd="30dp"
+                             android:textColor="@color/purple_500"
+                             android:fontFamily="sans-serif-condensed-medium"
+                             tools:ignore="HardcodedText" />
+
+                         <RadioButton
+                             android:id="@+id/someoneElse"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:text="Someone Else"
+                             android:layout_marginStart="30dp"
+                             android:textColor="@color/purple_500"
+                             android:fontFamily="sans-serif-condensed-medium"
+                             tools:ignore="HardcodedText" />
+
+
+                     </RadioGroup>
+
+                 </androidx.cardview.widget.CardView>
+
+                 <RelativeLayout
+                     android:id="@+id/youLayout"
+                     android:visibility="gone"
+                     android:layout_marginTop="10dp"
+                     android:layout_below="@id/radioGroup"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     tools:ignore="HardcodedText">
+
+                     <TextView
+                         android:id="@+id/patient"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Patient Name : "
+                         android:textColor="#AEACA9"
+                         android:textAllCaps="true"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:textStyle="bold"/>
+
+                     <TextView
+                         android:id="@+id/patientName"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text=""
+                         android:layout_below="@id/patient"
+                         android:layout_marginTop="10dp"
+                         android:layout_marginStart="0dp"
+                         android:textColor="@color/purple_500"
+                         android:textAllCaps="false"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:textStyle="bold"/>
+
+                     <View
+                         android:layout_width="match_parent"
+                         android:layout_height="1dp"
+                         android:background="#AEACA9"
+                         android:layout_below="@id/patientName"
+                         android:layout_marginTop="2dp"/>
+
+                     <TextView
+                         android:id="@+id/prob1"
+                         android:layout_below="@id/patientName"
+                         android:layout_marginTop="10dp"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Problem : "
+                         android:textColor="#AEACA9"
+                         android:textAllCaps="true"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:textStyle="bold"
+                         tools:ignore="HardcodedText" />
+
+                     <EditText
+                         android:id="@+id/problem1"
+                         android:hint=""
+                         android:keyboardNavigationCluster="true"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_below="@id/prob1"
+                         tools:ignore="HardcodedText" />
+
+                 </RelativeLayout>
+
+                 <RelativeLayout
+                     android:id="@+id/anotherPatientLayout"
+                     android:layout_below="@id/radioGroup"
+                     android:layout_marginTop="10dp"
+                     android:visibility="gone"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content">
+
+                     <TextView
+                         android:id="@+id/patient1"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Patient Name : "
+                         android:textColor="#AEACA9"
+                         android:textAllCaps="true"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:textStyle="bold"/>
+
+                     <EditText
+                         android:id="@+id/anotherPatientName"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:layout_below="@id/patient1"/>
+
+                     <TextView
+                         android:id="@+id/relation"
+                         android:layout_below="@id/anotherPatientName"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Relationship : "
+                         android:textColor="#AEACA9"
+                         android:textAllCaps="true"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:textStyle="bold"
+                         tools:ignore="HardcodedText" />
+
+                     <EditText
+                         android:id="@+id/relationship"
+                         android:hint="Son"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_below="@id/relation"
+                         tools:ignore="HardcodedText" />
+
+                     <TextView
+                         android:id="@+id/prob"
+                         android:layout_below="@id/relationship"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Problem : "
+                         android:textColor="#AEACA9"
+                         android:textAllCaps="true"
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:textStyle="bold"
+                         tools:ignore="HardcodedText" />
+
+                     <EditText
+                         android:id="@+id/problem"
+                         android:hint=""
+                         android:fontFamily="sans-serif-condensed-medium"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_below="@id/prob"
+                         tools:ignore="HardcodedText" />
+
+                 </RelativeLayout>
+
+                 <Button
+                     android:id="@+id/btnBookAppointment"
+                     android:layout_below="@id/anotherPatientLayout"
+                     android:visibility="gone"
+                     android:layout_width="match_parent"
+                     android:layout_height="60dp"
+                     android:text="Request Appointment"
+                     android:textStyle="bold"
+                     android:textAllCaps="false"
+                     android:fontFamily="sans-serif-condensed-medium"
+                     tools:ignore="HardcodedText" />
+
+             </RelativeLayout>
+
+
+         </androidx.cardview.widget.CardView>
+
+     </RelativeLayout>
+
+  </ScrollView>
 
 </RelativeLayout>

@@ -44,7 +44,7 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/doctor"/>
+                android:src="@drawable/doctors"/>
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/hospitalImg"
                 android:visibility="gone"

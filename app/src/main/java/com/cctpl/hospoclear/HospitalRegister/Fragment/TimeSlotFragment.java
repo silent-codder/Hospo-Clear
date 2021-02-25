@@ -358,16 +358,18 @@ public class TimeSlotFragment extends Fragment {
                         HashMap<String,Object> map = new HashMap<>();
                         map.put("TimeSlot",start_ms + " : 00 AM" );
                         map.put("DoctorId",DoctorId);
+                        map.put("Hr",start_ms);
                         map.put("TimeStamp",System.currentTimeMillis());
-                        map.put("Flag","2");
+                        map.put("Flag","false");
                         AddData(map);
                     }else{
 //                        System.out.println( start_ms +" : " + start_min  + " AM" );
                         HashMap<String,Object> map = new HashMap<>();
                         map.put("TimeSlot",start_ms + " : " + start_min + " AM" );
                         map.put("DoctorId",DoctorId);
+                        map.put("Hr",start_ms);
                         map.put("TimeStamp",System.currentTimeMillis());
-                        map.put("Flag","2");
+                        map.put("Flag","false");
                         AddData(map);
                     }
 
@@ -377,16 +379,18 @@ public class TimeSlotFragment extends Fragment {
                         HashMap<String,Object> map = new HashMap<>();
                         map.put("TimeSlot",start_ms + " : 00 " + start_timezon );
                         map.put("DoctorId",DoctorId);
+                        map.put("Hr",start_ms);
                         map.put("TimeStamp",System.currentTimeMillis());
-                        map.put("Flag","2");
+                        map.put("Flag","false");
                         AddData(map);
                     }else{
 //                        System.out.println( start_ms +" : " + start_min  + " " + start_timezon );
                         HashMap<String,Object> map = new HashMap<>();
                         map.put("TimeSlot",start_ms + " : " + start_min + " " + start_timezon );
                         map.put("DoctorId",DoctorId);
+                        map.put("Hr",start_ms);
                         map.put("TimeStamp",System.currentTimeMillis());
-                        map.put("Flag","2");
+                        map.put("Flag","false");
                         AddData(map);
                     }
                 }else{
@@ -397,16 +401,18 @@ public class TimeSlotFragment extends Fragment {
                             HashMap<String,Object> map = new HashMap<>();
                             map.put("TimeSlot",start_ms + " : 00 PM");
                             map.put("DoctorId",DoctorId);
+                            map.put("Hr",start_ms);
                             map.put("TimeStamp",System.currentTimeMillis());
-                            map.put("Flag","2");
+                            map.put("Flag","false");
                             AddData(map);
                         }else{
 //                            System.out.println( start_ms +" : " + start_min  + " PM" );
                             HashMap<String,Object> map = new HashMap<>();
                             map.put("TimeSlot",start_ms + " : " + start_min + " PM" );
                             map.put("DoctorId",DoctorId);
+                            map.put("Hr",start_ms);
                             map.put("TimeStamp",System.currentTimeMillis());
-                            map.put("Flag","2");
+                            map.put("Flag","false");
                             AddData(map);
                         }
                     }
@@ -419,16 +425,18 @@ public class TimeSlotFragment extends Fragment {
                             HashMap<String,Object> map = new HashMap<>();
                             map.put("TimeSlot",startMs + " : 00 PM");
                             map.put("DoctorId",DoctorId);
+                            map.put("Hr",start_ms);
                             map.put("TimeStamp",System.currentTimeMillis());
-                            map.put("Flag","2");
+                            map.put("Flag","false");
                             AddData(map);
                         }else{
 //                            System.out.println( startMs +" : " + start_min  + " PM" );
                             HashMap<String,Object> map = new HashMap<>();
                             map.put("TimeSlot",startMs + " : " + start_min + " PM" );
                             map.put("DoctorId",DoctorId);
+                            map.put("Hr",start_ms);
                             map.put("TimeStamp",System.currentTimeMillis());
-                            map.put("Flag","2");
+                            map.put("Flag","false");
                             AddData(map);
                         }
                     }

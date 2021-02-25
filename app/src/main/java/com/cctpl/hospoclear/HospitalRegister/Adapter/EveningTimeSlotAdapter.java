@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cctpl.hospoclear.R;
@@ -43,7 +44,7 @@ public class EveningTimeSlotAdapter extends RecyclerView.Adapter<EveningTimeSlot
         String DoctorId = eveningTimeSlotData.get(position).getDoctorId();
         holder.mTimeSlot.setText(TimeSlot);
 
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        holder.mBtnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Dialog dialog = new Dialog(v.getContext());
@@ -82,12 +83,12 @@ public class EveningTimeSlotAdapter extends RecyclerView.Adapter<EveningTimeSlot
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        RelativeLayout relativeLayout;
-        TextView mTimeSlot,mTimeSlotRed;
+        CardView mBtnSelect;
+        TextView mTimeSlot;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mTimeSlot = itemView.findViewById(R.id.timeSlot);
-            relativeLayout = itemView.findViewById(R.id.relativeLayout);
+            mBtnSelect = itemView.findViewById(R.id.relativeLayout);
         }
     }
 }
