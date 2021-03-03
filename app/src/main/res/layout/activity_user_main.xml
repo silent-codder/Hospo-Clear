@@ -25,22 +25,27 @@
             android:layout_height="match_parent"
             android:id="@+id/fragment_container"/>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/user"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/user"
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/user"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:src="@drawable/user"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_margin="10dp"-->
+<!--            app:civ_border_width="0.5dp"/>-->
+        <ImageView
+            android:id="@+id/notification"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_baseline_notifications_24"
             android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
-            app:civ_border_width="0.5dp"/>
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userImg"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/user"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
-            app:civ_border_width="0.5dp"/>
+            android:layout_margin="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/Primary_color"
+            android:layout_below="@id/notification"/>
 
     </RelativeLayout>
 

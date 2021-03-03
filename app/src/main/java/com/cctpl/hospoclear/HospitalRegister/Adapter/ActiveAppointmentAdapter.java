@@ -1,12 +1,18 @@
 package com.cctpl.hospoclear.HospitalRegister.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +24,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.cctpl.hospoclear.HospitalRegister.Fragment.BillViewFragment;
+import com.cctpl.hospoclear.UserRegister.Fragment.TrackAppointmentFragment;
 import com.cctpl.hospoclear.UserRegister.Model.AppointmentData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,7 +48,8 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
     List<AppointmentData> appointmentData;
     FirebaseFirestore firebaseFirestore;
     Context context;
-    String ProfileUrl;
+    String ProfileUrl,AppointmentId;
+    Fragment fragment;
 
     public ActiveAppointmentAdapter(List<AppointmentData> appointmentData) {
         this.appointmentData = appointmentData;
@@ -55,34 +64,123 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String UserId = appointmentData.get(position).getUserId();
         String PatientName = appointmentData.get(position).getPatientName();
         String AppointmentDate = appointmentData.get(position).getAppointmentDate();
         String Problem = appointmentData.get(position).getProblem();
-        String AppointmentId = appointmentData.get(position).AppointmentId;
+        AppointmentId = appointmentData.get(position).AppointmentId;
         String DoctorId = appointmentData.get(position).getDoctorId();
         String HospitalId = appointmentData.get(position).getHospitalId();
+        String AppointmentTime = appointmentData.get(position).getAppointmentTime();
         String Status = appointmentData.get(position).getStatus();
+        String Section = appointmentData.get(position).getSection();
+        String SlotId = appointmentData.get(position).getSlotId();
 
         firebaseFirestore.collection("Users").document(UserId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         ProfileUrl = task.getResult().getString("ProfileImgUrl");
-                        holder.progressBar.setVisibility(View.VISIBLE);
                         if(ProfileUrl != null){
-                            holder.mUser.setVisibility(View.INVISIBLE);
-                            Picasso.get().load(ProfileUrl).into(holder.mUserImg);
-                        }else {
-                            holder.progressBar.setVisibility(View.INVISIBLE);
+                            Picasso.get().load(ProfileUrl).into(holder.mPatientImg);
                         }
                     }
                 });
-        holder.mUserName.setText(PatientName);
-        holder.mAppointmentDate.setText(AppointmentDate);
-        holder.mProblem.setText(Problem);
+        holder.mPatientName.setText(PatientName);
+        holder.mAppointmentInfo.setText(AppointmentDate + ", " + AppointmentTime);
+
+
+        holder.mBtnAppointmentInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("UserName",PatientName);
+                bundle.putString("AppointmentDate",AppointmentDate);
+                bundle.putString("AppointmentTime",AppointmentTime);
+                bundle.putString("Problem",Problem);
+                bundle.putString("DoctorId",DoctorId);
+                bundle.putString("HospitalId",HospitalId);
+                bundle.putString("Status",Status);
+                bundle.putString("ProfileUrl",ProfileUrl);
+                bundle.putString("AppointmentId",AppointmentId);
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                Fragment fragment = new AppointmentDetailsFragment();
+                fragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+            }
+        });
+
+        holder.mMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(context,holder.mMenu);
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu_active_appointment,popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId()){
+                            case R.id.completeAppointment:
+                                Dialog dialog = new Dialog(context );
+                                dialog.setContentView(R.layout.complete_dialog);
+                                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialog.show();
+
+                                Button btnYes = (Button) dialog.findViewById(R.id.btnYes);
+                                Button btnCancel = (Button) dialog.findViewById(R.id.btnNo);
+                                btnYes.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        HashMap<String, Object> map = new HashMap<>();
+                                        map.put("Flag","false");
+                                        HashMap<String, Object> map1 = new HashMap<>();
+                                        map1.put("Status","Complete");
+                                        firebaseFirestore.collection("Doctors").document(DoctorId).collection(Section).document(SlotId)
+                                                .update(map);
+                                        firebaseFirestore.collection("Appointments").document(AppointmentId)
+                                                .update(map1)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()){
+                                                            Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                        appointmentData.remove(position);
+                                        notifyItemRemoved(position);
+                                        notifyItemRangeChanged(position,appointmentData.size());
+                                        dialog.dismiss();
+                                    }
+                                });
+
+                                btnCancel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                break;
+                            case R.id.addBill:
+                                fragment = new BillFragment();
+                                AppCompatActivity activity = (AppCompatActivity) context;
+                                Bundle bundle1 = new Bundle();
+                                bundle1.putString("Type","Bill");
+                                bundle1.putString("AppointmentId", AppointmentId);
+                                fragment.setArguments(bundle1);
+                                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
 
 //        holder.mBtnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -103,41 +201,41 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
 //            }
 //        });
 
-        firebaseFirestore.collection("Appointments").document(AppointmentId).collection("Bill")
-                .document(AppointmentId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    String totalBill = task.getResult().getString("TotalBill");
-                    if(totalBill != null){
-                        holder.mTotalBill.setText("Bill Amount :  " + totalBill);
-                    }else {
-                        holder.mTotalBill.setText("Bill Amount :  00");
-                    }
-                }
-            }
-        });
+//        firebaseFirestore.collection("Appointments").document(AppointmentId).collection("Bill")
+//                .document(AppointmentId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @SuppressLint("SetTextI18n")
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    String totalBill = task.getResult().getString("TotalBill");
+//                    if(totalBill != null){
+//                        holder.mTotalBill.setText("Bill Amount :  " + totalBill);
+//                    }else {
+//                        holder.mTotalBill.setText("Bill Amount :  00");
+//                    }
+//                }
+//            }
+//        });
 
-        holder.mViewDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.lottieAnimationView.setVisibility(View.INVISIBLE);
-                Bundle bundle = new Bundle();
-                bundle.putString("UserName",PatientName);
-                bundle.putString("AppointmentDate",AppointmentDate);
-                bundle.putString("DoctorId",DoctorId);
-                bundle.putString("HospitalId",HospitalId);
-                bundle.putString("Status",Status);
-                bundle.putString("ProfileUrl",ProfileUrl);
-                bundle.putString("AppointmentId",AppointmentId);
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                Fragment fragment = new AppointmentDetailsFragment();
-                fragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null)
-                        .commit();
-            }
-        });
+//        holder.mViewDetails.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                holder.lottieAnimationView.setVisibility(View.INVISIBLE);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("UserName",PatientName);
+//                bundle.putString("AppointmentDate",AppointmentDate);
+//                bundle.putString("DoctorId",DoctorId);
+//                bundle.putString("HospitalId",HospitalId);
+//                bundle.putString("Status",Status);
+//                bundle.putString("ProfileUrl",ProfileUrl);
+//                bundle.putString("AppointmentId",AppointmentId);
+//                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+//                Fragment fragment = new AppointmentDetailsFragment();
+//                fragment.setArguments(bundle);
+//                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null)
+//                        .commit();
+//            }
+//        });
 
         //for complete appointment
 //        if (Status.equals("4")){
@@ -193,23 +291,18 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView mUserImg,mUser;
-        ProgressBar progressBar;
-        TextView mUserName,mAppointmentDate,mProblem,mBtnViewDetails,mTotalBill;
-        LottieAnimationView lottieAnimationView;
-        RelativeLayout mViewDetails;
+
+        CircleImageView mPatientImg;
+        TextView mPatientName,mAppointmentInfo;
+        RelativeLayout mBtnAppointmentInfo;
+        ImageView mMenu;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mUserImg = itemView.findViewById(R.id.userImg);
-            mUserName = itemView.findViewById(R.id.userName);
-            mAppointmentDate = itemView.findViewById(R.id.appointmentDate);
-            mProblem = itemView.findViewById(R.id.problem);
-            mUser = itemView.findViewById(R.id.userIm);
-            progressBar = itemView.findViewById(R.id.loader);
-            mViewDetails = itemView.findViewById(R.id.viewDetails);
-            mBtnViewDetails = itemView.findViewById(R.id.btnViewDetails);
-            mTotalBill = itemView.findViewById(R.id.totalBill);
-            lottieAnimationView = itemView.findViewById(R.id.newNotification);
+           mPatientImg = (CircleImageView) itemView.findViewById(R.id.patientImg);
+           mPatientName = (TextView) itemView.findViewById(R.id.patientName);
+           mAppointmentInfo = (TextView) itemView.findViewById(R.id.appointmentInfo);
+           mBtnAppointmentInfo = (RelativeLayout) itemView.findViewById(R.id.btnAppointmentInfo);
+           mMenu = (ImageView) itemView.findViewById(R.id.btnMenu);
         }
     }
 

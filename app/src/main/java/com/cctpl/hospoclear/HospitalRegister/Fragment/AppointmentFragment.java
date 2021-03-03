@@ -56,6 +56,9 @@ public class AppointmentFragment extends Fragment {
         textView = view.findViewById(R.id.notFoundText);
         progressBar = view.findViewById(R.id.progressCircular);
 
+
+        progressBar.setVisibility(View.GONE);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -66,13 +69,6 @@ public class AppointmentFragment extends Fragment {
         loadData();
         return view;
     }
-
-
-
-    private void refreshData() {
-        loadData();
-    }
-
     private void loadData() {
         swipeRefreshLayout.setRefreshing(false);
         appointmentData = new ArrayList<>();
@@ -81,26 +77,23 @@ public class AppointmentFragment extends Fragment {
         recyclerView.setAdapter(activeAppointmentAdapter);
 
         Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("HospitalId", UserId)
-                .whereEqualTo("Status","4")
+                .whereEqualTo("Status","Accept")
                 .orderBy("TimeStamp", Query.Direction.ASCENDING);
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                if (value.isEmpty()){
-                    lottieAnimationView.setVisibility(View.VISIBLE);
-                    textView.setVisibility(View.VISIBLE);
-                    progressBar.setVisibility(View.GONE);
-                }
+                if (!value.isEmpty()){
+                    lottieAnimationView.setVisibility(View.GONE);
+                    textView.setVisibility(View.GONE);
 
-
-                for (DocumentChange doc : value.getDocumentChanges()){
-                    if (doc.getType() == DocumentChange.Type.ADDED){
-                        String AppointmentId = doc.getDocument().getId();
-                        AppointmentData mAppointmentData = doc.getDocument().toObject(AppointmentData.class).withId(AppointmentId);
-                        appointmentData.add(mAppointmentData);
-                        activeAppointmentAdapter.notifyDataSetChanged();
-                        progressBar.setVisibility(View.GONE);
+                    for (DocumentChange doc : value.getDocumentChanges()){
+                        if (doc.getType() == DocumentChange.Type.ADDED){
+                            String AppointmentId = doc.getDocument().getId();
+                            AppointmentData mAppointmentData = doc.getDocument().toObject(AppointmentData.class).withId(AppointmentId);
+                            appointmentData.add(mAppointmentData);
+                            activeAppointmentAdapter.notifyDataSetChanged();
+                        }
                     }
                 }
             }

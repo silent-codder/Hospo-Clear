@@ -57,6 +57,8 @@ public class CompleteAppointmentFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         HospitalId = firebaseAuth.getCurrentUser().getUid();
 
+        progressBar.setVisibility(View.GONE);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -69,10 +71,6 @@ public class CompleteAppointmentFragment extends Fragment {
         return view;
     }
 
-    private void refreshData() {
-        loadData();
-    }
-
     private void loadData() {
         swipeRefreshLayout.setRefreshing(false);
         appointmentData = new ArrayList<>();
@@ -81,28 +79,28 @@ public class CompleteAppointmentFragment extends Fragment {
         recyclerView.setAdapter(completeAppointmentAdapter);
 
         Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("HospitalId",HospitalId)
-                .whereEqualTo("Status","1")
+                .whereEqualTo("Status","Complete")
                 .orderBy("TimeStamp", Query.Direction.ASCENDING);
 
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                if (value.isEmpty()){
-                    lottieAnimationView.setVisibility(View.VISIBLE);
-                    textView.setVisibility(View.VISIBLE);
-                    progressBar.setVisibility(View.GONE);
-                }
-
-                for (DocumentChange doc : value.getDocumentChanges()){
-                    if (doc.getType() == DocumentChange.Type.ADDED){
-                        String AppointmentId = doc.getDocument().getId();
-                        AppointmentData mAppointmentData = doc.getDocument().toObject(AppointmentData.class).withId(AppointmentId);
-                        appointmentData.add(mAppointmentData);
-                        completeAppointmentAdapter.notifyDataSetChanged();
-                        progressBar.setVisibility(View.GONE);
+                if (!value.isEmpty()){
+                    lottieAnimationView.setVisibility(View.GONE);
+                    textView.setVisibility(View.GONE);
+                    for (DocumentChange doc : value.getDocumentChanges()){
+                        if (doc.getType() == DocumentChange.Type.ADDED){
+                            String AppointmentId = doc.getDocument().getId();
+                            AppointmentData mAppointmentData = doc.getDocument().toObject(AppointmentData.class).withId(AppointmentId);
+                            appointmentData.add(mAppointmentData);
+                            completeAppointmentAdapter.notifyDataSetChanged();
+                            progressBar.setVisibility(View.GONE);
+                        }
                     }
                 }
+
+
             }
         });
     }

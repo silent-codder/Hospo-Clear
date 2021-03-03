@@ -144,7 +144,7 @@ public class UserHomeFragment extends Fragment {
         //today appointment recycleView
 
         Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("dd.M.yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("d.M.yyyy");
         String currentDate = dateFormat.format(date);
 
 

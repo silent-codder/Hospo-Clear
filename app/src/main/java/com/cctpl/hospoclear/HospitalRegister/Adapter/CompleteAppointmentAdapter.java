@@ -1,12 +1,15 @@
 package com.cctpl.hospoclear.HospitalRegister.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,7 +35,7 @@ public class CompleteAppointmentAdapter extends RecyclerView.Adapter<CompleteApp
     List<AppointmentData> appointmentData;
     FirebaseFirestore firebaseFirestore;
     Context context;
-    String ProfileUrl;
+    String ProfileUrl,AppointmentId;
     public CompleteAppointmentAdapter(List<AppointmentData> appointmentData) {
         this.appointmentData = appointmentData;
     }
@@ -45,41 +48,54 @@ public class CompleteAppointmentAdapter extends RecyclerView.Adapter<CompleteApp
         context = parent.getContext();
         return new ViewHolder(view);    }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String UserId = appointmentData.get(position).getUserId();
         String PatientName = appointmentData.get(position).getPatientName();
         String AppointmentDate = appointmentData.get(position).getAppointmentDate();
         String Problem = appointmentData.get(position).getProblem();
-        String AppointmentId = appointmentData.get(position).AppointmentId;
+        AppointmentId = appointmentData.get(position).AppointmentId;
         String DoctorId = appointmentData.get(position).getDoctorId();
         String HospitalId = appointmentData.get(position).getHospitalId();
+        String AppointmentTime = appointmentData.get(position).getAppointmentTime();
         String Status = appointmentData.get(position).getStatus();
+        String Section = appointmentData.get(position).getSection();
+        String SlotId = appointmentData.get(position).getSlotId();
 
         firebaseFirestore.collection("Users").document(UserId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         ProfileUrl = task.getResult().getString("ProfileImgUrl");
-                        holder.progressBar.setVisibility(View.VISIBLE);
                         if(ProfileUrl != null){
-                            holder.mUser.setVisibility(View.INVISIBLE);
-                            Picasso.get().load(ProfileUrl).into(holder.mUserImg);
-                        }else {
-                            holder.progressBar.setVisibility(View.INVISIBLE);
+                            Picasso.get().load(ProfileUrl).into(holder.mPatientImg);
                         }
                     }
                 });
-        holder.mUserName.setText(PatientName);
-        holder.mAppointmentDate.setText(AppointmentDate);
-        holder.mProblem.setText(Problem);
+        holder.mPatientName.setText(PatientName);
+        holder.mAppointmentInfo.setText(AppointmentDate + ", " + AppointmentTime);
 
-        holder.mBtnViewDetails.setOnClickListener(new View.OnClickListener() {
+        firebaseFirestore.collection("Appointments").document(AppointmentId)
+                .collection("Bill").document(AppointmentId)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    String totalBill = task.getResult().getString("TotalBill");
+                    holder.mTotalBill.setText(totalBill);
+                }
+            }
+        });
+
+        holder.mBtnAppointmentInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("UserName",PatientName);
                 bundle.putString("AppointmentDate",AppointmentDate);
+                bundle.putString("AppointmentTime",AppointmentTime);
+                bundle.putString("Problem",Problem);
                 bundle.putString("DoctorId",DoctorId);
                 bundle.putString("HospitalId",HospitalId);
                 bundle.putString("Status",Status);
@@ -88,8 +104,7 @@ public class CompleteAppointmentAdapter extends RecyclerView.Adapter<CompleteApp
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 Fragment fragment = new AppointmentDetailsFragment();
                 fragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null)
-                        .commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
         });
     }
@@ -100,18 +115,18 @@ public class CompleteAppointmentAdapter extends RecyclerView.Adapter<CompleteApp
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView mUserImg,mUser;
-        ProgressBar progressBar;
-        TextView mUserName,mAppointmentDate,mProblem,mBtnViewDetails;
+        CircleImageView mPatientImg;
+        TextView mPatientName,mAppointmentInfo,mTotalBill;
+        RelativeLayout mBtnAppointmentInfo;
+        ImageView mMenu;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mUserImg = itemView.findViewById(R.id.userImg);
-            mUserName = itemView.findViewById(R.id.userName);
-            mAppointmentDate = itemView.findViewById(R.id.appointmentDate);
-            mProblem = itemView.findViewById(R.id.problem);
-            progressBar = itemView.findViewById(R.id.loader);
-            mUser = itemView.findViewById(R.id.userIm);
-            mBtnViewDetails = itemView.findViewById(R.id.btnViewDetails);
+            mPatientImg = (CircleImageView) itemView.findViewById(R.id.patientImg);
+            mPatientName = (TextView) itemView.findViewById(R.id.patientName);
+            mTotalBill = (TextView) itemView.findViewById(R.id.totalBill);
+            mAppointmentInfo = (TextView) itemView.findViewById(R.id.appointmentInfo);
+            mBtnAppointmentInfo = (RelativeLayout) itemView.findViewById(R.id.btnAppointmentInfo);
+            mMenu = (ImageView) itemView.findViewById(R.id.btnMenu);
         }
     }
 

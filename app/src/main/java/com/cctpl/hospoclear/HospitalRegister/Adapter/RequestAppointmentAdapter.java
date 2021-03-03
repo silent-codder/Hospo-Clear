@@ -1,15 +1,21 @@
 package com.cctpl.hospoclear.HospitalRegister.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -17,6 +23,7 @@ import com.cctpl.hospoclear.Notification.APIService;
 import com.cctpl.hospoclear.Notification.Client;
 import com.cctpl.hospoclear.Notification.Data;
 import com.cctpl.hospoclear.Notification.NotificationSender;
+import com.cctpl.hospoclear.UserRegister.Fragment.AppointmentDetailsFragment;
 import com.cctpl.hospoclear.UserRegister.Model.AppointmentData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,6 +50,7 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
     Context context;
     String fcmUrl = "https://fcm.googleapis.com/";
     String CurrentUserId;
+    String ProfileUrl;
 
     public RequestAppointmentAdapter(List<AppointmentData> appointmentData) {
         this.appointmentData = appointmentData;
@@ -51,7 +59,7 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.request_appointment_view,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.today_appointment_request_view,parent,false);
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         CurrentUserId = firebaseAuth.getCurrentUser().getUid();
@@ -64,33 +72,34 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
         String UserId = appointmentData.get(position).getUserId();
         String PatientName = appointmentData.get(position).getPatientName();
         String AppointmentDate = appointmentData.get(position).getAppointmentDate();
-        String Problem = appointmentData.get(position).getProblem();
+        String AppointmentTime = appointmentData.get(position).getAppointmentTime();
         String AppointmentId = appointmentData.get(position).AppointmentId;
         String DoctorId = appointmentData.get(position).getDoctorId();
+        String Problem = appointmentData.get(position).getProblem();
+        String HospitalId = appointmentData.get(position).getHospitalId();
+        String Status = appointmentData.get(position).getStatus();
+
+        if (TextUtils.isEmpty(AppointmentId)){
+           holder.mNoAppointment.setVisibility(View.VISIBLE);
+        }
 
         firebaseFirestore.collection("Users").document(UserId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        String ProfileUrl = task.getResult().getString("ProfileImgUrl");
-                        holder.progressBar.setVisibility(View.VISIBLE);
+                        ProfileUrl = task.getResult().getString("ProfileImgUrl");
                         if(ProfileUrl != null){
-                            holder.mUser.setVisibility(View.INVISIBLE);
                             Picasso.get().load(ProfileUrl).into(holder.mUserImg);
-                        }else {
-                            holder.progressBar.setVisibility(View.INVISIBLE);
                         }
                     }
                 });
         holder.mUserName.setText(PatientName);
         holder.mAppointmentDate.setText(AppointmentDate);
-        holder.mProblem.setText(Problem);
+        holder.mAppointmentTime.setText(AppointmentTime);
 
         holder.mBtnAcceptRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                holder.lottieAnimationView.setVisibility(View.INVISIBLE);
 
                 firebaseFirestore.collection("Tokens").document(DoctorId).get()
                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -98,7 +107,7 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()){
                                     String Token = task.getResult().getString("token");
-                                    sendNotification(Token,PatientName,Problem);
+                                    sendNotification(Token,PatientName,AppointmentTime);
                                 }
                             }
                         });
@@ -126,31 +135,31 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
 
                if (CurrentUserId.equals(DoctorId)){
                    HashMap<String,Object> map = new HashMap<>();
-                   map.put("Status","4");
+                   map.put("Status","Accept");
                    firebaseFirestore.collection("Appointments").document(AppointmentId)
                            .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                        @Override
                        public void onComplete(@NonNull Task<Void> task) {
                            if (task.isSuccessful()){
                                Toast.makeText(context, "Accepted", Toast.LENGTH_SHORT).show();
-                               holder.mBtnAcceptRequest.setVisibility(View.INVISIBLE);
-                               holder.mBtnCancelRequest.setVisibility(View.VISIBLE);
-
+                               appointmentData.remove(position);
+                               notifyItemRemoved(position);
+                               notifyItemRangeChanged(position,appointmentData.size());
                            }
                        }
                    });
                }else {
                    HashMap<String,Object> map1 = new HashMap<>();
-                   map1.put("Status","2");
+                   map1.put("Status","Accept");
                    firebaseFirestore.collection("Appointments").document(AppointmentId)
                            .update(map1).addOnCompleteListener(new OnCompleteListener<Void>() {
                        @Override
                        public void onComplete(@NonNull Task<Void> task) {
                            if (task.isSuccessful()){
                                Toast.makeText(context, "Accepted", Toast.LENGTH_SHORT).show();
-                               holder.mBtnAcceptRequest.setVisibility(View.INVISIBLE);
-                               holder.mBtnCancelRequest.setVisibility(View.VISIBLE);
-
+                               appointmentData.remove(position);
+                               notifyItemRemoved(position);
+                               notifyItemRangeChanged(position,appointmentData.size());
                            }
                        }
                    });
@@ -162,21 +171,42 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
             @Override
             public void onClick(View v) {
                 HashMap<String,Object> map = new HashMap<>();
-                map.put("Status","3");
+                map.put("Status","Decline");
                 firebaseFirestore.collection("Appointments").document(AppointmentId)
                         .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
                             Toast.makeText(context, "Cancel request", Toast.LENGTH_SHORT).show();
-                            holder.mBtnAcceptRequest.setVisibility(View.VISIBLE);
-                            holder.mBtnCancelRequest.setVisibility(View.INVISIBLE);
+                            appointmentData.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position,appointmentData.size());
                         }
                     }
                 });
             }
         });
 
+
+        holder.mBtnAppointmentInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("UserName",PatientName);
+                bundle.putString("AppointmentDate",AppointmentDate);
+                bundle.putString("AppointmentTime",AppointmentTime);
+                bundle.putString("Problem",Problem);
+                bundle.putString("DoctorId",DoctorId);
+                bundle.putString("HospitalId",HospitalId);
+                bundle.putString("Status",Status);
+                bundle.putString("ProfileUrl",ProfileUrl);
+                bundle.putString("AppointmentId",AppointmentId);
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                Fragment fragment = new AppointmentDetailsFragment();
+                fragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+            }
+        });
 
     }
 
@@ -201,26 +231,28 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
 
     @Override
     public int getItemCount() {
+
         return appointmentData.size();
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView mUserImg,mUser;
-        ProgressBar progressBar;
-        TextView mUserName,mAppointmentDate,mProblem;
-        Button mBtnAcceptRequest,mBtnCancelRequest;
-        LottieAnimationView lottieAnimationView;
+        CircleImageView mUserImg;
+        TextView mUserName,mAppointmentDate,mAppointmentTime;
+        CardView mBtnAcceptRequest,mBtnCancelRequest;
+        RelativeLayout mBtnAppointmentInfo;
+        RelativeLayout mNoAppointment;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mUserImg = itemView.findViewById(R.id.userImg);
-            mUserName = itemView.findViewById(R.id.userName);
+            mUserImg = itemView.findViewById(R.id.patientImg);
+            mUserName = itemView.findViewById(R.id.patientName);
             mAppointmentDate = itemView.findViewById(R.id.appointmentDate);
-            mProblem = itemView.findViewById(R.id.problem);
-            mUser = itemView.findViewById(R.id.userIm);
-            progressBar = itemView.findViewById(R.id.loader);
+            mAppointmentTime = itemView.findViewById(R.id.appointmentTime);
             mBtnAcceptRequest = itemView.findViewById(R.id.btnRequestAccept);
             mBtnCancelRequest = itemView.findViewById(R.id.btnRequestCancel);
-            lottieAnimationView = itemView.findViewById(R.id.newNotification);
+            mBtnAppointmentInfo = itemView.findViewById(R.id.btnAppointmentInfo);
+
+            mNoAppointment = itemView.findViewById(R.id.noAppointment);
         }
     }
 }

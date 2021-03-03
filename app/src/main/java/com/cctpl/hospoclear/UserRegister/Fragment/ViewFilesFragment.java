@@ -55,6 +55,19 @@ public class ViewFilesFragment extends Fragment {
             TextView textView1 = view.findViewById(R.id.text);
             textView1.setText(type);
         }
+        mBtnAttachFile.setVisibility(View.VISIBLE);
+        mBtnAttachFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new AttachFileFragment();
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("Location",type);
+                bundle1.putString("AppointmentId", appointmentId);
+                bundle1.putString("Flag","2");
+                fragment.setArguments(bundle1);
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+            }
+        });
 
         loadData();
 
@@ -75,19 +88,6 @@ public class ViewFilesFragment extends Fragment {
                         if (value.isEmpty()){
                             imageView.setVisibility(View.VISIBLE);
                             textView.setVisibility(View.VISIBLE);
-                            mBtnAttachFile.setVisibility(View.VISIBLE);
-                            mBtnAttachFile.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Fragment fragment = new AttachFileFragment();
-                                    Bundle bundle1 = new Bundle();
-                                    bundle1.putString("Location",type);
-                                    bundle1.putString("AppointmentId", appointmentId);
-                                    bundle1.putString("Flag","2");
-                                    fragment.setArguments(bundle1);
-                                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
-                                }
-                            });
                         }
                         for (DocumentChange doc : value.getDocumentChanges()){
                             if (doc.getType() == DocumentChange.Type.ADDED){

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="20dp"
+    app:cardElevation="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="20dp">
+
+    <RelativeLayout
+        android:id="@+id/appointment"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/appointmentInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#50C1E9"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Appointment Request"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_size_small"
+                android:fontFamily="sans-serif-condensed-medium"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/appointmentDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text"
+                android:layout_marginTop="10dp"
+                android:text="1.3.2021"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_size_large"
+                android:fontFamily="sans-serif-condensed-medium"
+                app:drawableStartCompat="@drawable/ic_baseline_calendar_today"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/appointmentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text"
+                android:layout_toEndOf="@id/appointmentDate"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:text="10:00 AM"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_size_large"
+                android:fontFamily="sans-serif-condensed-medium"
+                app:drawableStartCompat="@drawable/ic_baseline_access_time_24"
+                tools:ignore="HardcodedText" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btnAppointmentInfo"
+            android:layout_below="@id/appointmentInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/user"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/patientImg"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/user"/>
+
+            <TextView
+                android:id="@+id/patientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ajinkya Shinde"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/text_size_medium"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@id/patientImg"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_info_24"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                tools:ignore="RtlHardcoded" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@+id/btnAppointmentInfo"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btnRequestAccept"
+                android:layout_width="180dp"
+                app:contentPadding="10dp"
+                android:layout_margin="10dp"
+                app:cardBackgroundColor="#50C1E9"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Accept"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textSize="@dimen/text_size_medium"
+                    android:layout_gravity="center"
+                    tools:ignore="HardcodedText" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btnRequestCancel"
+                android:layout_width="100dp"
+                app:contentPadding="10dp"
+                android:layout_toEndOf="@id/btnRequestAccept"
+                android:layout_margin="10dp"
+                app:cardBackgroundColor="#7EF3EEEE"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Decline"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textSize="@dimen/text_size_medium"
+                    android:layout_gravity="center"
+                    tools:ignore="HardcodedText" />
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/noAppointment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="10dp">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:scaleType="centerCrop"
+            app:lottie_url="https://assets8.lottiefiles.com/packages/lf20_gditjsml.json"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/notFoundText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="Appointment request not found !!"
+            android:layout_below="@id/lottie"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

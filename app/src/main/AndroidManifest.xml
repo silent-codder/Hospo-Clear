@@ -74,7 +74,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".Notification.Remainder"/>
+        <receiver android:name=".Notification.Remainder"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>

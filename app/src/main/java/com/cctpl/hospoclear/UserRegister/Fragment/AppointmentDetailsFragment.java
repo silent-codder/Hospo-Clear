@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -28,10 +29,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.cctpl.hospoclear.HospitalRegister.Fragment.BillFragment;
 import com.cctpl.hospoclear.HospitalRegister.Fragment.BillViewFragment;
 import com.cctpl.hospoclear.R;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -45,9 +49,7 @@ import retrofit2.Response;
 public class AppointmentDetailsFragment extends Fragment {
 
     private FirebaseFirestore firebaseFirestore;
-    private String AppointmentId,Status,CurrentUserId,PatientId,HospitalName,time;
-    private Button btnCompleteAppointment;
-    private FirebaseAuth firebaseAuth;
+    private String AppointmentId,HospitalName,Status;
     String fcmUrl = "https://fcm.googleapis.com/";
 
     @SuppressLint("SetTextI18n")
@@ -56,9 +58,6 @@ public class AppointmentDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_appointment_details, container, false);
         firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
-        CurrentUserId = firebaseAuth.getCurrentUser().getUid();
-        btnCompleteAppointment = view.findViewById(R.id.btnCompleteAppointment);
 
         Bundle bundle = this.getArguments();
         if (bundle!=null){
@@ -115,180 +114,19 @@ public class AppointmentDetailsFragment extends Fragment {
                         });
         }
 
-        firebaseFirestore.collection("AppUsers").document(CurrentUserId).get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()){
-                            String isUser = task.getResult().getString("isUser");
-                            if (isUser.equals("2")){
-                                btnCompleteAppointment.setVisibility(View.GONE);
-                                Button button = view.findViewById(R.id.btnAddBill);
-                                button.setVisibility(View.GONE);
-                            }
-                        }
-                    }
-                });
-
-        firebaseFirestore.collection("Appointments").document(AppointmentId).get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()){
-                            String Status = task.getResult().getString("Status");
-                            PatientId = task.getResult().getString("UserId");
-                            if (Status.equals("1")){
-                                btnCompleteAppointment.setVisibility(View.GONE);
-                            }
-                        }
-                    }
-                });
-
-
-        //for complete Appointment
-        if (Status.equals("4")){
-            btnCompleteAppointment.setVisibility(View.GONE);
-            btnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    firebaseFirestore.collection("Tokens").document(PatientId).get()
-                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()){
-                                        String Token = task.getResult().getString("token");
-                                        String title = "Your appointment was complete";
-                                        sendNotification(Token,title,"Hospital Name : " + HospitalName);
-                                    }
-                                }
-                            });
-
-                    HashMap<String,Object> map = new HashMap<>();
-                    map.put("Status","1");
-
-                    firebaseFirestore.collection("Appointments").document(AppointmentId)
-                            .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
-                                Toast.makeText(getContext(), "Complete Appointment", Toast.LENGTH_SHORT).show();
-                                btnCompleteAppointment.setVisibility(View.GONE);
-                            }
-                        }
-                    });
-                }
-            });
-        }else {
-            btnCompleteAppointment.setVisibility(View.GONE);
-            btnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    HashMap<String,Object> map = new HashMap<>();
-                    map.put("Status","4");
-
-                    firebaseFirestore.collection("Appointments").document(AppointmentId)
-                            .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
-                                Toast.makeText(getContext(), "Request to Complete Appointment", Toast.LENGTH_SHORT).show();
-                                btnCompleteAppointment.setVisibility(View.GONE);
-                            }
-                        }
-                    });
-                }
-            });
-        }
-
-        Button btnAttachFile = view.findViewById(R.id.btnAttachFile);
-        btnAttachFile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Dialog dialog = new Dialog(getContext());
-                dialog.setContentView(R.layout.select_attach_file_type);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-
-                RadioButton radioButtonReport = dialog.findViewById(R.id.report);
-                radioButtonReport.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Fragment fragment = new AttachFileFragment();
-                        Bundle bundle1 = new Bundle();
-                        bundle1.putString("Location","Report");
-                        bundle1.putString("AppointmentId", AppointmentId);
-                        bundle1.putString("Flag","2");
-                        fragment.setArguments(bundle1);
-                        getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
-                        dialog.dismiss();
-                    }
-                });
-
-                RadioButton radioButtonXRay = dialog.findViewById(R.id.xRay);
-                radioButtonXRay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Fragment fragment = new AttachFileFragment();
-                        Bundle bundle1 = new Bundle();
-                        bundle1.putString("Location","XRay");
-                        bundle1.putString("AppointmentId", AppointmentId);
-                        bundle1.putString("Flag","2");
-                        fragment.setArguments(bundle1);
-                        getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
-                        dialog.dismiss();
-                    }
-                });
-
-                RadioButton radioButtonLabReport = dialog.findViewById(R.id.labReport);
-                radioButtonLabReport.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Fragment fragment = new AttachFileFragment();
-                        Bundle bundle1 = new Bundle();
-                        bundle1.putString("Location","LabReport");
-                        bundle1.putString("AppointmentId", AppointmentId);
-                        bundle1.putString("Flag","2");
-                        fragment.setArguments(bundle1);
-                        getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
-                        dialog.dismiss();
-                    }
-                });
-
-                RadioButton radioButtonPrescription = dialog.findViewById(R.id.prescription);
-                radioButtonPrescription.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Fragment fragment = new AttachFileFragment();
-                        Bundle bundle1 = new Bundle();
-                        bundle1.putString("Location","Prescription");
-                        bundle1.putString("AppointmentId", AppointmentId);
-                        bundle1.putString("Flag","1");
-                        fragment.setArguments(bundle1);
-                        getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
-                        dialog.dismiss();
-                    }
-                });
-
-                RadioButton radioButtonOther = dialog.findViewById(R.id.other);
-                radioButtonOther.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Fragment fragment = new AttachFileFragment();
-                        Bundle bundle1 = new Bundle();
-                        bundle1.putString("Location","Other");
-                        bundle1.putString("AppointmentId", AppointmentId);
-                        bundle1.putString("Flag","2");
-                        fragment.setArguments(bundle1);
-                        getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
-                        dialog.dismiss();
-                    }
-                });
-            }
-        });
-
 
         TextView btnReportFile = view.findViewById(R.id.btnReportFile);
+        firebaseFirestore.collection("Appointments").document(AppointmentId).collection("Report")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (!value.isEmpty()){
+                            int files = value.size();
+                            btnReportFile.setText("Report File " + "(" + files + ")");
+                        }
+                    }
+                });
+
         btnReportFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -302,6 +140,16 @@ public class AppointmentDetailsFragment extends Fragment {
         });
 
         TextView btnXRayFile = view.findViewById(R.id.btnXRayFile);
+        firebaseFirestore.collection("Appointments").document(AppointmentId).collection("XRay")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (!value.isEmpty()){
+                            int files = value.size();
+                            btnXRayFile.setText("X-ray File " + "(" + files + ")");
+                        }
+                    }
+                });
         btnXRayFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -315,6 +163,16 @@ public class AppointmentDetailsFragment extends Fragment {
         });
 
         TextView btnLabReport = view.findViewById(R.id.btnLabReport);
+        firebaseFirestore.collection("Appointments").document(AppointmentId).collection("LabReport")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (!value.isEmpty()){
+                            int files = value.size();
+                            btnLabReport.setText("Lab Reports " + "(" + files + ")");
+                        }
+                    }
+                });
         btnLabReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -328,6 +186,16 @@ public class AppointmentDetailsFragment extends Fragment {
         });
 
         TextView btnPrescription = view.findViewById(R.id.btnPrescription);
+        firebaseFirestore.collection("Appointments").document(AppointmentId).collection("Prescription")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (!value.isEmpty()){
+                            int files = value.size();
+                            btnPrescription.setText("Prescription " + "(" + files + ")");
+                        }
+                    }
+                });
         btnPrescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -341,6 +209,16 @@ public class AppointmentDetailsFragment extends Fragment {
         });
 
         TextView btnOther = view.findViewById(R.id.btnOther);
+        firebaseFirestore.collection("Appointments").document(AppointmentId).collection("Other")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (!value.isEmpty()){
+                            int files = value.size();
+                            btnOther.setText("Other File " + "(" + files + ")");
+                        }
+                    }
+                });
         btnOther.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -354,6 +232,17 @@ public class AppointmentDetailsFragment extends Fragment {
         });
 
         TextView btnBill = view.findViewById(R.id.btnBill);
+        firebaseFirestore.collection("Appointments").document(AppointmentId).collection("Bill")
+                .document(AppointmentId).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            String totalBill = task.getResult().getString("TotalBill");
+                            btnBill.setText("Bill : " + totalBill);
+                        }
+                    }
+                });
         btnBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

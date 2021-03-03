@@ -100,15 +100,15 @@ public class UserMainActivity extends AppCompatActivity{
 
         nav = findViewById(R.id.navMenu);
         drawerLayout = findViewById(R.id.drawer);
-        CircleImageView UserImg = findViewById(R.id.userImg);
+//        CircleImageView UserImg = findViewById(R.id.userImg);
 
-        UserImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new UserProfileFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
-            }
-        });
+//        UserImg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Fragment fragment = new UserProfileFragment();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+//            }
+//        });
 
 
         toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.Open,R.string.Close);
@@ -132,7 +132,7 @@ public class UserMainActivity extends AppCompatActivity{
                 name.setText(UserName);
                 mobileNumber.setText(MobileNumber);
                 Picasso.get().load(ProfileUrl).into(profile);
-                Picasso.get().load(ProfileUrl).into(UserImg);
+//                Picasso.get().load(ProfileUrl).into(UserImg);
             }
         });
 

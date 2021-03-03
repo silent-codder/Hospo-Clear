@@ -10,19 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pull down to refresh"
-            android:layout_centerHorizontal="true"
-            android:textColor="#D7D5DA"
-            android:id="@+id/text"
-            tools:ignore="HardcodedText" />
         <com.airbnb.lottie.LottieAnimationView
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_below="@id/text"
             android:scaleType="centerCrop"
             app:lottie_autoPlay="true"
             app:lottie_loop="false"
@@ -31,7 +22,7 @@
             android:id="@+id/lottie"/>
         <TextView
             android:id="@+id/notFoundText"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Yet not appointments"
@@ -42,7 +33,6 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text"
             android:id="@+id/refresh">
 
             <androidx.recyclerview.widget.RecyclerView

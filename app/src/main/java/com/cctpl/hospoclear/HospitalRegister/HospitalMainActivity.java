@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cctpl.hospoclear.HospitalRegister.Fragment.HospitalMainFragment;
 import com.cctpl.hospoclear.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -134,7 +135,7 @@ public class HospitalMainActivity extends AppCompatActivity {
 
                 switch (item.getItemId()){
                     case R.id.hospital_home :
-                        selectFragment = new HospitalHomeFragment();
+                        selectFragment = new HospitalMainFragment();
                         break;
                     case R.id.hospital_Doctors :
                         selectFragment = new AllDoctorFragment();
@@ -158,7 +159,7 @@ public class HospitalMainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HospitalHomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HospitalMainFragment()).commit();
     }
 
     private void logOut() {

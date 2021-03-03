@@ -4,89 +4,75 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="10dp"
+    app:cardElevation="10dp"
     app:cardCornerRadius="20dp"
     android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/view_bg"
         android:padding="10dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userIm"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/user"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="1.5dp"/>
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:id="@+id/loader"
-            android:visibility="invisible"/>
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userImg"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:civ_border_width="0.5dp"/>
-        <TextView
-            android:id="@+id/userName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ajinkya Shinde"
-            android:layout_toRightOf="@id/userImg"
-            android:layout_marginStart="10dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_medium"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-condensed-medium"
-            tools:ignore="HardcodedText,RtlHardcoded" />
-        <TextView
-            android:id="@+id/appointmentDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="9 July 2020"
-            android:layout_toRightOf="@id/userImg"
-            android:layout_marginStart="10dp"
-            android:textColor="@color/white"
-            android:maxLines="2"
-            android:textSize="@dimen/text_size_small"
-            android:layout_below="@id/userName"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText,RtlHardcoded" />
-        <TextView
-            android:id="@+id/problem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Testing propose.."
-            android:layout_toRightOf="@id/userImg"
-            android:layout_marginStart="10dp"
-            android:textColor="@color/white"
-            android:maxLines="2"
-            android:textSize="@dimen/text_size_small"
-            android:layout_below="@id/appointmentDate"
-            android:textStyle="normal"
-            tools:ignore="HardcodedText,RtlHardcoded" />
-
-        <TextView
-            android:id="@+id/btnViewDetails"
+        <RelativeLayout
+            android:id="@+id/btnAppointmentInfo"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/edit_txt_problem_bg"
-            android:text="View Details"
-            android:gravity="center"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:textColor="@color/Primary_color"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_size_small"
-            android:layout_below="@id/userImg"
-            android:layout_marginTop="15dp"
-            android:padding="5dp"
-            tools:ignore="HardcodedText" />
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/user"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/patientImg"/>
+            <TextView
+                android:id="@+id/patientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ajinkya Shinde"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textColor="@color/black"
+                android:layout_toEndOf="@id/patientImg"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                android:textSize="@dimen/text_size_medium"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/appointmentInfo"
+                android:layout_below="@id/patientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="10:00 AM , 3.3.2021"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:layout_toEndOf="@id/patientImg"
+                android:textSize="@dimen/text_size_extra_small"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/totalBill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textSize="25sp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                tools:ignore="HardcodedText" />
+
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/btnMenu"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

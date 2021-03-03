@@ -25,10 +25,8 @@ public class TabAdapter extends FragmentPagerAdapter {
 
         switch (position){
             case 0 :
-                return new RequestAppointmentFragment();
-            case 1 :
                 return new AppointmentFragment();
-            case 2 :
+            case 1 :
                 return new CompleteAppointmentFragment();
             default:
                 return null;
