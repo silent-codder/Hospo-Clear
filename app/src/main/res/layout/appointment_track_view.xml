@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp">
+
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_small"
+        android:layout_below="@id/view"
+        android:textStyle="bold"
+        android:text="Mar 05"
+        android:fontFamily="sans-serif-condensed-medium"
+        tools:ignore="HardcodedText" />
+    <View
+        android:id="@+id/view"
+        android:orientation="horizontal"
+        android:layout_width="1dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:background="@android:color/black"/>
+    <TextView
+        android:id="@+id/details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="280dp"
+        android:padding="10dp"
+        android:text="Appointment accept by "
+        android:layout_toEndOf="@id/time"
+        android:layout_above="@id/time"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:background="@drawable/edit_txt_bg"
+        android:textColor="@color/black"
+        tools:ignore="HardcodedText" />
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="10:00pm"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textSize="@dimen/text_size_extra_small"
+        android:layout_toEndOf="@id/time"
+        android:layout_above="@id/details"
+        tools:ignore="HardcodedText" />
+
+</RelativeLayout>

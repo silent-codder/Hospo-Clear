@@ -1,7 +1,9 @@
 package com.cctpl.hospoclear.UserRegister.Fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,25 +14,34 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ajithvgiri.canvaslibrary.CanvasView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -39,12 +50,24 @@ import com.cctpl.hospoclear.HospitalRegister.Fragment.AppointmentFragment;
 import com.cctpl.hospoclear.R;
 import com.cctpl.hospoclear.UserRegister.Adapter.UploadImgAdapter;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URI;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
 
 public class AttachFileFragment extends Fragment {
 
@@ -52,14 +75,19 @@ public class AttachFileFragment extends Fragment {
     private static final int PICK_IMG = 1;
     private List<String> ImageList;
     private UploadImgAdapter uploadImgAdapter;
-    private Button btnUpload,btnUploadPrescription,btnTypeHere;
+    private Button btnUpload;
     private EditText prescription;
     private RecyclerView recyclerView;
     private FirebaseFirestore firebaseFirestore;
+    private FirebaseAuth firebaseAuth;
     private StorageReference storageReference;
-    private String location,appointmentId,flag;
+    private String location,appointmentId,flag,doctorId;
     private ProgressBar progressBar;
-    private TextView textView;
+    private TextView textView,mDate,mDoctorName;
+    private CanvasView canvasView;
+    private FloatingActionButton drawBtn,addImgBtn,cancelBtn;
+    private RelativeLayout relativeLayoutCanvas;
+    private BottomNavigationView navigationView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,31 +95,64 @@ public class AttachFileFragment extends Fragment {
        btnUpload = view.findViewById(R.id.btnUpload);
        progressBar = view.findViewById(R.id.loader);
        prescription = view.findViewById(R.id.prescription);
-       btnTypeHere = view.findViewById(R.id.btnTypePrescription);
-       btnUploadPrescription = view.findViewById(R.id.btnUploadPrescription);
+       relativeLayoutCanvas = view.findViewById(R.id.canvas);
+       drawBtn = view.findViewById(R.id.drawPrescription);
+       navigationView = view.findViewById(R.id.navBar);
+       addImgBtn = view.findViewById(R.id.addImg);
+       cancelBtn = view.findViewById(R.id.cancelBtn);
+       mDate = view.findViewById(R.id.date);
+       mDoctorName = view.findViewById(R.id.doctorName);
        textView = view.findViewById(R.id.text);
        firebaseFirestore = FirebaseFirestore.getInstance();
+       firebaseAuth = FirebaseAuth.getInstance();
+       String CurrentUserId = firebaseAuth.getCurrentUser().getUid();
        storageReference = FirebaseStorage.getInstance().getReference();
        ImageList = new ArrayList<>();
        Bundle bundle = this.getArguments();
        if (bundle!=null){
            location  = bundle.getString("Location");
            appointmentId = bundle.getString("AppointmentId");
+           doctorId = bundle.getString("DoctorId");
            flag = bundle.getString("Flag");
-           if (flag.equals("1")){
-               btnTypeHere.setVisibility(View.VISIBLE);
+           if (flag.equals("1") && doctorId.equals(CurrentUserId)){
+               drawBtn.setVisibility(View.VISIBLE);
            }
        }
 
-       btnTypeHere.setOnClickListener(new View.OnClickListener() {
+       drawBtn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
                recyclerView.setVisibility(View.INVISIBLE);
-               prescription.setVisibility(View.VISIBLE);
-               btnUploadPrescription.setVisibility(View.VISIBLE);
+               relativeLayoutCanvas.setVisibility(View.VISIBLE);
+               navigationView.setVisibility(View.VISIBLE);
+               canvasView = new CanvasView(getContext());
+               relativeLayoutCanvas.addView(canvasView);
                btnUpload.setVisibility(View.INVISIBLE);
            }
        });
+
+       cancelBtn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Objects.requireNonNull(getActivity()).getSupportFragmentManager().popBackStack();
+           }
+       });
+
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy hh : mm a");
+        String currentDate = dateFormat.format(date);
+        mDate.setText(currentDate);
+
+        firebaseFirestore.collection("Doctors").document(doctorId)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    String doctorName = task.getResult().getString("DoctorName");
+                    mDoctorName.setText(doctorName);
+                }
+            }
+        });
 
        btnUpload.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -108,51 +169,102 @@ public class AttachFileFragment extends Fragment {
        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
        recyclerView.setHasFixedSize(false);
        recyclerView.setAdapter(uploadImgAdapter);
-        ExtendedFloatingActionButton floatingActionButton = view.findViewById(R.id.floatingBtn);
-        floatingActionButton.setBackgroundColor(Color.parseColor("#150441"));
-       floatingActionButton.setOnClickListener(new View.OnClickListener() {
+
+       addImgBtn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+               relativeLayoutCanvas.setVisibility(View.INVISIBLE);
+               navigationView.setVisibility(View.GONE);
                Intent intent = new Intent();
                intent.setType("image/*");
                intent.setAction(Intent.ACTION_GET_CONTENT);
                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
                startActivityForResult(intent,PICK_IMG);
 
-               prescription.setVisibility(View.INVISIBLE);
-               btnUploadPrescription.setVisibility(View.INVISIBLE);
                recyclerView.setVisibility(View.VISIBLE);
            }
        });
 
-       btnUploadPrescription.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               String Prescription = prescription.getText().toString();
-               HashMap<String ,Object> map = new HashMap<>();
-               map.put("Prescription",Prescription);
-               firebaseFirestore.collection("Appointments").document(appointmentId)
-                       .collection(location).add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                   @Override
-                   public void onComplete(@NonNull Task<DocumentReference> task) {
-                       if (task.isSuccessful()){
-                           progressBar.setVisibility(View.INVISIBLE);
-                           btnUpload.setVisibility(View.VISIBLE);
-                           textView.setVisibility(View.INVISIBLE);
-                           try {
-                               Objects.requireNonNull(getActivity()).getSupportFragmentManager().popBackStack();
-                               Snackbar.make(getView(),"Upload Successfully !!",Snackbar.LENGTH_LONG).show();
-                           }catch (Exception ignored){
 
-                           }
-                       }
-                   }
-               });
+       navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+           @Override
+           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+               switch (item.getItemId()){
+                   case R.id.navigation_delete :
+                        canvasView.clearCanvas();
+                        break;
+                   case R.id.navigation_save:
+                       progressBar.setVisibility(View.VISIBLE);
+                       textView.setVisibility(View.VISIBLE);
+                       saveCanvas();
+                       break;
+               }
+
+               return true;
            }
        });
        return view;
     }
 
+    private void saveCanvas() {
+
+        progressBar.setVisibility(View.VISIBLE);
+        textView.setVisibility(View.VISIBLE);
+
+//        Bitmap bitmap = relativeLayoutCanvas.getDrawingCache();
+        relativeLayoutCanvas.setDrawingCacheEnabled(true);
+        relativeLayoutCanvas.buildDrawingCache();
+        Bitmap bitmap = relativeLayoutCanvas.getDrawingCache();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        StorageReference file = storageReference.child("PatientReports").child("canvas-" + System.currentTimeMillis()+".jpg");
+        file.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                file.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()){
+                            String Url = task.getResult().toString();
+                            HashMap<String,Object> map = new HashMap<>();
+                            map.put("ImgUrl",Url);
+
+                            HashMap<String, Object> Status = new HashMap<>();
+                            Status.put("TimeStamp",System.currentTimeMillis());
+                            Status.put("DoctorId",doctorId);
+                            Status.put("Description",location + " attached by");
+
+                            firebaseFirestore.collection("Appointments").document(appointmentId)
+                                    .collection("Status").add(Status);
+
+                            firebaseFirestore.collection("Appointments").document(appointmentId)
+                                    .collection(location).add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentReference> task) {
+                                    if (task.isSuccessful()){
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        btnUpload.setVisibility(View.VISIBLE);
+                                        textView.setVisibility(View.INVISIBLE);
+                                        canvasView.clearCanvas();
+                                        try {
+                                            Objects.requireNonNull(getActivity()).getSupportFragmentManager().popBackStack();
+                                            Snackbar.make(getView(),"Upload Successfully !!",Snackbar.LENGTH_LONG).show();
+                                        }catch (Exception ignored){
+
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+
+        Log.d(TAG, "saveCanvas: " + data);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -197,6 +309,15 @@ public class AttachFileFragment extends Fragment {
                                 String Url = task.getResult().toString();
                                 HashMap<String,Object> map = new HashMap<>();
                                 map.put("ImgUrl",Url);
+
+                                HashMap<String, Object> Status = new HashMap<>();
+                                Status.put("TimeStamp",System.currentTimeMillis());
+                                Status.put("DoctorId",doctorId);
+                                Status.put("Description",location + " attached by");
+
+                                firebaseFirestore.collection("Appointments").document(appointmentId)
+                                        .collection("Status").add(Status);
+
                                 firebaseFirestore.collection("Appointments").document(appointmentId)
                                         .collection(location).add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                     @Override

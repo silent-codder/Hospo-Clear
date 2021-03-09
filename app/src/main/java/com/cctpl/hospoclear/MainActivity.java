@@ -7,7 +7,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,11 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cctpl.hospoclear.DoctorRegister.DoctorMainActivity;
 import com.cctpl.hospoclear.DoctorRegister.RegisterActivity.DoctorLoginActivity;
-import com.cctpl.hospoclear.DoctorRegister.RegisterActivity.SelectHospitalActivity;
 import com.cctpl.hospoclear.HospitalRegister.HospitalLogin;
 import com.cctpl.hospoclear.HospitalRegister.HospitalMainActivity;
 import com.cctpl.hospoclear.HospitalRegister.HospitalRegister;
@@ -33,20 +33,23 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.cctpl.hospoclear.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "";
     Button mBtnStart;
     Dialog dialog;
     ProgressBar progressBar;
+    String UserId;
+    FirebaseFirestore firebaseFirestore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mBtnStart = findViewById(R.id.btnStart);
         dialog = new Dialog(this);
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         mBtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,14 +119,14 @@ public class MainActivity extends AppCompatActivity {
                         circleImageView3.setVisibility(View.INVISIBLE);
 
                         LinearLayout linearLayout = dialog.findViewById(R.id.linear);
-                        linearLayout.setVisibility(View.VISIBLE);
+                        linearLayout.setVisibility(View.GONE);
 
                         TextView register = dialog.findViewById(R.id.register);
+                        register.setVisibility(View.GONE);
                         register.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                startActivity(new Intent(MainActivity.this, SelectHospitalActivity.class));
-                                finish();
+                               //Register activity call here
                             }
                         });
 
@@ -154,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                         circleImageView3.setVisibility(View.INVISIBLE);
 
                         LinearLayout linearLayout = dialog.findViewById(R.id.linear);
-                        linearLayout.setVisibility(View.VISIBLE);
+                        linearLayout.setVisibility(View.GONE);
                         TextView register = dialog.findViewById(R.id.register);
                         register.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -189,14 +192,35 @@ public class MainActivity extends AppCompatActivity {
         if (user!=null){
             progressBar.setVisibility(View.VISIBLE);
             mBtnStart.setVisibility(View.INVISIBLE);
-            String UserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            UserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//            firebaseFirestore.collection("Doctors").document(UserId)
+//                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                    if (task.isSuccessful()){
+//                        String isUser = task.getResult().getString("isUser");
+//                        String Hospital = task.getResult().getString("Hospital");
+//                        Log.d(TAG, "Hospital Name: " + Hospital);
+//                        if (isUser.equals("3") && Hospital.equals("False")){
+//                                progressBar.setVisibility(View.GONE);
+//                                startActivity(new Intent(MainActivity.this, DoctorMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
+//                                        Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//                                finish();
+//                        }else {
+//                            CheckOtherLogin();
+//                        }
+//                    }
+//                }
+//            });
+
             firebaseFirestore.collection("AppUsers").document(UserId).get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()){
                                     String isUser = task.getResult().getString("isUser");
-                                    if (isUser.equals("1")){
+                                    String HospitalName = task.getResult().getString("HospitalName");
+                                    if (isUser.equals("1") && !TextUtils.isEmpty(HospitalName)){
                                         //Hospital Section open
                                         progressBar.setVisibility(View.GONE);
                                         startActivity(new Intent(MainActivity.this, HospitalMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
@@ -208,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                                         startActivity(new Intent(MainActivity.this, UserMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
                                                 Intent.FLAG_ACTIVITY_CLEAR_TASK));
                                         finish();
-                                    }else if (isUser.equals("3")){
+                                    }else{
                                         //Doctor Section open
                                         progressBar.setVisibility(View.GONE);
                                         startActivity(new Intent(MainActivity.this, DoctorMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
@@ -219,5 +243,36 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    private void CheckOtherLogin() {
+        firebaseFirestore.collection("AppUsers").document(UserId).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            String isUser = task.getResult().getString("isUser");
+                            if (isUser.equals("1")){
+                                //Hospital Section open
+                                progressBar.setVisibility(View.GONE);
+                                startActivity(new Intent(MainActivity.this, HospitalMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                finish();
+                            }else if (isUser.equals("2")){
+                                //User Section open
+                                progressBar.setVisibility(View.GONE);
+                                startActivity(new Intent(MainActivity.this, UserMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                finish();
+                            }else{
+                                //Doctor Section open
+                                progressBar.setVisibility(View.GONE);
+                                startActivity(new Intent(MainActivity.this, DoctorMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                finish();
+                            }
+                        }
+                    }
+                });
     }
 }

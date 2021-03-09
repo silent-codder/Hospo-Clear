@@ -6,78 +6,90 @@
     android:layout_height="match_parent"
     tools:context=".DoctorRegister.RegisterActivity.DoctorLoginActivity">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:lottie_rawRes="@raw/doctor"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"/>
+
     <TextView
         android:id="@+id/text"
-        android:layout_width="match_parent"
+        android:layout_below="@id/lottie"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Doctor Login"
-        android:textSize="20sp"
-        android:layout_marginTop="56dp"
-        android:textStyle="bold"
         android:fontFamily="sans-serif-condensed-medium"
-        android:gravity="center"
-        android:textColor="@color/purple_500"
-        tools:ignore="HardcodedText" />
+        android:text="@string/hospo_clear"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size_extra_large"
+        android:textColor="@color/purple_700"
+        android:textAllCaps="true"
+        android:layout_centerHorizontal="true"/>
 
     <RelativeLayout
-        android:layout_marginTop="5dp"
-        android:layout_below="@id/text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20sp"
+        android:layout_below="@id/text"
+        android:layout_marginTop="20dp"
         android:background="@drawable/layout_bg">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/doctors"
-            android:layout_marginTop="20dp"
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/cpp"
+            android:layout_marginTop="60dp"
+            android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
-            android:id="@+id/doctorImg"/>
+            android:layout_height="wrap_content"/>
+
 
         <EditText
-            android:id="@+id/emailAddress"
-            android:inputType="textEmailAddress"
-            android:layout_width="match_parent"
+            android:id="@+id/mobileNumber"
+            android:layout_below="@id/cpp"
+            android:layout_width="250dp"
+            android:textColor="@color/black"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:hint="Email Address"
-            android:layout_below="@+id/doctorImg"
-            android:layout_marginTop="20sp"
             android:background="@drawable/edit_txt_bg"
-            tools:ignore="HardcodedText" />
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:hint="Mobile Number"
             android:padding="10dp"
-            android:hint="Password"
-            android:layout_below="@+id/emailAddress"
-            android:layout_marginTop="20sp"
-            android:background="@drawable/edit_txt_bg"
-            tools:ignore="HardcodedText" />
+            android:maxLength="11"
+            android:inputType="phone"
+            tools:ignore="HardcodedText"
+            android:autofillHints="no" />
 
         <Button
-            android:id="@+id/btnNext"
-            android:layout_below="@id/password"
+            android:id="@+id/btnContinue"
+            android:layout_below="@id/mobileNumber"
             android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Next"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:textSize="17sp"
+            android:textSize="@dimen/text_size_small"
+            android:text="Continue"
             android:visibility="visible"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
             tools:ignore="HardcodedText" />
         <ProgressBar
             android:id="@+id/loader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/password"
+            android:layout_below="@id/mobileNumber"
             android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="350dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_extra_small"
+            android:gravity="center"
+            android:text="By Clicking on the CONTINUE button, you agree to our Terms of Use and Privacy Policy."
+            android:layout_below="@id/btnContinue"
+            tools:ignore="HardcodedText" />
+
 
     </RelativeLayout>
 

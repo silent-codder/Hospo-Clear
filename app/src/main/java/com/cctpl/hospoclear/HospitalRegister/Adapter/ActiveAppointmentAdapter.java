@@ -139,6 +139,13 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
                                         map.put("Flag","false");
                                         HashMap<String, Object> map1 = new HashMap<>();
                                         map1.put("Status","Complete");
+                                        HashMap<String, Object> status = new HashMap<>();
+                                        status.put("DoctorId",DoctorId);
+                                        status.put("TimeStamp",System.currentTimeMillis());
+                                        status.put("UserId",UserId);
+                                        status.put("Description","Appointment completed by");
+                                        firebaseFirestore.collection("Appointments").document(AppointmentId)
+                                                .collection("Status").add(status);
                                         firebaseFirestore.collection("Doctors").document(DoctorId).collection(Section).document(SlotId)
                                                 .update(map);
                                         firebaseFirestore.collection("Appointments").document(AppointmentId)
@@ -182,107 +189,6 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
             }
         });
 
-//        holder.mBtnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                HashMap<String,Object> map = new HashMap<>();
-//                map.put("Status","4");
-//
-//                firebaseFirestore.collection("Appointments").document(AppointmentId)
-//                        .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if (task.isSuccessful()){
-//                            Toast.makeText(context, " Requesting for Complete Appointment", Toast.LENGTH_SHORT).show();
-//                            holder.mBtnCompleteAppointment.setVisibility(View.GONE);
-//                        }
-//                    }
-//                });
-//            }
-//        });
-
-//        firebaseFirestore.collection("Appointments").document(AppointmentId).collection("Bill")
-//                .document(AppointmentId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @SuppressLint("SetTextI18n")
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    String totalBill = task.getResult().getString("TotalBill");
-//                    if(totalBill != null){
-//                        holder.mTotalBill.setText("Bill Amount :  " + totalBill);
-//                    }else {
-//                        holder.mTotalBill.setText("Bill Amount :  00");
-//                    }
-//                }
-//            }
-//        });
-
-//        holder.mViewDetails.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                holder.lottieAnimationView.setVisibility(View.INVISIBLE);
-//                Bundle bundle = new Bundle();
-//                bundle.putString("UserName",PatientName);
-//                bundle.putString("AppointmentDate",AppointmentDate);
-//                bundle.putString("DoctorId",DoctorId);
-//                bundle.putString("HospitalId",HospitalId);
-//                bundle.putString("Status",Status);
-//                bundle.putString("ProfileUrl",ProfileUrl);
-//                bundle.putString("AppointmentId",AppointmentId);
-//                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-//                Fragment fragment = new AppointmentDetailsFragment();
-//                fragment.setArguments(bundle);
-//                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null)
-//                        .commit();
-//            }
-//        });
-
-        //for complete appointment
-//        if (Status.equals("4")){
-//            holder.mBtnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    HashMap<String,Object> map = new HashMap<>();
-//                    map.put("Status","1");
-//
-//                    firebaseFirestore.collection("Appointments").document(AppointmentId)
-//                            .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if (task.isSuccessful()){
-//                                Toast.makeText(context, "Complete Appointment", Toast.LENGTH_SHORT).show();
-//                                holder.mBtnCompleteAppointment.setVisibility(View.GONE);
-//                            }
-//                        }
-//                    });
-////                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
-////                    Fragment fragment = new BillFragment();
-////                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment)
-////                            .addToBackStack(null).commit();
-//
-//                }
-//            });
-//        }else {
-//            holder.mBtnCompleteAppointment.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    HashMap<String,Object> map = new HashMap<>();
-//                    map.put("Status","4");
-//
-//                    firebaseFirestore.collection("Appointments").document(AppointmentId)
-//                            .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if (task.isSuccessful()){
-//                                Toast.makeText(context, "Request to Complete Appointment", Toast.LENGTH_SHORT).show();
-//                                holder.mBtnCompleteAppointment.setVisibility(View.GONE);
-//                            }
-//                        }
-//                    });
-//                }
-//            });
-//        }
-        
     }
 
     @Override

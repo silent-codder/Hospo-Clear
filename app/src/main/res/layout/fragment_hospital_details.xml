@@ -13,173 +13,327 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:layout_margin="10dp"
+                android:id="@+id/hospitalInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="20dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/loader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="250dp"
+                        android:text="Images Unavailable.."
+                        android:visibility="invisible"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        tools:ignore="HardcodedText" />
+
+                    <com.smarteist.autoimageslider.SliderView
+                        android:id="@+id/slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:layout_centerHorizontal="true"
+                        app:sliderAnimationDuration="600"
+                        app:sliderAutoCycleDirection="back_and_forth"
+                        app:sliderIndicatorAnimationDuration="600"
+                        app:sliderIndicatorEnabled="true"
+                        app:sliderIndicatorGravity="center_horizontal|bottom"
+                        app:sliderIndicatorMargin="15dp"
+                        app:sliderIndicatorOrientation="horizontal"
+                        app:sliderIndicatorPadding="3dp"
+                        app:sliderIndicatorRadius="2dp"
+                        app:sliderIndicatorSelectedColor="#5A5A5A"
+                        app:sliderIndicatorUnselectedColor="#FFF"
+                        app:sliderScrollTimeInSec="1" />
+
+                    <TextView
+                        android:id="@+id/hospitalName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Loading....."
+                        android:layout_below="@id/slider"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        android:textColor="@color/Primary_color"
+                        tools:ignore="HardcodedText" />
+
+                    <RelativeLayout
+                        android:id="@+id/details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_below="@id/hospitalName">
+
+                        <TextView
+                            android:id="@+id/patient"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="Patients"
+                            android:gravity="center_horizontal"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:textSize="@dimen/text_size_medium"
+                            android:textStyle="bold"
+                            android:textAllCaps="true"
+                            tools:ignore="HardcodedText" />
+                        <TextView
+                            android:id="@+id/patientCount"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="+10,000"
+                            android:gravity="center_horizontal"
+                            android:layout_below="@id/patient"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:textSize="@dimen/text_size_large"
+                            android:textStyle="bold"
+                            android:textColor="@color/purple_500"
+                            android:textAllCaps="true"
+                            tools:ignore="HardcodedText" />
+
+                        <View
+                            android:id="@+id/view1"
+                            android:layout_width="2dp"
+                            android:layout_height="50dp"
+                            android:background="#939697"
+                            android:layout_toEndOf="@id/patient"
+                            android:layout_marginStart="20dp"/>
+
+                        <TextView
+                            android:id="@+id/rate"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/view1"
+                            android:text="Rate"
+                            android:gravity="center_horizontal"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:textSize="@dimen/text_size_medium"
+                            android:textStyle="bold"
+                            android:textAllCaps="true"
+                            tools:ignore="HardcodedText" />
+                        <TextView
+                            android:id="@+id/rating"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="4.5"
+                            android:layout_toEndOf="@id/view1"
+                            android:gravity="center_horizontal"
+                            android:layout_below="@id/rate"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:textSize="@dimen/text_size_large"
+                            android:textStyle="bold"
+                            android:textColor="@color/purple_500"
+                            android:textAllCaps="true"
+                            tools:ignore="HardcodedText" />
+
+                        <View
+                            android:id="@+id/view2"
+                            android:layout_width="2dp"
+                            android:layout_height="50dp"
+                            android:background="#939697"
+                            android:layout_toEndOf="@id/rate"
+                            android:layout_marginStart="10dp"/>
+
+                        <TextView
+                            android:id="@+id/doctor"
+                            android:layout_width="80dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/view2"
+                            android:text="Doctors"
+                            android:gravity="center_horizontal"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:textSize="@dimen/text_size_medium"
+                            android:textStyle="bold"
+                            android:textAllCaps="true"
+                            tools:ignore="HardcodedText" />
+                        <TextView
+                            android:id="@+id/doctorCount"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="+17"
+                            android:layout_toEndOf="@id/view2"
+                            android:gravity="center_horizontal"
+                            android:layout_below="@id/rate"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:textSize="@dimen/text_size_large"
+                            android:textStyle="bold"
+                            android:textColor="@color/purple_500"
+                            android:textAllCaps="true"
+                            tools:ignore="HardcodedText" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/contactDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hospitalInfo"
+                android:layout_margin="10dp"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="20dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Contact Details"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/hospitalContactNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9096618447"
+                        android:layout_margin="20sp"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textColor="@color/black"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:drawableStart="@drawable/ic_call"
+                        android:layout_below="@id/text"
+                        tools:ignore="HardcodedText,UseCompatTextViewDrawableXml" />
+
+                    <TextView
+                        android:id="@+id/hospitalEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  ?"
+                        android:layout_marginStart="20sp"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textColor="@color/black"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:drawableStart="@drawable/ic_mail"
+                        android:layout_below="@id/hospitalContactNumber"
+                        tools:ignore="HardcodedText,UseCompatTextViewDrawableXml" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/hospitalBioDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/contactDetails"
+                android:layout_margin="10dp"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="20dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/text3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Hospital Details"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:textSize="@dimen/text_size_medium"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/hospitalBio"
+                        android:layout_below="@+id/text3"
+                        android:layout_margin="20dp"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Noting more about hospital."
+                        tools:ignore="HardcodedText" />
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/hospitalLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hospitalBioDetails"
+                android:layout_margin="10dp"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="20dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Location"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:textSize="@dimen/text_size_medium"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/hospitalAddress"
+                        android:layout_below="@+id/text2"
+                        android:layout_margin="20dp"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phaltan,Maharastra"
+                        tools:ignore="HardcodedText"
+                        app:drawableStartCompat="@drawable/ic_baseline_location" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Unavailable Map"
+                        android:background="@drawable/edit_txt_bg"
+                        android:padding="10dp"
+                        android:layout_margin="10dp"
+                        android:drawableTop="@drawable/ic_baseline_not_listed_location_24"
+                        android:layout_below="@id/hospitalAddress"
+                        android:layout_centerHorizontal="true"
+                        tools:ignore="HardcodedText" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/loader"
                 android:layout_width="wrap_content"
-                android:layout_height="250dp"
-                android:text="Images Unavailable.."
-                android:visibility="invisible"
+                android:layout_height="wrap_content"
+                android:text="@string/Clearcode"
                 android:layout_centerHorizontal="true"
-                android:gravity="center"
-                tools:ignore="HardcodedText" />
-
-            <com.smarteist.autoimageslider.SliderView
-                android:id="@+id/slider"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_centerHorizontal="true"
-                app:sliderAnimationDuration="600"
-                app:sliderAutoCycleDirection="back_and_forth"
-                app:sliderIndicatorAnimationDuration="600"
-                app:sliderIndicatorEnabled="true"
-                app:sliderIndicatorGravity="center_horizontal|bottom"
-                app:sliderIndicatorMargin="15dp"
-                app:sliderIndicatorOrientation="horizontal"
-                app:sliderIndicatorPadding="3dp"
-                app:sliderIndicatorRadius="2dp"
-                app:sliderIndicatorSelectedColor="#5A5A5A"
-                app:sliderIndicatorUnselectedColor="#FFF"
-                app:sliderScrollTimeInSec="1" />
-
-            <TextView
-                android:id="@+id/hospitalName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/slider"
-                android:layout_marginTop="3dp"
-                android:text="@string/hospo_clear"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:gravity="center"
-                android:textColor="@color/purple_700"
-                android:textSize="@dimen/text_size_extra_large"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/ratingStarLottie"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                app:lottie_rawRes="@raw/rating_star"
-                android:layout_marginStart="20dp"
-                android:layout_below="@id/hospitalName"
-                android:layout_centerHorizontal="true"
-                app:lottie_autoPlay="true"/>
-            <TextView
-                android:id="@+id/rating"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="5.0"
-                android:textSize="@dimen/text_size_small"
-                android:gravity="center_vertical"
-                android:textStyle="bold"
-                android:textColor="@color/Primary_color"
-                android:layout_toEndOf="@id/ratingStarLottie"
-                tools:ignore="HardcodedText"
-                android:layout_below="@id/hospitalName"/>
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/Primary_color"
-                android:layout_below="@id/ratingStarLottie"
-                android:layout_marginTop="10dp"/>
-
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Contact details : "
-                android:layout_marginTop="10dp"
-                android:textColor="@color/Primary_color"
-                android:layout_below="@id/view"
-                android:textSize="@dimen/text_size_medium"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/hospitalContactNumber"
-                android:layout_below="@id/text"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:drawableStartCompat="@drawable/ic_call"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
-            <TextView
-                android:id="@+id/hospitalMail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ajinkyashinde@gmail.com"
-                android:textStyle="bold"
-                android:layout_below="@id/hospitalContactNumber"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                tools:ignore="HardcodedText"
-                app:drawableLeftCompat="@drawable/ic_mail" />
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/Primary_color"
-                android:layout_below="@id/hospitalMail"
-                android:layout_marginTop="10dp"/>
-            <TextView
-                android:id="@+id/text2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Address : "
-                android:textStyle="bold"
-                android:textSize="@dimen/text_size_medium"
-                android:layout_below="@id/view2"
-                android:layout_marginTop="10dp"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:textColor="@color/Primary_color"
-                tools:ignore="HardcodedText" />
-            <TextView
-                android:id="@+id/hospitalAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/text2"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText"
-                app:drawableStartCompat="@drawable/ic_baseline_location" />
-
-            <TextView
-                android:id="@+id/map"
-                android:background="@drawable/edit_txt_bg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Map Unavailable"
-                android:layout_marginTop="30dp"
-                android:layout_below="@id/hospitalAddress"
-                android:layout_centerHorizontal="true"
-                android:drawableTop="@drawable/ic_baseline_not_listed_location_24"
-                tools:ignore="HardcodedText,UseCompatTextViewDrawableXml" />
-
-<!--            <com.google.android.gms.maps.MapView-->
-<!--                android:id="@+id/map"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="200dp"-->
-<!--                android:layout_below="@id/hospitalAddress"-->
-<!--                android:layout_marginTop="10dp"/>-->
-
-            <View
-                android:id="@+id/view3"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@id/map"
-                android:layout_marginTop="10dp"
-                android:background="@color/Primary_color"/>
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/hospitalLocation"
+                android:textSize="@dimen/text_size_extra_small"/>
 
         </RelativeLayout>
 

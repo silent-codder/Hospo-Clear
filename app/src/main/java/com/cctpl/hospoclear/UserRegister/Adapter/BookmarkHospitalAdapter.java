@@ -25,6 +25,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.cctpl.hospoclear.R;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -89,7 +90,8 @@ public class BookmarkHospitalAdapter extends RecyclerView.Adapter<BookmarkHospit
         holder.mBookMarkWhite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firebaseFirestore.collection("Bookmark-Hospital").document(HospitalId)
+                firebaseFirestore.collection("Bookmark-Hospital")
+                        .document(HospitalId)
                         .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -106,18 +108,21 @@ public class BookmarkHospitalAdapter extends RecyclerView.Adapter<BookmarkHospit
 
         //show bookmark or not
         firebaseFirestore.collection("Bookmark-Hospital").document(HospitalId)
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (value.exists()){
-                            holder.mBookMarkWhite.setVisibility(View.VISIBLE);
-                            holder.mBookMark.setVisibility(View.INVISIBLE);
-                        }else {
-                            holder.mBookMarkWhite.setVisibility(View.INVISIBLE);
-                            holder.mBookMark.setVisibility(View.VISIBLE);
-                        }
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    String UserId = task.getResult().getString("UserId");
+                    if (UserId.equals(UserId)){
+                        holder.mBookMarkWhite.setVisibility(View.VISIBLE);
+                        holder.mBookMark.setVisibility(View.INVISIBLE);
+                    }else {
+                        holder.mBookMarkWhite.setVisibility(View.INVISIBLE);
+                        holder.mBookMark.setVisibility(View.VISIBLE);
                     }
-                });
+                }
+            }
+        });
 
         //button for view hospital doctors
         holder.mBtnView.setOnClickListener(new View.OnClickListener() {

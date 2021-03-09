@@ -223,10 +223,10 @@ public class SelectUserFragment extends Fragment {
                             map.put("DoctorId",DoctorId);
 
                             HashMap<String, Object> AppointmentStatus = new HashMap<>();
-                            AppointmentStatus.put("TimeStamp",System.currentTimeMillis());
+                            AppointmentStatus.put("DoctorId",DoctorId);
                             AppointmentStatus.put("UserId",UserId);
-                            AppointmentStatus.put("Status","Request");
-                            AppointmentStatus.put("Details","Request Send Successfully");
+                            AppointmentStatus.put("TimeStamp",System.currentTimeMillis());
+                            AppointmentStatus.put("Description","Requested for Appointment to");
 
                             AddData(map,AppointmentStatus);
                         }
@@ -295,10 +295,10 @@ public class SelectUserFragment extends Fragment {
                             map.put("DoctorId",DoctorId);
 
                             HashMap<String, Object> AppointmentStatus = new HashMap<>();
-                            AppointmentStatus.put("TimeStamp",System.currentTimeMillis());
+                            AppointmentStatus.put("DoctorId",DoctorId);
                             AppointmentStatus.put("UserId",UserId);
-                            AppointmentStatus.put("Status","Request");
-                            AppointmentStatus.put("Details","Request Send Successfully");
+                            AppointmentStatus.put("TimeStamp",System.currentTimeMillis());
+                            AppointmentStatus.put("Description","Requested for Appointment to");
 
                             AddData(map,AppointmentStatus);
                         }
@@ -313,10 +313,17 @@ public class SelectUserFragment extends Fragment {
 
         setRemainder();
 
-        firebaseFirestore.collection("Appointments").add(map)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+        String id = firebaseFirestore.collection("Appointments").document().getId();
+        Log.d(TAG, "FireStore ID: " + id);
+
+
+
+        firebaseFirestore.collection("Appointments").document(id).collection("Status").add(AppointmentStatus);
+        firebaseFirestore.collection("Appointments")
+                .document(id).set(map)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                    public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
                             progressDialog.dismiss();
                             Dialog dialog = new Dialog(getContext());

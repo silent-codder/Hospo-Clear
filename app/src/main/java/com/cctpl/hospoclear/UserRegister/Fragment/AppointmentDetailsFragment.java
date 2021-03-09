@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.cctpl.hospoclear.Notification.APIService;
 import com.cctpl.hospoclear.Notification.Client;
 import com.cctpl.hospoclear.Notification.Data;
 import com.cctpl.hospoclear.Notification.NotificationSender;
+import com.cctpl.hospoclear.UserRegister.Model.DoctorId;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,7 +51,7 @@ import retrofit2.Response;
 public class AppointmentDetailsFragment extends Fragment {
 
     private FirebaseFirestore firebaseFirestore;
-    private String AppointmentId,HospitalName,Status;
+    private String AppointmentId,HospitalName,Status,DoctorId;
     String fcmUrl = "https://fcm.googleapis.com/";
 
     @SuppressLint("SetTextI18n")
@@ -66,7 +68,7 @@ public class AppointmentDetailsFragment extends Fragment {
             String Time = bundle.getString("AppointmentTime");
             String Problem = bundle.getString("Problem");
             Status = bundle.getString("Status");
-            String DoctorId = bundle.getString("DoctorId");
+            DoctorId = bundle.getString("DoctorId");
             String HospitalId = bundle.getString("HospitalId");
             String ProfileUrl = bundle.getString("ProfileUrl");
             AppointmentId = bundle.getString("AppointmentId");
@@ -133,6 +135,7 @@ public class AppointmentDetailsFragment extends Fragment {
                 Fragment fragment = new ViewFilesFragment();
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("Type","Report");
+                bundle1.putString("DoctorId",DoctorId);
                 bundle1.putString("AppointmentId", AppointmentId);
                 fragment.setArguments(bundle1);
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
@@ -156,7 +159,9 @@ public class AppointmentDetailsFragment extends Fragment {
                 Fragment fragment = new ViewFilesFragment();
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("Type","XRay");
+                bundle1.putString("DoctorId",DoctorId);
                 bundle1.putString("AppointmentId", AppointmentId);
+                bundle1.putString("Flag","2");
                 fragment.setArguments(bundle1);
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
@@ -179,7 +184,9 @@ public class AppointmentDetailsFragment extends Fragment {
                 Fragment fragment = new ViewFilesFragment();
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("Type","LabReport");
+                bundle1.putString("DoctorId",DoctorId);
                 bundle1.putString("AppointmentId", AppointmentId);
+                bundle1.putString("Flag","2");
                 fragment.setArguments(bundle1);
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
@@ -202,7 +209,9 @@ public class AppointmentDetailsFragment extends Fragment {
                 Fragment fragment = new ViewFilesFragment();
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("Type","Prescription");
+                bundle1.putString("DoctorId",DoctorId);
                 bundle1.putString("AppointmentId", AppointmentId);
+                bundle1.putString("Flag","1");
                 fragment.setArguments(bundle1);
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
@@ -225,7 +234,9 @@ public class AppointmentDetailsFragment extends Fragment {
                 Fragment fragment = new ViewFilesFragment();
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("Type","Other");
+                bundle1.putString("DoctorId",DoctorId);
                 bundle1.putString("AppointmentId", AppointmentId);
+                bundle1.putString("Flag","2");
                 fragment.setArguments(bundle1);
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
@@ -239,7 +250,9 @@ public class AppointmentDetailsFragment extends Fragment {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()){
                             String totalBill = task.getResult().getString("TotalBill");
-                            btnBill.setText("Bill : " + totalBill);
+                            if (!TextUtils.isEmpty(totalBill)){
+                                btnBill.setText("Bill : " + totalBill);
+                            }
                         }
                     }
                 });
@@ -249,7 +262,9 @@ public class AppointmentDetailsFragment extends Fragment {
                 Fragment fragment = new BillViewFragment();
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("Type","Bill");
+                bundle1.putString("DoctorId",DoctorId);
                 bundle1.putString("AppointmentId", AppointmentId);
+                bundle1.putString("Flag","2");
                 fragment.setArguments(bundle1);
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
@@ -262,6 +277,7 @@ public class AppointmentDetailsFragment extends Fragment {
                 Fragment fragment = new BillFragment();
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("AppointmentId", AppointmentId);
+                bundle1.putString("DoctorId",DoctorId);
                 fragment.setArguments(bundle1);
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }

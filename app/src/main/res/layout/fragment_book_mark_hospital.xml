@@ -11,23 +11,16 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Favorite Hospital"
+        android:text="Saved Hospital"
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed-medium"
         android:layout_centerHorizontal="true"
         android:textSize="@dimen/text_size_large"
-        android:textColor="@color/purple_500"
+        android:textColor="@color/black"
         tools:ignore="HardcodedText" />
 
-    <RelativeLayout
-        android:layout_below="@id/text"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp"
-        android:background="@drawable/layout_bg">
-
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/favHospitalRecycleView"/>
@@ -54,6 +47,5 @@
             android:layout_centerHorizontal="true"
             tools:ignore="HardcodedText" />
 
-    </RelativeLayout>
 
 </RelativeLayout>

@@ -18,13 +18,14 @@ public class AppointmentData extends AppointmentId{
     String Section;
     Long TimeStamp;
     String AppointmentTimeStamp;
+    String Description;
 
     public AppointmentData() {
     }
 
     public AppointmentData(String hospitalId, String doctorId, String userId, String patientName, String relationship,
                            String problem, String appointmentDate ,String status,String imgUrl,String prescription,String appointmentTime,String slotId,
-                           String section,Long timeStamp,String appointmentTimeStamp) {
+                           String section,Long timeStamp,String appointmentTimeStamp,String description) {
         HospitalId = hospitalId;
         DoctorId = doctorId;
         UserId = userId;
@@ -40,6 +41,7 @@ public class AppointmentData extends AppointmentId{
         Section = section;
         TimeStamp = timeStamp;
         AppointmentTimeStamp = appointmentTimeStamp;
+        Description = description;
     }
 
     public String getAppointmentTimeStamp() {
@@ -48,6 +50,14 @@ public class AppointmentData extends AppointmentId{
 
     public void setAppointmentTimeStamp(String appointmentTimeStamp) {
         AppointmentTimeStamp = appointmentTimeStamp;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
     }
 
     public Long getTimeStamp() {

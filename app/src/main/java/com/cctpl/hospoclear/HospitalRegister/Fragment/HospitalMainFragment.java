@@ -113,7 +113,6 @@ public class HospitalMainFragment extends Fragment {
         DateFormat dateFormat = new SimpleDateFormat("d.M.yyyy");
         String currentDate = dateFormat.format(date);
 
-        //Status value is "3" means request for appointment
         Query query = firebaseFirestore.collectionGroup("Appointments")
                 .whereEqualTo("HospitalId",HospitalId)
                 .whereEqualTo("Status","Request")

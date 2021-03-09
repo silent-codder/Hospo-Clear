@@ -66,25 +66,10 @@ public class UserProfileFragment extends Fragment {
         progressDialog.setMessage("Fetching data..");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
-        mFavDoctor = view.findViewById(R.id.favDoctor);
-        mFavHospital = view.findViewById(R.id.favHospital);
         mUserImg = view.findViewById(R.id.userImg);
         mBtnEditProfile = view.findViewById(R.id.btnEditProfile);
 
-        mFavHospital.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new BookMarkHospitalFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
-            }
-        });
-        mFavDoctor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new BookmarkDoctorFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
-            }
-        });
+
 
         //edit profile button
         mBtnEditProfile.setOnClickListener(new View.OnClickListener() {

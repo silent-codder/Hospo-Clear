@@ -4,7 +4,7 @@
 
     <string name="Open">open</string>
     <string name="Close">Close</string>
-    <string name="Clearcode">Powered by Clearcode Technologies</string>
+    <string name="Clearcode">Design &amp; Developed by Clearcode Technologies</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

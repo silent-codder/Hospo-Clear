@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,12 +104,23 @@ public class HospitalDetailsFragment extends Fragment{
                             String City = task.getResult().getString("City");
                             String Contact = task.getResult().getString("ContactNumber");
                             String State = task.getResult().getString("State");
+                            String Bio = task.getResult().getString("HospitalBio");
+                            String Email = task.getResult().getString("Email");
                             TextView hospitalName = view.findViewById(R.id.hospitalName);
                             TextView contact = view.findViewById(R.id.hospitalContactNumber);
                             TextView address = view.findViewById(R.id.hospitalAddress);
+                            TextView email = view.findViewById(R.id.hospitalEmail);
+                            TextView bio = view.findViewById(R.id.hospitalBio);
                             hospitalName.setText(HospitalName + ", " +City);
                             contact.setText(Contact);
                             address.setText(City + ", " + State);
+                            if (!TextUtils.isEmpty(Email)){
+                                email.setText(Email);
+                            }
+                            if (!TextUtils.isEmpty(Bio)){
+                                bio.setText(Bio);
+                            }
+
                             progressDialog.dismiss();
                         }
                     }

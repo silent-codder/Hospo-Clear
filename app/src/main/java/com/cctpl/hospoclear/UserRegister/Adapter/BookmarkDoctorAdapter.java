@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.cctpl.hospoclear.R;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class BookmarkDoctorAdapter extends RecyclerView.Adapter<BookmarkDoctorAdapter.ViewHolder>{
@@ -66,34 +69,57 @@ public class BookmarkDoctorAdapter extends RecyclerView.Adapter<BookmarkDoctorAd
         holder.mDoctorExperience.setText("Ex : " + Experience);
         holder.mDoctorQualification.setText(Qualification);
 
-        //Remove Bookmark
-        holder.mBookMarkWhite.setOnClickListener(new View.OnClickListener() {
+        holder.mBtnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firebaseFirestore.collection("Bookmark-Doctor").document(DoctorId)
-                        .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                PopupMenu popupMenu = new PopupMenu(context,holder.mBtnMenu);
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu_hospital,popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        holder.mBookMark.setVisibility(View.VISIBLE);
-                        holder.mBookMarkWhite.setVisibility(View.INVISIBLE);
-                        Toast.makeText(context, "Remove to favorite successfully", Toast.LENGTH_SHORT).show();
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId()){
+                            case R.id.addSave:
+                                HashMap<String , Object> map = new HashMap<>();
+                                map.put("DoctorName",DoctorName);
+                                map.put("Speciality",Speciality);
+                                map.put("Experience",Experience);
+                                map.put("Qualification",Qualification);
+                                map.put("DoctorId",DoctorId);
+                                map.put("UserId",UserId);
+                                map.put("TimeStamp",System.currentTimeMillis());
+
+                                firebaseFirestore.collection("Bookmark-Doctor").document(DoctorId)
+                                        .set(map)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Toast.makeText(context, "Doctor save successfully", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                break;
+                            case R.id.removeSave:
+                                firebaseFirestore.collection("Bookmark-Doctor").document(DoctorId)
+                                        .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+                                            Toast.makeText(context, "Remove to Doctor", Toast.LENGTH_SHORT).show();
+                                            bookmarkDoctorData.remove(position);
+                                            notifyItemRemoved(position);
+                                            notifyItemRangeChanged(position,bookmarkDoctorData.size());
+                                        }else {
+                                            Toast.makeText(context, "Sorry, Something wrong", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                                break;
+                        }
+                        return true;
                     }
                 });
-            }
-        });
-
-        //show bookmark hospital or not
-        firebaseFirestore.collection("Bookmark-Doctor").document(DoctorId)
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (!documentSnapshot.exists()){
-                    holder.mBookMarkWhite.setVisibility(View.INVISIBLE);
-                    holder.mBookMark.setVisibility(View.VISIBLE);
-                }else {
-                    holder.mBookMark.setVisibility(View.INVISIBLE);
-                    holder.mBookMarkWhite.setVisibility(View.VISIBLE);
-                }
+                popupMenu.show();
             }
         });
 
@@ -120,7 +146,7 @@ public class BookmarkDoctorAdapter extends RecyclerView.Adapter<BookmarkDoctorAd
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView mDoctorName,mDoctorSpeciality,mDoctorExperience,mDoctorQualification;
         RelativeLayout relativeLayout;
-        ImageView mBookMark,mBookMarkWhite;
+        ImageView mBtnMenu;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mDoctorName = itemView.findViewById(R.id.doctorName);
@@ -128,8 +154,7 @@ public class BookmarkDoctorAdapter extends RecyclerView.Adapter<BookmarkDoctorAd
             mDoctorExperience = itemView.findViewById(R.id.doctorExperience);
             mDoctorQualification = itemView.findViewById(R.id.doctorQualification);
             relativeLayout = itemView.findViewById(R.id.relativeLayout);
-            mBookMark = itemView.findViewById(R.id.bookmark);
-            mBookMarkWhite = itemView.findViewById(R.id.bookmark_white);
+            mBtnMenu = itemView.findViewById(R.id.btnMenu);
         }
     }
 }

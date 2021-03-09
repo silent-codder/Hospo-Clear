@@ -7,7 +7,7 @@
     android:layout_marginTop="56dp"
     tools:context=".UserRegister.Fragment.UserHomeFragment">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -298,6 +298,6 @@
 
         </RelativeLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

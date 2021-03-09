@@ -30,7 +30,7 @@ import java.util.List;
 
 public class ViewFilesFragment extends Fragment {
 
-    private String type,appointmentId;
+    private String type,appointmentId,doctorId,flag;
     private List<AppointmentData> appointmentData;
     private ViewFilesAdapter viewFilesAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -52,6 +52,8 @@ public class ViewFilesFragment extends Fragment {
         if (bundle != null){
             type = bundle.getString("Type");
             appointmentId = bundle.getString("AppointmentId");
+            doctorId = bundle.getString("DoctorId");
+            flag = bundle.getString("Flag");
             TextView textView1 = view.findViewById(R.id.text);
             textView1.setText(type);
         }
@@ -63,7 +65,8 @@ public class ViewFilesFragment extends Fragment {
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("Location",type);
                 bundle1.putString("AppointmentId", appointmentId);
-                bundle1.putString("Flag","2");
+                bundle1.putString("DoctorId",doctorId);
+                bundle1.putString("Flag",flag);
                 fragment.setArguments(bundle1);
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }

@@ -11,6 +11,7 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
         android:padding="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -95,25 +96,33 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:visibility="visible"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_below="@id/relativeLayout">
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
+
+<!--        <ImageView-->
+<!--            android:id="@+id/bookmark"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/ic_save"-->
+<!--            android:visibility="visible"-->
+<!--            android:layout_alignParentEnd="true"/>-->
+<!--        <ImageView-->
+<!--            android:id="@+id/bookmark_white"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/ic_save_white"-->
+<!--            android:visibility="gone"-->
+<!--            android:layout_alignParentEnd="true"/>-->
 
         <ImageView
-            android:id="@+id/bookmark"
+            android:id="@+id/btnMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_save"
-            android:visibility="visible"
-            android:layout_alignParentEnd="true"/>
-        <ImageView
-            android:id="@+id/bookmark_white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_save_white"
-            android:visibility="gone"
-            android:layout_alignParentEnd="true"/>
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_menu" />
 
     </RelativeLayout>
 

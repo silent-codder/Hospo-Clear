@@ -142,6 +142,13 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
                        public void onComplete(@NonNull Task<Void> task) {
                            if (task.isSuccessful()){
                                Toast.makeText(context, "Accepted", Toast.LENGTH_SHORT).show();
+                               HashMap<String, Object> status = new HashMap<>();
+                               status.put("DoctorId",DoctorId);
+                               status.put("TimeStamp",System.currentTimeMillis());
+                               status.put("UserId",UserId);
+                               status.put("Description","Appointment accepted by");
+                               firebaseFirestore.collection("Appointments").document(AppointmentId)
+                                       .collection("Status").add(status);
                                appointmentData.remove(position);
                                notifyItemRemoved(position);
                                notifyItemRangeChanged(position,appointmentData.size());
@@ -177,6 +184,13 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
+                            HashMap<String, Object> status = new HashMap<>();
+                            status.put("DoctorId",DoctorId);
+                            status.put("TimeStamp",System.currentTimeMillis());
+                            status.put("UserId",UserId);
+                            status.put("Description","Appointment declined by");
+                            firebaseFirestore.collection("Appointments").document(AppointmentId)
+                                    .collection("Status").add(status);
                             Toast.makeText(context, "Cancel request", Toast.LENGTH_SHORT).show();
                             appointmentData.remove(position);
                             notifyItemRemoved(position);

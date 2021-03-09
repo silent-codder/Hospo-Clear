@@ -1,14 +1,20 @@
 package com.cctpl.hospoclear.UserRegister.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.icu.lang.UScript;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cctpl.hospoclear.UserRegister.Fragment.TopHospitalDoctorFragment;
+import com.cctpl.hospoclear.UserRegister.Fragment.TrackAppointmentFragment;
 import com.cctpl.hospoclear.UserRegister.Model.HospitalData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -82,60 +89,55 @@ public class TopHospitalAdapter extends RecyclerView.Adapter<TopHospitalAdapter.
             holder.progressBar.setVisibility(View.INVISIBLE);
         }
 
-        //Bookmark hospital
-       holder.mBookMark.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               HashMap<String , Object> map = new HashMap<>();
-               map.put("HospitalId",HospitalId);
-               map.put("HospitalName",HospitalName);
-               map.put("ContactNumber",Contact);
-               map.put("City",City);
-               map.put("State",State);
-               map.put("UserId",UserId);
-               map.put("TimeStamp",System.currentTimeMillis());
-
-               firebaseFirestore.collection("Bookmark-Hospital").document(HospitalId).set(map)
-                       .addOnCompleteListener(new OnCompleteListener<Void>() {
-                           @Override
-                           public void onComplete(@NonNull Task<Void> task) {
-                               if (task.isSuccessful()){
-                                   Toast.makeText(context, "Add to favorite", Toast.LENGTH_SHORT).show();
-                                   holder.mBookMarkWhite.setVisibility(View.VISIBLE);
-                                   holder.mBookMark.setVisibility(View.INVISIBLE);
-                               }
-                           }
-                       });
-              }
-       });
-       //Remove Bookmark
-       holder.mBookMarkWhite.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               firebaseFirestore.collection("Bookmark-Hospital").document(HospitalId)
-                       .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                   @Override
-                   public void onComplete(@NonNull Task<Void> task) {
-                       holder.mBookMark.setVisibility(View.VISIBLE);
-                       holder.mBookMarkWhite.setVisibility(View.INVISIBLE);
-                       Toast.makeText(context, "Remove to favorite", Toast.LENGTH_SHORT).show();
-                   }
-               });
-           }
-       });
-//
-       //show bookmark hospital or not
-        firebaseFirestore.collection("Bookmark-Hospital").document(HospitalId)
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        holder.mBtnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (!documentSnapshot.exists()){
-                    holder.mBookMarkWhite.setVisibility(View.INVISIBLE);
-                    holder.mBookMark.setVisibility(View.VISIBLE);
-                }else {
-                    holder.mBookMark.setVisibility(View.INVISIBLE);
-                    holder.mBookMarkWhite.setVisibility(View.VISIBLE);
-                }
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(context,holder.mBtnMenu);
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu_hospital,popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId()){
+                            case R.id.addSave:
+                                HashMap<String , Object> map = new HashMap<>();
+                                map.put("HospitalId",HospitalId);
+                                map.put("HospitalName",HospitalName);
+                                map.put("ContactNumber",Contact);
+                                map.put("City",City);
+                                map.put("State",State);
+                                map.put("UserId",UserId);
+                                map.put("TimeStamp",System.currentTimeMillis());
+
+                                firebaseFirestore.collection("Bookmark-Hospital").document(HospitalId).set(map)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()){
+                                                    Toast.makeText(context, "Save Hospital", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                                break;
+                            case R.id.removeSave:
+                                firebaseFirestore.collection("Bookmark-Hospital").document(HospitalId)
+                                        .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+                                            Toast.makeText(context, "Remove to Hospital", Toast.LENGTH_SHORT).show();
+                                        }else {
+                                            Toast.makeText(context, "Sorry, Something wrong", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                popupMenu.show();
             }
         });
 
@@ -161,7 +163,7 @@ public class TopHospitalAdapter extends RecyclerView.Adapter<TopHospitalAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView mHospitalName,mCity,mState,mContact;
         RelativeLayout relativeLayout;
-        ImageView mBookMark,mBookMarkWhite;
+        ImageView mBtnMenu;
         CircleImageView mHospitalProfileImg,mImg;
         ProgressBar progressBar;
         public ViewHolder(@NonNull View itemView) {
@@ -171,8 +173,9 @@ public class TopHospitalAdapter extends RecyclerView.Adapter<TopHospitalAdapter.
             mState = itemView.findViewById(R.id.state);
             mContact = itemView.findViewById(R.id.hospitalContactNumber);
             relativeLayout = itemView.findViewById(R.id.relativeLayout);
-            mBookMark = itemView.findViewById(R.id.bookmark);
-            mBookMarkWhite = itemView.findViewById(R.id.bookmark_white);
+//            mBookMark = itemView.findViewById(R.id.bookmark);
+//            mBookMarkWhite = itemView.findViewById(R.id.bookmark_white);
+            mBtnMenu = itemView.findViewById(R.id.btnMenu);
             mHospitalProfileImg = itemView.findViewById(R.id.hospitalImg);
             mImg = itemView.findViewById(R.id.hospital);
             progressBar = itemView.findViewById(R.id.ImgLoader);

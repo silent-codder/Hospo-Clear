@@ -107,6 +107,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                             case R.id.trackAppointment:
                                 Fragment fragment = new TrackAppointmentFragment();
                                 AppCompatActivity activity = (AppCompatActivity) context;
+                                Bundle bundle = new Bundle();
+                                bundle.putString("AppointmentId",AppointmentId);
+                                fragment.setArguments(bundle);
                                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
                                 break;
                             case R.id.deleteAppointment:
@@ -148,24 +151,6 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             }
         });
 
-//        if (Status.equals("Request")){
-//            holder.mComplete.setVisibility(View.INVISIBLE);
-//            holder.mRequest.setVisibility(View.VISIBLE);
-//            holder.mPending.setVisibility(View.INVISIBLE);
-//        }else if(Status.equals("2") || Status.equals("4")){
-//            holder.mComplete.setVisibility(View.INVISIBLE);
-//            holder.mRequest.setVisibility(View.INVISIBLE);
-//            holder.mPending.setVisibility(View.VISIBLE);
-//        }else if(Status.equals("3")){
-//            holder.mComplete.setVisibility(View.VISIBLE);
-//            holder.mRequest.setVisibility(View.INVISIBLE);
-//            holder.mPending.setVisibility(View.INVISIBLE);
-//        }
-//
-//        holder.mPatientName.setText(PatientName);
-//        holder.mTime.setText(Time);
-//        holder.mProblem.setText(Problem);
-//        holder.mDate.setText(Date);
         holder.mBtnAppointmentInfo.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -187,22 +172,6 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                         .commit();
             }
         });
-//
-//        holder.mMoreInfo.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                HashMap<String,Object> map = new HashMap<>();
-//                map.put("Status","5");
-//                firebaseFirestore.collection("Appointments").document(AppointmentId)
-//                        .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        Toast.makeText(context, "Delete appointment successfully..", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//                return false;
-//            }
-//        });
     }
 
     @Override
@@ -217,14 +186,6 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         RelativeLayout mBtnAppointmentInfo;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-//            mPatientName = itemView.findViewById(R.id.patientName);
-//            mProblem = itemView.findViewById(R.id.problem);
-//            mDate = itemView.findViewById(R.id.date);
-//            mTime = itemView.findViewById(R.id.time);
-//            mComplete = itemView.findViewById(R.id.completeImg);
-//            mPending = itemView.findViewById(R.id.pendingImg);
-//            mRequest = itemView.findViewById(R.id.requestImg);
-//            mUserImg = itemView.findViewById(R.id.userImg);
             mBtnAppointmentInfo = itemView.findViewById(R.id.btnAppointmentInfo);
             mPatientName = itemView.findViewById(R.id.patientName);
             mPatientImg = itemView.findViewById(R.id.patientImg);

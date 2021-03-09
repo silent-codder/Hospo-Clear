@@ -3,15 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="56dp"
     tools:context=".UserRegister.Fragment.TrackAppointmentFragment">
 
     <TextView
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Appointment Tracking"
+        android:textSize="@dimen/text_size_medium"
+        android:textColor="@color/black"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:fontFamily="sans-serif-condensed-medium"
         tools:ignore="HardcodedText" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:id="@+id/recycleViewAppointmentTrack"/>
 
 </RelativeLayout>

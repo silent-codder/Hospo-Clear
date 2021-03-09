@@ -157,7 +157,9 @@ public class UserHomeFragment extends Fragment {
 
 
         Query query = firebaseFirestore.collection("Appointments")
-                .whereEqualTo("AppointmentDate",currentDate);
+                .whereEqualTo("AppointmentDate",currentDate)
+                .whereEqualTo("UserId",UserId)
+                .whereEqualTo("Status","Request");
 
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
