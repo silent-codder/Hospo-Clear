@@ -135,7 +135,7 @@ public class RequestAppointmentAdapter extends RecyclerView.Adapter<RequestAppoi
 
                if (CurrentUserId.equals(DoctorId)){
                    HashMap<String,Object> map = new HashMap<>();
-                   map.put("Status","Accept");
+                   map.put("Status","Pending");
                    firebaseFirestore.collection("Appointments").document(AppointmentId)
                            .update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                        @Override

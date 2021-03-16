@@ -172,6 +172,18 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                         .commit();
             }
         });
+
+        firebaseFirestore.collection("Appointments").document(AppointmentId)
+                .collection("Bill").document(AppointmentId)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    String totalBill = task.getResult().getString("TotalBill");
+                    holder.mTotalBill.setText(totalBill);
+                }
+            }
+        });
     }
 
     @Override
@@ -180,8 +192,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView mPatientName,mProblem,mDate,mTime;
-        CircleImageView mPending,mRequest,mComplete,mPatientImg;
+        TextView mPatientName,mTotalBill,mDate;
+        CircleImageView mPatientImg;
         ImageView mMenu;
         RelativeLayout mBtnAppointmentInfo;
         public ViewHolder(@NonNull View itemView) {
@@ -189,6 +201,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             mBtnAppointmentInfo = itemView.findViewById(R.id.btnAppointmentInfo);
             mPatientName = itemView.findViewById(R.id.patientName);
             mPatientImg = itemView.findViewById(R.id.patientImg);
+            mTotalBill = itemView.findViewById(R.id.totalBill);
             mDate = itemView.findViewById(R.id.appointmentDate);
             mMenu  = itemView.findViewById(R.id.btnMenu);
         }

@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.cctpl.hospoclear.DoctorRegister.Adapter.DoctorActiveAppointmentAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -35,7 +36,7 @@ public class DoctorActiveAppointmentFragment extends Fragment {
 
     RecyclerView recyclerView;
     List<AppointmentData> appointmentData;
-    ActiveAppointmentAdapter activeAppointmentAdapter;
+    DoctorActiveAppointmentAdapter activeAppointmentAdapter;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
     ProgressBar progressBar;
@@ -74,12 +75,12 @@ public class DoctorActiveAppointmentFragment extends Fragment {
     private void loadData() {
         swipeRefreshLayout.setRefreshing(false);
         appointmentData = new ArrayList<>();
-        activeAppointmentAdapter = new ActiveAppointmentAdapter(appointmentData);
+        activeAppointmentAdapter = new DoctorActiveAppointmentAdapter(appointmentData);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(activeAppointmentAdapter);
 
         Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("DoctorId", UserId)
-                .whereEqualTo("Status","2")
+                .whereEqualTo("Status","Accept")
                 .orderBy("TimeStamp", Query.Direction.ASCENDING);
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override

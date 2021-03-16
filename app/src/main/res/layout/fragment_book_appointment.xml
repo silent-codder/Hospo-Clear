@@ -208,7 +208,7 @@
                 android:id="@+id/appointmentDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="(No appointment date selected)"
+                android:text="(Please select date)"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-condensed-medium"

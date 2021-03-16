@@ -52,17 +52,6 @@
                android:layout_toEndOf="@id/patientImg"
                android:textSize="@dimen/text_size_extra_small"
                tools:ignore="HardcodedText" />
-           <TextView
-               android:id="@+id/totalBill"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text=""
-               android:textColor="@color/black"
-               android:fontFamily="sans-serif-condensed-medium"
-               android:textSize="20sp"
-               android:layout_centerVertical="true"
-               android:layout_alignParentEnd="true"
-               tools:ignore="HardcodedText" />
 
        </RelativeLayout>
         <ImageView
