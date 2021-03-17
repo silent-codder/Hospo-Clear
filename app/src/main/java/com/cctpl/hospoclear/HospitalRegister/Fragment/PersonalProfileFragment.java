@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -56,6 +57,26 @@ public class PersonalProfileFragment extends Fragment {
         mDoctorImg = view.findViewById(R.id.doctorImg);
         mBtnEditProfile = view.findViewById(R.id.btnEditProfile);
 
+
+        firebaseFirestore.collection("Hospitals").document(firebaseAuth.getCurrentUser().getUid())
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    String Status = task.getResult().getString("Status");
+
+                    if (Status.equals("Single")){
+                        RelativeLayout relativeLayout = view.findViewById(R.id.relativeLayout);
+                        relativeLayout.setVisibility(View.VISIBLE);
+                        TextView textView = view.findViewById(R.id.text);
+                        textView.setVisibility(View.VISIBLE);
+                        TextView textView1 = view.findViewById(R.id.profile);
+                        textView1.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
+
         firebaseFirestore.collection("Doctors").document(UserId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @SuppressLint("SetTextI18n")
@@ -65,6 +86,7 @@ public class PersonalProfileFragment extends Fragment {
                             String DoctorName = task.getResult().getString("DoctorName");
                             String Speciality = task.getResult().getString("Speciality");
                             String Qualification = task.getResult().getString("Qualification");
+                            String HospitalId = task.getResult().getString("HospitalId");
                             String Experience = task.getResult().getString("Experience");
                             String ProfileUrl = task.getResult().getString("ProfileImgUrl");
                             String DoctorBio = task.getResult().getString("DoctorBio");
@@ -79,6 +101,9 @@ public class PersonalProfileFragment extends Fragment {
                             if (ProfileUrl!=null){
                                 Picasso.get().load(ProfileUrl).into(mDoctorImg);
                             }
+
+
+
                             progressDialog.dismiss();
                         }
                     }

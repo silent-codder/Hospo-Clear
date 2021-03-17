@@ -296,8 +296,17 @@
                 android:layout_below="@id/Hospital"
                 android:id="@+id/hospitalRecycleView2"/>
 
-        </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/Clearcode"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/hospitalRecycleView2"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif-condensed-medium"/>
 
+        </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

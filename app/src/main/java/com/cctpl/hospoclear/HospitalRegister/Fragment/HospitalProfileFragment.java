@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,7 +142,9 @@ public class HospitalProfileFragment extends Fragment {
                             mHospitalName.setText(HospitalName);
                             mHospitalAddress.setText(City+", "+State);
                             mHospitalContactNumber.setText(ContactNumber);
-                            mHospitalBio.setText(Bio);
+                            if (!TextUtils.isEmpty(Bio)){
+                                mHospitalBio.setText(Bio);
+                            }
                             Picasso.get().load(ProfileUrl).into(mHospitalImg);
 
                         }

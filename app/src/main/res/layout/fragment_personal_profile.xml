@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Profile"
+        android:visibility="gone"
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed-medium"
         android:textColor="@color/purple_500"
@@ -20,6 +21,8 @@
         tools:ignore="HardcodedText" />
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20dp"
@@ -127,4 +130,17 @@
             tools:ignore="HardcodedText" />
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/profile"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Personal profile not available \nfor hospital"
+        android:gravity="center"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        tools:ignore="HardcodedText" />
+
 </RelativeLayout>

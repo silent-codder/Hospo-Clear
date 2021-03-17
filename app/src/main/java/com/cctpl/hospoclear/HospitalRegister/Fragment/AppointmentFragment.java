@@ -66,7 +66,7 @@ public class AppointmentFragment extends Fragment {
             }
         });
 
-        loadData();
+        //loadData();
         return view;
     }
     private void loadData() {
@@ -83,17 +83,19 @@ public class AppointmentFragment extends Fragment {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                if (!value.isEmpty()){
-                    lottieAnimationView.setVisibility(View.GONE);
-                    textView.setVisibility(View.GONE);
+//                if (!value.isEmpty()){
+//                    lottieAnimationView.setVisibility(View.GONE);
+//                    textView.setVisibility(View.GONE);
+//
+//
+//                }
 
-                    for (DocumentChange doc : value.getDocumentChanges()){
-                        if (doc.getType() == DocumentChange.Type.ADDED){
-                            String AppointmentId = doc.getDocument().getId();
-                            AppointmentData mAppointmentData = doc.getDocument().toObject(AppointmentData.class).withId(AppointmentId);
-                            appointmentData.add(mAppointmentData);
-                            activeAppointmentAdapter.notifyDataSetChanged();
-                        }
+                for (DocumentChange doc : value.getDocumentChanges()){
+                    if (doc.getType() == DocumentChange.Type.ADDED){
+                        String AppointmentId = doc.getDocument().getId();
+                        AppointmentData mAppointmentData = doc.getDocument().toObject(AppointmentData.class).withId(AppointmentId);
+                        appointmentData.add(mAppointmentData);
+                        activeAppointmentAdapter.notifyDataSetChanged();
                     }
                 }
             }
