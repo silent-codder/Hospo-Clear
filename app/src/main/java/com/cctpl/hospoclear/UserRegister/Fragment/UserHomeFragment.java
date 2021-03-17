@@ -57,6 +57,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.content.ContentValues.TAG;
+import static android.widget.GridLayout.HORIZONTAL;
 
 public class UserHomeFragment extends Fragment {
 
@@ -124,7 +125,7 @@ public class UserHomeFragment extends Fragment {
         hospitalData = new ArrayList<>();
         topHospitalAdapter = new TopHospitalAdapter(hospitalData);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2,GridLayoutManager.HORIZONTAL,false));
         recyclerView.setAdapter(topHospitalAdapter);
 
         CollectionReference ref = firebaseFirestore.collection("Hospitals");

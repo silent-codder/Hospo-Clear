@@ -26,9 +26,12 @@ import com.cctpl.hospoclear.HospitalRegister.Adapter.RequestAppointmentAdapter;
 import com.cctpl.hospoclear.HospitalRegister.Adapter.TabAdapter;
 import com.cctpl.hospoclear.R;
 import com.cctpl.hospoclear.UserRegister.Model.AppointmentData;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -66,6 +69,19 @@ public class HospitalMainFragment extends Fragment {
 //        lottieAnimationView = view.findViewById(R.id.lottie);
 
         loadData();
+
+
+        firebaseFirestore.collection("Hospitals").document(HospitalId).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            String HospitalName = task.getResult().getString("HospitalName");
+                            TextView textView = view.findViewById(R.id.hospitalName);
+                            textView.setText(HospitalName);
+                        }
+                    }
+                });
 
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         ViewPager viewPager = view.findViewById(R.id.viewPager);

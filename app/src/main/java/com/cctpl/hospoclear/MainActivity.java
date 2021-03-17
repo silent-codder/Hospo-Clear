@@ -219,8 +219,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()){
                                     String isUser = task.getResult().getString("isUser");
-                                    String HospitalName = task.getResult().getString("HospitalName");
-                                    if (isUser.equals("1") && !TextUtils.isEmpty(HospitalName)){
+                                    if (isUser.equals("1")){
                                         //Hospital Section open
                                         progressBar.setVisibility(View.GONE);
                                         startActivity(new Intent(MainActivity.this, HospitalMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|

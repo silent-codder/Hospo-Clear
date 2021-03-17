@@ -77,7 +77,7 @@ public class DoctorCompleteAppointmentFragment extends Fragment {
         recyclerView.setAdapter(completeAppointmentAdapter);
 
         Query query = firebaseFirestore.collectionGroup("Appointments").whereEqualTo("DoctorId",UserId)
-                .whereEqualTo("Status","1")
+                .whereEqualTo("Status","Complete")
                 .orderBy("TimeStamp", Query.Direction.ASCENDING);
 
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {

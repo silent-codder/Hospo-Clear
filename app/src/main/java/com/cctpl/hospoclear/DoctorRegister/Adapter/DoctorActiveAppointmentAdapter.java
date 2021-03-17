@@ -1,4 +1,4 @@
-package com.cctpl.hospoclear.HospitalRegister.Adapter;
+package com.cctpl.hospoclear.DoctorRegister.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,18 +22,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.airbnb.lottie.LottieAnimationView;
-import com.cctpl.hospoclear.HospitalRegister.Fragment.BillViewFragment;
-import com.cctpl.hospoclear.UserRegister.Fragment.TrackAppointmentFragment;
+import com.cctpl.hospoclear.HospitalRegister.Fragment.BillFragment;
+import com.cctpl.hospoclear.R;
+import com.cctpl.hospoclear.UserRegister.Fragment.AppointmentDetailsFragment;
 import com.cctpl.hospoclear.UserRegister.Model.AppointmentData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.cctpl.hospoclear.HospitalRegister.Fragment.BillFragment;
-import com.cctpl.hospoclear.R;
-import com.cctpl.hospoclear.UserRegister.Fragment.AppointmentDetailsFragment;
-import com.cctpl.hospoclear.UserRegister.Model.AppointmentData;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -42,7 +37,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppointmentAdapter.ViewHolder> {
+public class DoctorActiveAppointmentAdapter extends RecyclerView.Adapter<DoctorActiveAppointmentAdapter.ViewHolder> {
 
 
     List<AppointmentData> appointmentData;
@@ -51,14 +46,14 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
     String ProfileUrl,AppointmentId;
     Fragment fragment;
 
-    public ActiveAppointmentAdapter(List<AppointmentData> appointmentData) {
+    public DoctorActiveAppointmentAdapter(List<AppointmentData> appointmentData) {
         this.appointmentData = appointmentData;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.active_appointment_view,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.doctor_active_appointment_view,parent,false);
         firebaseFirestore = FirebaseFirestore.getInstance();
         context = parent.getContext();
         return new ViewHolder(view);
@@ -117,14 +112,14 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(context,holder.mMenu);
-                popupMenu.getMenuInflater().inflate(R.menu.popup_menu_active_appointment,popupMenu.getMenu());
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu_doctor_active_appointment,popupMenu.getMenu());
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
 
                         switch (item.getItemId()){
-                            case R.id.completeAppointment:
+                            case R.id.requestToCompleteAppointment:
                                 Dialog dialog = new Dialog(context );
                                 dialog.setContentView(R.layout.complete_dialog);
                                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -138,12 +133,12 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
                                         HashMap<String, Object> map = new HashMap<>();
                                         map.put("Flag","false");
                                         HashMap<String, Object> map1 = new HashMap<>();
-                                        map1.put("Status","Complete");
+                                        map1.put("Status","Pending");
                                         HashMap<String, Object> status = new HashMap<>();
                                         status.put("DoctorId",DoctorId);
                                         status.put("TimeStamp",System.currentTimeMillis());
                                         status.put("UserId",UserId);
-                                        status.put("Description","Appointment completed by");
+                                        status.put("Description","Appointment on process by");
                                         firebaseFirestore.collection("Appointments").document(AppointmentId)
                                                 .collection("Status").add(status);
                                         firebaseFirestore.collection("Doctors").document(DoctorId).collection(Section).document(SlotId)
@@ -154,7 +149,7 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()){
-                                                            Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(context, "Request for complete appointment", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
                                                 });
@@ -189,18 +184,6 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
             }
         });
 
-        firebaseFirestore.collection("Appointments").document(AppointmentId)
-                .collection("Bill").document(AppointmentId)
-                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
-                    String totalBill = task.getResult().getString("TotalBill");
-                    holder.mTotalBill.setText(totalBill);
-                }
-            }
-        });
-
     }
 
     @Override
@@ -211,7 +194,7 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView mPatientImg;
-        TextView mPatientName,mAppointmentInfo,mTotalBill;
+        TextView mPatientName,mAppointmentInfo;
         RelativeLayout mBtnAppointmentInfo;
         ImageView mMenu;
         public ViewHolder(@NonNull View itemView) {
@@ -219,7 +202,6 @@ public class ActiveAppointmentAdapter extends RecyclerView.Adapter<ActiveAppoint
            mPatientImg = (CircleImageView) itemView.findViewById(R.id.patientImg);
            mPatientName = (TextView) itemView.findViewById(R.id.patientName);
            mAppointmentInfo = (TextView) itemView.findViewById(R.id.appointmentInfo);
-           mTotalBill = (TextView) itemView.findViewById(R.id.totalBill);
            mBtnAppointmentInfo = (RelativeLayout) itemView.findViewById(R.id.btnAppointmentInfo);
            mMenu = (ImageView) itemView.findViewById(R.id.btnMenu);
         }
