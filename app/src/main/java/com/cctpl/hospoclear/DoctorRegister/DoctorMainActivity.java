@@ -8,6 +8,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cctpl.hospoclear.HospitalRegister.Fragment.TimeSlotFragment;
 import com.cctpl.hospoclear.MainActivity;
 import com.cctpl.hospoclear.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,11 +43,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DoctorMainActivity extends AppCompatActivity {
 
-
     NavigationView nav;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
-
     Fragment selectFragment;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
@@ -137,6 +138,10 @@ public class DoctorMainActivity extends AppCompatActivity {
                     case R.id.doctor_profile :
                         selectFragment = new PersonalProfileFragment();
                         break;
+                    case R.id.doctor_timeSlot :
+                        selectFragment = new TimeSlotFragment();
+                        break;
+
                     case R.id.doctor_logout :
                         logOut();
                         Toast.makeText(DoctorMainActivity.this, "Log out Successfully", Toast.LENGTH_SHORT).show();
@@ -154,9 +159,23 @@ public class DoctorMainActivity extends AppCompatActivity {
     }
 
     private void logOut() {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(DoctorMainActivity.this, MainActivity.class));
-        finish();
+
+        new AlertDialog.Builder(this)
+                .setIcon(R.mipmap.ic_launcher)
+                .setTitle("M-Hosp's")
+                .setMessage("You want to Log Out?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(DoctorMainActivity.this, MainActivity.class));
+                        finish();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     private void removeColor(NavigationView view) {

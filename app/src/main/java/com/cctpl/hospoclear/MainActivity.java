@@ -245,34 +245,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void CheckOtherLogin() {
-        firebaseFirestore.collection("AppUsers").document(UserId).get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()){
-                            String isUser = task.getResult().getString("isUser");
-                            if (isUser.equals("1")){
-                                //Hospital Section open
-                                progressBar.setVisibility(View.GONE);
-                                startActivity(new Intent(MainActivity.this, HospitalMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
-                                        Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                finish();
-                            }else if (isUser.equals("2")){
-                                //User Section open
-                                progressBar.setVisibility(View.GONE);
-                                startActivity(new Intent(MainActivity.this, UserMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
-                                        Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                finish();
-                            }else{
-                                //Doctor Section open
-                                progressBar.setVisibility(View.GONE);
-                                startActivity(new Intent(MainActivity.this, DoctorMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
-                                        Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                finish();
-                            }
-                        }
-                    }
-                });
-    }
+
 }

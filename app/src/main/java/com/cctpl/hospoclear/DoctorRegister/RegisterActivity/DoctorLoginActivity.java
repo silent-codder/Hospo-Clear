@@ -55,7 +55,7 @@ public class DoctorLoginActivity extends AppCompatActivity {
                 mBtnContinue.setVisibility(View.INVISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
 
-                firebaseFirestore.collection("Hospitals").whereEqualTo("MobileNumber",mCpp.getFullNumberWithPlus())
+                firebaseFirestore.collection("Doctors").whereEqualTo("MobileNumber",mCpp.getFullNumberWithPlus())
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

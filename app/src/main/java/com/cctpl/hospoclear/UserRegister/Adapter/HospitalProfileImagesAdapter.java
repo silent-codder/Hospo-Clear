@@ -39,8 +39,6 @@ public class HospitalProfileImagesAdapter extends RecyclerView.Adapter<HospitalP
         String ImgUrl = hospitalData.get(position).getImgUrl();
         Picasso.get().load(ImgUrl).into(holder.imageView);
 
-
-
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +51,7 @@ public class HospitalProfileImagesAdapter extends RecyclerView.Adapter<HospitalP
                         .commit();
             }
         });
+
     }
 
     @Override

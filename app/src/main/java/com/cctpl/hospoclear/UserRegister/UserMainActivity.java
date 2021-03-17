@@ -9,6 +9,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cctpl.hospoclear.DoctorRegister.DoctorMainActivity;
 import com.cctpl.hospoclear.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -156,7 +159,6 @@ public class UserMainActivity extends AppCompatActivity{
                         break;
                     case R.id.user_logout :
                         logOut();
-                        Toast.makeText(UserMainActivity.this, "Log out Successfully", Toast.LENGTH_SHORT).show();
                         break;
                 }
 
@@ -173,9 +175,23 @@ public class UserMainActivity extends AppCompatActivity{
     }
 
     private void logOut() {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(UserMainActivity.this, MainActivity.class));
-        finish();
+
+        new AlertDialog.Builder(this)
+                .setIcon(R.mipmap.ic_launcher)
+                .setTitle("M-Hosp's")
+                .setMessage("You want to Log Out?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(UserMainActivity.this, MainActivity.class));
+                        finish();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     private void removeColor(NavigationView view) {
