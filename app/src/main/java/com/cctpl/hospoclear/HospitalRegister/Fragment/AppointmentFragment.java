@@ -43,6 +43,13 @@ public class AppointmentFragment extends Fragment {
     LottieAnimationView lottieAnimationView;
     TextView textView;
     SwipeRefreshLayout swipeRefreshLayout;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadData();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,8 +72,7 @@ public class AppointmentFragment extends Fragment {
                 loadData();
             }
         });
-
-        //loadData();
+//        loadData();
         return view;
     }
     private void loadData() {

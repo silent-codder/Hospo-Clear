@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
                                         startActivity(new Intent(MainActivity.this, UserMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
                                                 Intent.FLAG_ACTIVITY_CLEAR_TASK));
                                         finish();
-                                    }else{
+                                    }else if(isUser.equals("3")){
                                         //Doctor Section open
                                         progressBar.setVisibility(View.GONE);
                                         startActivity(new Intent(MainActivity.this, DoctorMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|

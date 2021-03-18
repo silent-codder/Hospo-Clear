@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,6 +66,7 @@ public class UserHomeFragment extends Fragment {
     TopHospitalAdapter topHospitalAdapter;
     List<HospitalData> hospitalData;
     RecyclerView recyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
     String mLocation;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,9 +74,18 @@ public class UserHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_home, container, false);
         recyclerView = view.findViewById(R.id.hospitalRecycleView2);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        swipeRefreshLayout = view.findViewById(R.id.refresh);
+
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         String UserId = firebaseAuth.getCurrentUser().getUid();
 
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         firebaseFirestore.collection("Users").document(UserId)
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -125,7 +136,9 @@ public class UserHomeFragment extends Fragment {
         hospitalData = new ArrayList<>();
         topHospitalAdapter = new TopHospitalAdapter(hospitalData);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2,GridLayoutManager.HORIZONTAL,false));
+//        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2,GridLayoutManager.HORIZONTAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView,new RecyclerView.State(), topHospitalAdapter.getItemCount());
         recyclerView.setAdapter(topHospitalAdapter);
 
         CollectionReference ref = firebaseFirestore.collection("Hospitals");
@@ -139,6 +152,7 @@ public class UserHomeFragment extends Fragment {
                         HospitalData mHospitalData = doc.getDocument().toObject(HospitalData.class);
                         hospitalData.add(mHospitalData);
                         topHospitalAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }
             }
@@ -179,6 +193,7 @@ public class UserHomeFragment extends Fragment {
                         AppointmentData mAppointmentData = doc.getDocument().toObject(AppointmentData.class);
                         appointmentData.add(mAppointmentData);
                         todayAppointmentAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }
             }

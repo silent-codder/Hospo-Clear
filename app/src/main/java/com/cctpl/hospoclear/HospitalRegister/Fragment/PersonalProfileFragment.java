@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cctpl.hospoclear.HospitalRegister.HospitalLogin;
+import com.cctpl.hospoclear.UserRegister.Adapter.HospitalImageAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +32,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.content.ContentValues.TAG;
+
 public class PersonalProfileFragment extends Fragment {
 
     FirebaseFirestore firebaseFirestore;
@@ -38,6 +43,7 @@ public class PersonalProfileFragment extends Fragment {
     Button mBtnEditProfile;
     CircleImageView mDoctorImg;
     ProgressDialog progressDialog;
+    String HospitalId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,24 +64,7 @@ public class PersonalProfileFragment extends Fragment {
         mBtnEditProfile = view.findViewById(R.id.btnEditProfile);
 
 
-        firebaseFirestore.collection("Hospitals").document(firebaseAuth.getCurrentUser().getUid())
-                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
-                    String Status = task.getResult().getString("Status");
-
-                    if (Status.equals("Single")){
-                        RelativeLayout relativeLayout = view.findViewById(R.id.relativeLayout);
-                        relativeLayout.setVisibility(View.VISIBLE);
-                        TextView textView = view.findViewById(R.id.text);
-                        textView.setVisibility(View.VISIBLE);
-                        TextView textView1 = view.findViewById(R.id.profile);
-                        textView1.setVisibility(View.GONE);
-                    }
-                }
-            }
-        });
+        Log.d(TAG, "UserId: " + UserId);
 
         firebaseFirestore.collection("Doctors").document(UserId).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -86,7 +75,8 @@ public class PersonalProfileFragment extends Fragment {
                             String DoctorName = task.getResult().getString("DoctorName");
                             String Speciality = task.getResult().getString("Speciality");
                             String Qualification = task.getResult().getString("Qualification");
-                            String HospitalId = task.getResult().getString("HospitalId");
+                            HospitalId = task.getResult().getString("HospitalId");
+                            Log.d(TAG, "onCreateView: " + HospitalId);
                             String Experience = task.getResult().getString("Experience");
                             String ProfileUrl = task.getResult().getString("ProfileImgUrl");
                             String DoctorBio = task.getResult().getString("DoctorBio");
@@ -101,13 +91,18 @@ public class PersonalProfileFragment extends Fragment {
                             if (ProfileUrl!=null){
                                 Picasso.get().load(ProfileUrl).into(mDoctorImg);
                             }
-
-
-
                             progressDialog.dismiss();
+
+                            if (!TextUtils.isEmpty(HospitalId)){
+                                CheckHospitalStatus(view);
+                            }
                         }
                     }
                 });
+
+        Log.d(TAG, "onCreateView: " + HospitalId);
+
+//
 
         mBtnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,5 +121,33 @@ public class PersonalProfileFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void CheckHospitalStatus(View view) {
+        firebaseFirestore.collection("Hospitals").document(HospitalId)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    String Status = task.getResult().getString("Status");
+
+                    if (Status.equals("Single")){
+                        RelativeLayout relativeLayout = view.findViewById(R.id.relativeLayout);
+                        relativeLayout.setVisibility(View.VISIBLE);
+                        TextView textView = view.findViewById(R.id.text);
+                        textView.setVisibility(View.VISIBLE);
+                        TextView textView1 = view.findViewById(R.id.profile);
+                        textView1.setVisibility(View.GONE);
+                    }else {
+                        RelativeLayout relativeLayout = view.findViewById(R.id.relativeLayout);
+                        relativeLayout.setVisibility(View.VISIBLE);
+                        TextView textView = view.findViewById(R.id.text);
+                        textView.setVisibility(View.VISIBLE);
+                        TextView textView1 = view.findViewById(R.id.profile);
+                        textView1.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
     }
 }

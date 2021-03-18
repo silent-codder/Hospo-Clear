@@ -43,6 +43,13 @@ public class CompleteAppointmentFragment extends Fragment {
     TextView textView;
     String HospitalId;
     SwipeRefreshLayout swipeRefreshLayout;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadData();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,7 +73,7 @@ public class CompleteAppointmentFragment extends Fragment {
             }
         });
 
-        loadData();
+//        loadData();
 
         return view;
     }

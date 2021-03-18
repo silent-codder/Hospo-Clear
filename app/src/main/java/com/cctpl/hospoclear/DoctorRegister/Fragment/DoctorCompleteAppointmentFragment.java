@@ -41,6 +41,13 @@ public class DoctorCompleteAppointmentFragment extends Fragment {
     String UserId;
     LottieAnimationView lottieAnimationView;
     TextView textView;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadData();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,7 +67,7 @@ public class DoctorCompleteAppointmentFragment extends Fragment {
             }
         });
 
-        loadData();
+//        loadData();
         return view;
     }
 
