@@ -111,36 +111,38 @@ public class TimeSlotFragment extends Fragment {
         radioButtonEveningSec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Section = "Evening";
-                relativeLayoutFrom.setVisibility(View.VISIBLE);
-                firebaseFirestore.collection("Doctors").document(DoctorId).collection(Section).addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                     size =  value.getDocuments().size();
-                    }
 
+                Section = "Evening";
+                firebaseFirestore.collection("Doctors").document(DoctorId).collection(Section).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        size =  queryDocumentSnapshots.getDocuments().size();
+                        if (  size != 0 ){
+                            aleart(Section);
+                        }
+                    }
                 });
 
-                if (  size != 0 ){
-                    aleart(Section);
-                }
+                relativeLayoutFrom.setVisibility(View.VISIBLE);
+
+
             }
         });
         radioButtonMorningSec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Section = "Morning";
-                relativeLayoutFrom.setVisibility(View.VISIBLE);
-                firebaseFirestore.collection("Doctors").document(DoctorId).collection(Section).addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+                firebaseFirestore.collection("Doctors").document(DoctorId).collection(Section).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        value.getDocuments().size();
-                        if (  value.getDocuments().size() != 0 ){
-                            size =  value.getDocuments().size();
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        size =  queryDocumentSnapshots.getDocuments().size();
+                        if (  size != 0 ){
+                            aleart(Section);
                         }
                     }
                 });
-
+                relativeLayoutFrom.setVisibility(View.VISIBLE);
                 if (  size != 0 ){
                     aleart(Section);
                 }
