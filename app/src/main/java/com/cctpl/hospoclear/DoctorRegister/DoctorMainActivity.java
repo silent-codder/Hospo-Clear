@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cctpl.hospoclear.DoctorRegister.Fragment.DoctorProfileFragment;
 import com.cctpl.hospoclear.HospitalRegister.Fragment.TimeSlotFragment;
 import com.cctpl.hospoclear.MainActivity;
 import com.cctpl.hospoclear.R;
@@ -136,7 +137,7 @@ public class DoctorMainActivity extends AppCompatActivity {
                         selectFragment = new DoctorHomeFragment();
                         break;
                     case R.id.doctor_profile :
-                        selectFragment = new PersonalProfileFragment();
+                        selectFragment = new DoctorProfileFragment();
                         break;
                     case R.id.doctor_timeSlot :
                         selectFragment = new TimeSlotFragment();
@@ -144,7 +145,6 @@ public class DoctorMainActivity extends AppCompatActivity {
 
                     case R.id.doctor_logout :
                         logOut();
-                        Toast.makeText(DoctorMainActivity.this, "Log out Successfully", Toast.LENGTH_SHORT).show();
                         break;
                 }
 
