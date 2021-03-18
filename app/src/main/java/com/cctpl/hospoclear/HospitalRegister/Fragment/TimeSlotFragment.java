@@ -1,6 +1,10 @@
 package com.cctpl.hospoclear.HospitalRegister.Fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -31,10 +36,12 @@ import com.cctpl.hospoclear.UserRegister.Model.DoctorId;
 import com.cctpl.hospoclear.UserRegister.Model.EveningTimeSlotData;
 import com.cctpl.hospoclear.UserRegister.Model.TimeSlotData;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -59,6 +66,8 @@ public class TimeSlotFragment extends Fragment {
     List<EveningTimeSlotData> eveningTimeSlotData;
     TimeSlotAdapter timeSlotAdapter;
     EveningTimeSlotAdapter eveningTimeSlotAdapter;
+    Dialog dialog ;
+    int size ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +78,7 @@ public class TimeSlotFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycleView);
         recyclerView2 = view.findViewById(R.id.recycleView2);
         DoctorId = firebaseAuth.getCurrentUser().getUid();
+        dialog = new Dialog(getContext());
 
         RelativeLayout relativeLayoutFrom = view.findViewById(R.id.layoutFrom);
         RelativeLayout relativeLayoutTo = view.findViewById(R.id.layoutTo);
@@ -103,6 +113,17 @@ public class TimeSlotFragment extends Fragment {
             public void onClick(View v) {
                 Section = "Evening";
                 relativeLayoutFrom.setVisibility(View.VISIBLE);
+                firebaseFirestore.collection("Doctors").document(DoctorId).collection(Section).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                     size =  value.getDocuments().size();
+                    }
+
+                });
+
+                if (  size != 0 ){
+                    aleart(Section);
+                }
             }
         });
         radioButtonMorningSec.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +131,19 @@ public class TimeSlotFragment extends Fragment {
             public void onClick(View v) {
                 Section = "Morning";
                 relativeLayoutFrom.setVisibility(View.VISIBLE);
+                firebaseFirestore.collection("Doctors").document(DoctorId).collection(Section).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        value.getDocuments().size();
+                        if (  value.getDocuments().size() != 0 ){
+                            size =  value.getDocuments().size();
+                        }
+                    }
+                });
+
+                if (  size != 0 ){
+                    aleart(Section);
+                }
             }
         });
 
@@ -278,6 +312,42 @@ public class TimeSlotFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void aleart(String section) {
+        dialog.setContentView(R.layout.delete_time_slot);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        Button btnClose = dialog.findViewById(R.id.btnNo);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Button btnYes = dialog.findViewById(R.id.btnYes);
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delete(section);
+            }
+        });
+
+    }
+
+    private void delete(String section) {
+        firebaseFirestore.collection("Doctors").document(DoctorId).collection(section).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()){
+                    firebaseFirestore.collection("Doctors").document(DoctorId).collection(section).document(doc.getReference().getId()).delete();
+
+                }
+            }
+        });
+        dialog.dismiss();
     }
 
     private void CreateTimeSlot(String fromHr, String fromMin, String toHr, String toMin, String amOrPm, String toAmOrPm,String Min) {
