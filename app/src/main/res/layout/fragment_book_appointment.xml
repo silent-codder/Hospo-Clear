@@ -73,8 +73,8 @@
             android:text="Patients"
             android:gravity="center_horizontal"
             android:fontFamily="sans-serif-condensed-medium"
-            android:textSize="@dimen/text_size_medium"
-            android:textStyle="bold"
+            android:textSize="@dimen/text_size_extra_small"
+            android:textStyle="normal"
             android:textAllCaps="true"
             tools:ignore="HardcodedText" />
         <TextView
@@ -85,7 +85,7 @@
             android:gravity="center_horizontal"
             android:layout_below="@id/patient"
             android:fontFamily="sans-serif-condensed-medium"
-            android:textSize="@dimen/text_size_large"
+            android:textSize="@dimen/text_size_small"
             android:textStyle="bold"
             android:textColor="@color/purple_500"
             android:textAllCaps="true"
@@ -107,7 +107,7 @@
             android:text="Rate"
             android:gravity="center_horizontal"
             android:fontFamily="sans-serif-condensed-medium"
-            android:textSize="@dimen/text_size_medium"
+            android:textSize="@dimen/text_size_extra_small"
             android:textStyle="bold"
             android:textAllCaps="true"
             tools:ignore="HardcodedText" />
@@ -120,7 +120,7 @@
             android:gravity="center_horizontal"
             android:layout_below="@id/rate"
             android:fontFamily="sans-serif-condensed-medium"
-            android:textSize="@dimen/text_size_large"
+            android:textSize="@dimen/text_size_small"
             android:textStyle="bold"
             android:textColor="@color/purple_500"
             android:textAllCaps="true"
@@ -143,8 +143,8 @@
             android:text="Experience"
             android:gravity="center_horizontal"
             android:fontFamily="sans-serif-condensed-medium"
-            android:textSize="@dimen/text_size_medium"
-            android:textStyle="bold"
+            android:textSize="@dimen/text_size_extra_small"
+            android:textStyle="normal"
             android:textAllCaps="true"
             tools:ignore="HardcodedText" />
         <TextView
@@ -156,7 +156,7 @@
             android:gravity="center_horizontal"
             android:layout_below="@id/rate"
             android:fontFamily="sans-serif-condensed-medium"
-            android:textSize="@dimen/text_size_large"
+            android:textSize="@dimen/text_size_small"
             android:textStyle="bold"
             android:textColor="@color/purple_500"
             android:textAllCaps="false"
@@ -230,13 +230,5 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Clearcode"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:textSize="@dimen/text_size_extra_small"/>
 
 </RelativeLayout>

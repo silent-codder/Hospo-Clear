@@ -8,10 +8,11 @@
     tools:context=".DoctorRegister.Fragment.DoctorProfileFragment">
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/profileText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Profile"
+        android:visibility="visible"
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed-medium"
         android:textColor="@color/purple_500"
@@ -20,11 +21,13 @@
         tools:ignore="HardcodedText" />
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20dp"
         android:background="@drawable/layout_bg"
-        android:layout_below="@+id/text"
+        android:layout_below="@+id/profileText"
         android:gravity="center_horizontal"
         android:layout_marginTop="5dp">
 
@@ -38,7 +41,6 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/user"
             app:civ_border_width="0.4dp"
             android:layout_marginTop="10dp"
             android:id="@+id/doctorImg"/>
@@ -115,6 +117,30 @@
             android:layout_below="@id/btnEditProfile"
             android:layout_marginTop="10dp"/>
 
+        <Button
+            android:id="@+id/btnTimeSlots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update Time Slots"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:layout_below="@id/view"
+            android:layout_marginTop="10dp"
+            tools:ignore="HardcodedText" />
+
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/profileStatus"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Personal profile not available \nfor hospital"
+        android:gravity="center"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        tools:ignore="HardcodedText" />
 
 </RelativeLayout>

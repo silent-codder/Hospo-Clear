@@ -91,14 +91,16 @@ public class PersonalProfileFragment extends Fragment {
                             if (ProfileUrl!=null){
                                 Picasso.get().load(ProfileUrl).into(mDoctorImg);
                             }
-                            progressDialog.dismiss();
-
                             if (!TextUtils.isEmpty(HospitalId)){
-                                CheckHospitalStatus(view);
+//                                CheckHospitalStatus(view);
                             }
+
+                            progressDialog.dismiss();
                         }
                     }
                 });
+
+        CheckHospitalStatus(view);
 
         Log.d(TAG, "onCreateView: " + HospitalId);
 
@@ -124,7 +126,7 @@ public class PersonalProfileFragment extends Fragment {
     }
 
     private void CheckHospitalStatus(View view) {
-        firebaseFirestore.collection("Hospitals").document(HospitalId)
+        firebaseFirestore.collection("Hospitals").document(firebaseAuth.getCurrentUser().getUid())
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -134,18 +136,12 @@ public class PersonalProfileFragment extends Fragment {
                     if (Status.equals("Single")){
                         RelativeLayout relativeLayout = view.findViewById(R.id.relativeLayout);
                         relativeLayout.setVisibility(View.VISIBLE);
-                        TextView textView = view.findViewById(R.id.text);
-                        textView.setVisibility(View.VISIBLE);
-                        TextView textView1 = view.findViewById(R.id.profile);
-                        textView1.setVisibility(View.GONE);
-                    }else {
-                        RelativeLayout relativeLayout = view.findViewById(R.id.relativeLayout);
-                        relativeLayout.setVisibility(View.VISIBLE);
-                        TextView textView = view.findViewById(R.id.text);
-                        textView.setVisibility(View.VISIBLE);
-                        TextView textView1 = view.findViewById(R.id.profile);
-                        textView1.setVisibility(View.GONE);
+                        TextView profileText = view.findViewById(R.id.profileText);
+                        profileText.setVisibility(View.VISIBLE);
+                        TextView profileStatus = view.findViewById(R.id.profileStatus);
+                        profileStatus.setVisibility(View.GONE);
                     }
+                    progressDialog.dismiss();
                 }
             }
         });
