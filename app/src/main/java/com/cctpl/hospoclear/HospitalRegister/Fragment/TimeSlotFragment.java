@@ -340,6 +340,7 @@ public class TimeSlotFragment extends Fragment {
     }
 
     private void delete(String section) {
+
         firebaseFirestore.collection("Doctors").document(DoctorId).collection(section).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -349,6 +350,7 @@ public class TimeSlotFragment extends Fragment {
                 }
             }
         });
+        if(section.equals(""))
         dialog.dismiss();
     }
 
