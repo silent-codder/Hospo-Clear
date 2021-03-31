@@ -38,6 +38,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.cctpl.hospoclear.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class TopHospitalAdapter extends RecyclerView.Adapter<TopHospitalAdapter.
     public TopHospitalAdapter(List<HospitalData> hospitalData) {
         this.hospitalData = hospitalData;
     }
+
 
     @NonNull
     @Override

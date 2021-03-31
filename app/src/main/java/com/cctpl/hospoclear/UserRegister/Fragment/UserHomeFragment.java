@@ -136,8 +136,8 @@ public class UserHomeFragment extends Fragment {
         hospitalData = new ArrayList<>();
         topHospitalAdapter = new TopHospitalAdapter(hospitalData);
 
-//        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2,GridLayoutManager.HORIZONTAL,false));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2,GridLayoutManager.HORIZONTAL,false));
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView,new RecyclerView.State(), topHospitalAdapter.getItemCount());
         recyclerView.setAdapter(topHospitalAdapter);
 
@@ -220,6 +220,16 @@ public class UserHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment fragment = new MoreCategoryFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
+            }
+        });
+
+
+        TextView BtnViewMoreHospital = view.findViewById(R.id.btnViewMoreHospital);
+        BtnViewMoreHospital.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new MoreHospitalFragment();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack(null).commit();
             }
         });

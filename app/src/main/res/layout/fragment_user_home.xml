@@ -270,10 +270,27 @@
                     android:id="@+id/categoryRecycleView"/>
                 <TextView
                     android:id="@+id/btnViewMore"
+                    android:layout_below="@id/categoryRecycleView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="More Category"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:background="@drawable/edit_txt_bg"
+                    android:padding="10dp"
+                    tools:ignore="HardcodedText" />
+                <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="View more"
-                    android:layout_below="@id/categoryRecycleView"
+                    android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:layout_below="@id/tableLayout"
+                    android:layout_marginTop="20dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="10dp"
                     android:textColor="@color/Primary_color"
@@ -287,19 +304,50 @@
                     android:layout_height="wrap_content"
                     android:text="Hospitals"
                     android:layout_marginStart="18dp"
+                    android:layout_marginTop="10dp"
                     android:textSize="@dimen/text_size_medium"
                     android:fontFamily="sans-serif-condensed-medium"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View more"
+                    android:visibility="gone"
+                    android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:layout_below="@id/categoryRecycleView"
+                    android:layout_marginTop="13dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="10dp"
+                    android:textColor="@color/Primary_color"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="5dp"
                     android:background="@drawable/bg"
+                    android:layout_marginTop="5dp"
                     android:padding="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/Hospital"
                     android:id="@+id/hospitalRecycleView2"/>
+                <TextView
+                    android:id="@+id/btnViewMoreHospital"
+                    android:layout_below="@id/hospitalRecycleView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="More Hospitals"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:background="@drawable/edit_txt_bg"
+                    android:padding="10dp"
+                    tools:ignore="HardcodedText" />
 
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>

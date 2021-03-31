@@ -8,6 +8,11 @@
         android:title="Home"
         android:fontFamily="sans-serif-condensed-medium"
         tools:ignore="HardcodedText" />
+    <item android:id="@+id/book_appointment"
+        android:icon="@drawable/ic_baseline_calendar_today_24"
+        android:title="Book Appointment"
+        android:fontFamily="sans-serif-condensed-medium"
+        tools:ignore="HardcodedText" />
     <item android:id="@+id/user_appointments"
         android:icon="@drawable/ic_appointments"
         android:title="Appointments History"

@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.cctpl.hospoclear.DoctorRegister.DoctorMainActivity;
 import com.cctpl.hospoclear.MainActivity;
+import com.cctpl.hospoclear.UserRegister.Fragment.MoreHospitalFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -156,6 +157,9 @@ public class UserMainActivity extends AppCompatActivity{
                         break;
                     case R.id.user_profile :
                         selectFragment = new UserProfileFragment();
+                        break;
+                    case R.id.book_appointment :
+                        selectFragment = new MoreHospitalFragment();
                         break;
                     case R.id.user_logout :
                         logOut();

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="56dp"
+    tools:context=".UserRegister.Fragment.MoreHospitalFragment">
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapWords"
+        android:padding="10dp"
+        android:hint="Search hospital...."
+        android:drawableLeft="@drawable/ic_search"
+        android:background="@drawable/search_bg"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/search"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/hospitalRecycleView2"/>
+    <TextView
+        android:id="@+id/notFoundText"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Opps.. not found hospital"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:drawableTop="@drawable/ic_search"
+        tools:ignore="HardcodedText" />
+
+</RelativeLayout>
